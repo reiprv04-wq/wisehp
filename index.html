@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>株式会社WEBY 新卒採用サイト | THE RED EDGE</title>
+  <meta name="description" content="株式会社WEBYの新卒採用サイトです。専門家プロファイル・法務救済・債務救済などのメディア事業と、士業向けWebコンサルティング事業を展開。2026年卒の採用情報はこちら。">
+  <meta name="keywords" content="株式会社WEBY,WEBY,新卒採用,採用,2026年卒,新卒,就職,銀座,Webコンサルティング,専門家プロファイル">
+  <meta property="og:title" content="株式会社WEBY 新卒採用サイト">
+  <meta property="og:description" content="「今日よりも明日、大きな社会課題を解決する。」株式会社WEBYの2026年卒新卒採用情報。">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Serif+JP:wght@300;400;700;900&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --weby-red: #C0143C;
+      --pure-black: #000000;
+      --pure-white: #FFFFFF;
+      --text-gray: #555555;
+      --line-gray: #EEEEEE;
+      --font-en: 'Montserrat', sans-serif;
+      --font-serif: 'Noto Serif JP', serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-serif);
+      color: var(--pure-black);
+      background: var(--pure-white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.9;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    section {
+      padding: 160px 0;
+      position: relative;
+    }
+
+    /* --- Brand Header (Pristine Transparency) --- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 90px;
+      padding: 0 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: 0.5s ease;
+    }
+
+    header.scrolled {
+      height: 75px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(25px);
+      border-bottom: 1px solid var(--line-gray);
+    }
+
+    header.top-transparent .logo img {
+      filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.6));
+    }
+
+    header.top-transparent nav a {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    header.scrolled nav a {
+      color: var(--pure-black);
+    }
+
+    .logo img {
+      height: 28px;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-family: var(--font-en);
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      margin-left: 45px;
+      transition: 0.3s;
+    }
+
+    .nav-entry {
+      background: var(--weby-red);
+      color: white !important;
+      padding: 12px 35px;
+      border-radius: 2px;
+    }
+
+    /* --- Hero --- */
+    .hero {
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('./photos/main-banner.JPG');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.7;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-2026 {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 0.95rem;
+      letter-spacing: 0.6em;
+      color: rgba(255, 255, 255, 0.6);
+      display: block;
+      margin-bottom: 35px;
+      border-bottom: 2px solid var(--weby-red);
+      width: fit-content;
+      margin: 0 auto 35px;
+      padding-bottom: 5px;
+    }
+
+    .hero-h1 {
+      font-size: 4.8rem;
+      font-weight: 900;
+      line-height: 1.6;
+      color: white;
+      text-align: center;
+      letter-spacing: 0.15em;
+      font-family: var(--font-serif);
+    }
+
+    .scroll-line-container {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      z-index: 20;
+    }
+
+    .scroll-line-fill {
+      width: 100%;
+      height: 100%;
+      background: var(--weby-red);
+      transform: translateY(-100%);
+      animation: scrollLineAnim 3s infinite;
+    }
+
+    @keyframes scrollLineAnim {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      50% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    /* --- Message (Elegant Balanced Size) --- */
+    .message-section {
+      background: white;
+      padding: 200px 0;
+      text-align: center;
+    }
+
+    .m-script {
+      font-family: var(--font-en);
+      font-weight: 900;
+      color: var(--weby-red);
+      font-size: 1.1rem;
+      letter-spacing: 0.6em;
+      display: block;
+      margin-bottom: 60px;
+    }
+
+    .m-copy {
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.8;
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      letter-spacing: 0.1em;
+      color: #2a2a2a;
+      font-family: var(--font-serif);
+    }
+
+    .m-detail {
+      font-size: 1.3rem;
+      line-height: 2.5;
+      max-width: 950px;
+      margin: 0 auto;
+      color: #555;
+    }
+
+    /* --- Gallery (Full-Width Responsive Edge-to-Edge) --- */
+    .gallery-section {
+      padding: 120px 0;
+      background: #FFF;
+      overflow: hidden;
+    }
+
+    .gallery-header {
+      margin-bottom: 80px;
+      text-align: center;
+    }
+
+    .gallery-full {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .gallery-item {
+      position: relative;
+      height: 450px;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 1.5s ease;
+      filter: brightness(0.9);
+    }
+
+    .gallery-item {
+      cursor: zoom-in;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(1);
+    }
+
+    /* Lightbox */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+
+    .lightbox-overlay.open {
+      display: flex;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      display: block;
+      animation: lightboxIn 0.3s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    @keyframes lightboxIn {
+      from { opacity: 0; transform: scale(0.93); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      font-size: 1.8rem;
+      color: rgba(255,255,255,0.6);
+      background: none;
+      border: none;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .lightbox-close:hover {
+      color: var(--weby-red);
+    }
+
+    .g-label {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      color: white;
+      z-index: 10;
+      text-align: left;
+    }
+
+    .g-loc {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 0.8rem;
+      letter-spacing: 0.4em;
+      color: var(--weby-red);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .g-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 40%);
+    }
+
+    /* --- Business Section --- */
+    .business-section {
+      background: #FBFBFA;
+      padding: 160px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .business-section::before {
+      content: 'BUSINESS';
+      position: absolute;
+      top: 50%;
+      left: -2%;
+      transform: translateY(-50%);
+      font-family: var(--font-en);
+      font-size: 20vw;
+      font-weight: 900;
+      color: rgba(0, 0, 0, 0.03);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .biz-categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .biz-category {
+      background: white;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .biz-cat-top {
+      background: linear-gradient(135deg, #111 60%, #2a0008 100%);
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .biz-cat-top::before {
+      content: attr(data-num);
+      position: absolute;
+      right: -10px;
+      top: -20px;
+      font-family: var(--font-en);
+      font-size: 10rem;
+      font-weight: 900;
+      color: rgba(255,31,75,0.12);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .biz-cat-top::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--weby-red);
+    }
+
+    .biz-cat-top-en {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: rgba(255,31,75,0.8);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .biz-cat-top-num {
+      font-family: var(--font-en);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--weby-red);
+      line-height: 1;
+      display: block;
+      margin-bottom: 12px;
+      text-shadow: 0 0 40px rgba(255,31,75,0.4);
+    }
+
+    .biz-cat-top-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+
+    .biz-cat-body {
+      padding: 48px 48px 56px;
+      flex: 1;
+      border: 1px solid #eee;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .biz-service-icon {
+      color: var(--weby-red);
+      margin-right: 10px;
+      font-size: 1.1rem;
+      vertical-align: baseline;
+    }
+
+    .biz-service {
+      padding: 24px 0;
+      border-bottom: 1px solid #f0f0f0;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .biz-service:first-child {
+      padding-top: 0;
+    }
+
+    .biz-service:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .biz-service:hover {
+      padding-left: 10px;
+    }
+
+    .biz-service:hover .biz-service-name {
+      color: var(--weby-red);
+    }
+
+    .biz-service-tag {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--weby-red);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .biz-service-name {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #111;
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--font-jp);
+    }
+
+    .biz-service-url {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      color: #bbb;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .biz-service-desc {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.9;
+      margin-top: 6px;
+    }
+
+    .biz-highlight .biz-service-name {
+      color: var(--weby-red);
+    }
+
+    /* --- Training Section --- */
+    .training-section {
+      background: #FAFAFA;
+      padding: 120px 0 160px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 研修フロータイムライン */
+    .training-flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .training-flow-item {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 矢印: カードの右端に食い込む形で表示 */
+    .training-flow-item:not(:last-child) .training-flow-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -20px;
+      width: 0;
+      height: 0;
+      border-top: 50px solid transparent;
+      border-bottom: 50px solid transparent;
+      border-left: 20px solid #fff;
+      z-index: 3;
+      filter: drop-shadow(2px 0 0 #eee);
+    }
+
+    /* 矢印の赤アウトライン（影で見せる）*/
+    .training-flow-item:not(:last-child) .training-flow-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -24px;
+      width: 0;
+      height: 0;
+      border-top: 50px solid transparent;
+      border-bottom: 50px solid transparent;
+      border-left: 24px solid rgba(255,31,75,0.15);
+      z-index: 2;
+    }
+
+    .training-flow-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-right: none;
+      padding: 32px 28px 32px 24px;
+      height: 100%;
+      min-height: 180px;
+      position: relative;
+      overflow: visible;
+      transition: background 0.3s;
+      box-sizing: border-box;
+    }
+
+    .training-flow-item:last-child .training-flow-card {
+      border: 1px solid var(--weby-red);
+      background: var(--weby-red);
+    }
+
+    .training-flow-card:hover {
+      background: #fafafa;
+    }
+
+    .training-flow-item:last-child .training-flow-card:hover {
+      background: #e01a42;
+    }
+
+    .training-flow-phase {
+      font-family: var(--font-en);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.45em;
+      color: var(--weby-red);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .training-flow-item:last-child .training-flow-phase {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .training-flow-month {
+      font-family: var(--font-en);
+      font-size: 2rem;
+      font-weight: 900;
+      color: #111;
+      line-height: 1;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .training-flow-item:last-child .training-flow-month {
+      color: #fff;
+    }
+
+    .training-flow-title {
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .training-flow-item:last-child .training-flow-title {
+      color: #fff;
+    }
+
+    .training-flow-desc {
+      font-size: 0.75rem;
+      color: #888;
+      line-height: 1.7;
+    }
+
+    .training-flow-item:last-child .training-flow-desc {
+      color: rgba(255,255,255,0.75);
+    }
+
+    .training-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: stretch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .training-text {
+      padding: 80px 80px 80px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .training-text .m-script {
+      color: var(--weby-red);
+    }
+
+    .training-text h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.25;
+      margin: 24px 0 40px;
+    }
+
+    .training-text h2 em {
+      font-style: normal;
+      color: var(--weby-red);
+    }
+
+    .training-step {
+      display: flex;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .training-step:first-of-type {
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .training-step-num {
+      font-family: var(--font-en);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--weby-red);
+      opacity: 0.3;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 48px;
+    }
+
+    .training-step-body {}
+
+    .training-step-title {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 6px;
+    }
+
+    .training-step-desc {
+      font-size: 0.875rem;
+      color: #777;
+      line-height: 1.8;
+    }
+
+    /* Training photo animations */
+    @keyframes trainingFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes trainingFloatSlow {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50% { transform: translateY(-14px) rotate(1deg); }
+    }
+    @keyframes trainingScale {
+      0%, 100% { transform: scale(1.02); }
+      50% { transform: scale(1.06); }
+    }
+    @keyframes trainingSlideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes trainingFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Training: asymmetric bento grid — 7 photos */
+    .training-photos {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      grid-template-rows: 240px 200px 200px 200px;
+      gap: 6px;
+      margin-right: -80px;
+    }
+
+    /* 全写真共通 */
+    .training-photos > div {
+      overflow: hidden;
+    }
+    .training-photos > div img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+    .training-photos > div:hover img {
+      transform: scale(1.06);
+    }
+
+    /* メイン: 左・縦2行 */
+    .training-photo-main {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      animation: trainingSlideIn 0.8s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .training-photo-main img {
+      animation: trainingScale 10s ease-in-out infinite;
+    }
+
+    /* 右上 */
+    .training-photo-sub {
+      grid-column: 2;
+      grid-row: 1;
+      animation: trainingFadeUp 1s 0.15s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    /* 右中 */
+    .training-photo-accent {
+      grid-column: 2;
+      grid-row: 2;
+      animation: trainingFadeUp 1s 0.25s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    /* 左3行目 */
+    .training-photo-mini {
+      grid-column: 1;
+      grid-row: 3;
+      animation: trainingFadeUp 1s 0.35s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    /* 右3行目 */
+    .training-photo-mini2 {
+      grid-column: 2;
+      grid-row: 3;
+      animation: trainingFadeUp 1s 0.45s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    /* 左4行目 */
+    .training-photo-extra1 {
+      grid-column: 1;
+      grid-row: 4;
+      overflow: hidden;
+      animation: trainingFadeUp 1s 0.55s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .training-photo-extra1 img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+    .training-photo-extra1:hover img { transform: scale(1.06); }
+
+    /* 右4行目 */
+    .training-photo-extra2 {
+      grid-column: 2;
+      grid-row: 4;
+      overflow: hidden;
+      animation: trainingFadeUp 1s 0.65s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .training-photo-extra2 img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+    .training-photo-extra2:hover img { transform: scale(1.06); }
+
+    .training-red-bar {
+      position: absolute;
+      left: -20px;
+      top: 10%;
+      width: 4px;
+      height: 40%;
+      background: var(--weby-red);
+    }
+
+    /* --- Intern Alumni Section --- */
+    .alumni-section {
+      background: #fff;
+      padding: 120px 0;
+      border-top: 1px solid var(--line-gray);
+    }
+
+    .alumni-block {
+      margin-top: 70px;
+    }
+
+    .alumni-block-title {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--weby-red);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .alumni-block-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line-gray);
+    }
+
+    .alumni-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .alumni-tag {
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #111;
+      background: #F5F5F5;
+      padding: 9px 20px;
+      border-radius: 2px;
+      border: 1px solid #E8E8E8;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .alumni-tag:hover {
+      background: var(--weby-red);
+      color: #fff;
+      border-color: var(--weby-red);
+    }
+
+    .alumni-tag.highlight {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+
+    .alumni-univ-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 8px;
+    }
+
+    .alumni-univ-item {
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
+      color: #444;
+      padding: 8px 14px;
+      border-left: 3px solid var(--line-gray);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .alumni-univ-item:hover {
+      border-color: var(--weby-red);
+      color: #111;
+    }
+
+    @media (max-width: 768px) {
+      .alumni-univ-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* --- Workers Story (Restored White BG) --- */
+    .workers-section {
+      background: white;
+      padding: 160px 0;
+    }
+
+    .workers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 80px;
+    }
+
+    .worker-card {
+      height: 750px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .worker-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 1.2s;
+    }
+
+    .worker-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .worker-info {
+      position: absolute;
+      bottom: 60px;
+      left: 60px;
+      color: white;
+      z-index: 10;
+    }
+
+    .worker-tag {
+      color: var(--weby-red);
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 0.95rem;
+      letter-spacing: 0.4em;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .worker-quote {
+      font-weight: 700;
+      font-size: 1.8rem;
+      line-height: 1.5;
+    }
+
+    .worker-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%);
+    }
+
+    .worker-hover-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      z-index: 20;
+      background: rgba(255, 31, 75, 0.9);
+      color: white;
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.4em;
+      padding: 14px 28px;
+      opacity: 0;
+      transition: 0.4s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .worker-card:hover .worker-hover-hint {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* --- Worker Carousel --- */
+    .workers-section {
+      background: white;
+      padding: 160px 0;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      margin-top: 80px;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: stretch;
+      min-height: 680px;
+    }
+
+    .carousel-img {
+      height: 700px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+    }
+
+    .carousel-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, white 100%);
+    }
+
+    .carousel-info {
+      padding: 80px 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: white;
+    }
+
+    .carousel-tag {
+      font-family: var(--font-en);
+      color: var(--weby-red);
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.4em;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .carousel-name {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    .carousel-quote {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: #444;
+      line-height: 1.8;
+      border-left: 3px solid var(--weby-red);
+      padding-left: 20px;
+      margin: 30px 0 40px;
+    }
+
+    .carousel-detail {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 2.0;
+    }
+
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    .carousel-btn {
+      width: 52px;
+      height: 52px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      color: #333;
+    }
+
+    .carousel-btn:hover {
+      background: var(--weby-red);
+      color: white;
+      border-color: var(--weby-red);
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .carousel-dot.active {
+      background: var(--weby-red);
+    }
+
+    .career-timeline {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .career-label {
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: #aaa;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .career-steps {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .career-step {
+      flex: 1;
+      position: relative;
+    }
+
+    .career-step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -10px;
+      top: 8px;
+      color: var(--weby-red);
+      font-size: 0.9rem;
+    }
+
+    .career-step-head {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .career-step-num {
+      font-family: var(--font-en);
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--weby-red);
+      line-height: 1;
+    }
+
+    .career-step-year {
+      font-size: 0.72rem;
+      color: #999;
+    }
+
+    .career-step-body {
+      background: #f9f9f9;
+      border-left: 2px solid var(--weby-red);
+      padding: 12px 14px;
+      margin-right: 20px;
+      font-size: 0.82rem;
+      color: #444;
+      line-height: 1.6;
+      min-height: 60px;
+    }
+
+    /* --- FAQ (Graphical Q&A Recovered) --- */
+    .faq-section {
+      background: white;
+      padding: 160px 0;
+      border-top: 1px solid var(--line-gray);
+    }
+
+    .faq-list {
+      max-width: 1000px;
+      margin: 70px auto 0;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--line-gray);
+      padding: 55px 0;
+      transition: 0.5s;
+      position: relative;
+    }
+
+    .faq-q {
+      font-size: 1.8rem;
+      font-weight: 900;
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .faq-q::before {
+      content: "Q";
+      color: var(--weby-red);
+      font-family: var(--font-en);
+      font-weight: 1000;
+      font-size: 2.8rem;
+      font-style: italic;
+      line-height: 1;
+      margin-top: -10px;
+    }
+
+    .faq-a {
+      padding-left: 95px;
+      color: #555;
+      font-size: 1.2rem;
+      line-height: 2.4;
+      margin-top: 40px;
+    }
+
+    .faq-item:hover {
+      background: rgba(255, 31, 75, 0.02);
+      padding-left: 40px;
+    }
+
+    /* --- Recruit Section (Recovered FULL INFO) --- */
+    .recruit-section {
+      background: #FAFAFA;
+      padding: 120px 0 140px;
+    }
+
+    .recruit-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 60px;
+      background: #e8e8e8;
+      border: 2px solid #e8e8e8;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .r-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 28px 32px;
+      background: #fff;
+      align-items: flex-start;
+    }
+
+    .r-row.r-wide {
+      grid-column: 1 / 3;
+    }
+
+    .r-label {
+      font-weight: 900;
+      color: var(--weby-red);
+      font-family: var(--font-jp);
+      letter-spacing: 0.05em;
+      font-size: 0.78rem;
+      display: block;
+    }
+
+    .r-data {
+      line-height: 1.9;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      color: #333;
+    }
+
+    .r-h3 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      border-left: 12px solid var(--weby-red);
+      padding-left: 25px;
+      margin-bottom: 25px;
+      display: block;
+      color: #000;
+    }
+
+    .r-p {
+      color: #555;
+      padding-left: 35px;
+      margin-bottom: 40px;
+    }
+
+    /* --- Footer --- */
+    footer {
+      background: #0d0d0d;
+      color: white;
+    }
+
+    .f-entry-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 60px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f-entry-text {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .f-entry-label {
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .f-h2 {
+      font-family: var(--font-en);
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: white;
+      margin: 0;
+    }
+
+    .f-bottom {
+      padding: 32px 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-direction: column;
+    }
+
+    .f-logo {
+      height: 16px;
+      opacity: 0.25;
+    }
+
+    .f-copy {
+      font-size: 0.62rem;
+      color: rgba(255, 255, 255, 0.18);
+      font-family: var(--font-en);
+      letter-spacing: 0.12em;
+    }
+
+    .nav-entry {
+      background: var(--weby-red);
+      color: white !important;
+      border-radius: 4px;
+      box-shadow: 0 4px 15px rgba(255, 31, 75, 0.2);
+    }
+
+    /* --- FAQ Section --- */
+    .faq-section {
+      background: #0d0d0d;
+      padding: 140px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .faq-section::before {
+      content: 'FAQ';
+      position: absolute;
+      top: 50%;
+      left: -2%;
+      transform: translateY(-50%);
+      font-family: var(--font-en);
+      font-size: 22vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .faq-section .m-script {
+      color: var(--weby-red);
+    }
+
+    .faq-section h2 {
+      color: #fff;
+    }
+
+    .faq-list {
+      max-width: 860px;
+      margin: 80px auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .faq-item {
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .faq-item:last-child {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .faq-q {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 32px 0;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.2s;
+    }
+
+    .faq-q:hover {
+      opacity: 0.75;
+    }
+
+    .faq-q-mark {
+      font-family: var(--font-en);
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--weby-red);
+      flex-shrink: 0;
+      width: 32px;
+    }
+
+    .faq-q-text {
+      flex: 1;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+      line-height: 1.6;
+    }
+
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(255,31,75,0.5);
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--weby-red);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .faq-icon::before {
+      width: 12px;
+      height: 1.5px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-icon::after {
+      width: 1.5px;
+      height: 12px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-item.open .faq-icon {
+      background: var(--weby-red);
+      border-color: var(--weby-red);
+    }
+
+    .faq-item.open .faq-icon::before,
+    .faq-item.open .faq-icon::after {
+      background: #fff;
+    }
+
+    .faq-item.open .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .faq-a {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 400px;
+    }
+
+    .faq-a-inner {
+      display: flex;
+      gap: 20px;
+      padding: 0 0 36px 0;
+    }
+
+    .faq-a-mark {
+      font-family: var(--font-en);
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.25);
+      flex-shrink: 0;
+      width: 32px;
+    }
+
+    .faq-a-text {
+      flex: 1;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 2;
+    }
+
+    /* --- Job Board (Image Banner Style) --- */
+    .jobboard-section {
+      background: white;
+      padding: 60px 0 80px;
+    }
+
+    .jb-label {
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      letter-spacing: 0.6em;
+      color: #999;
+      margin-bottom: 40px;
+      display: block;
+      text-align: center;
+    }
+
+    .jb-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .jb-card {
+      display: block;
+      text-decoration: none;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .jb-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .jb-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .jb-card-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .jb-card:hover .jb-card-overlay {
+      opacity: 1;
+    }
+
+    .jb-card-cta {
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      color: white;
+      background: var(--weby-red);
+      padding: 10px 20px;
+    }
+
+    /* --- Worker Modal --- */
+    .wmodal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.4s;
+    }
+
+    .wmodal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .wmodal-box {
+      background: white;
+      width: 90%;
+      max-width: 760px;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 80px 70px;
+      position: relative;
+    }
+
+    .wmodal-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #000;
+      line-height: 1;
+    }
+
+    .wm-tag {
+      font-family: var(--font-en);
+      color: var(--weby-red);
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: 0.4em;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .wm-name {
+      font-size: 2.8rem;
+      font-weight: 900;
+      margin-bottom: 15px;
+      letter-spacing: 0.1em;
+    }
+
+    .wm-quote {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: #555;
+      border-left: 3px solid var(--weby-red);
+      padding-left: 20px;
+      margin-bottom: 60px;
+      line-height: 1.8;
+    }
+
+    .wm-intro {
+      font-size: 1.05rem;
+      color: #555;
+      line-height: 2.0;
+      margin-bottom: 50px;
+      padding: 24px 28px;
+      background: #f9f9f9;
+      border-left: none;
+    }
+
+    .wm-section {
+      margin-bottom: 50px;
+    }
+
+    .wm-label {
+      font-family: var(--font-en);
+      font-size: 0.8rem;
+      letter-spacing: 0.5em;
+      font-weight: 900;
+      color: #999;
+      margin-bottom: 30px;
+    }
+
+    .wm-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .wm-trow {
+      display: flex;
+      gap: 30px;
+      padding: 18px 0;
+      border-bottom: 1px solid #f0f0f0;
+      align-items: center;
+    }
+
+    .wm-time {
+      font-family: var(--font-en);
+      font-weight: 900;
+      color: var(--weby-red);
+      font-size: 0.9rem;
+      min-width: 55px;
+    }
+
+    .wm-task {
+      font-size: 1.05rem;
+      color: #333;
+    }
+
+    .wm-reward {
+      font-size: 1.1rem;
+      line-height: 2.2;
+      color: #444;
+    }
+
+    /* --- Budo Animation --- */
+    .m-budo {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-serif);
+      font-size: 22vw;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(0, 0, 0, 0.06);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .m-budo.animate {
+      animation: budoWrite 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes budoWrite {
+      0% {
+        -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
+        color: transparent;
+      }
+
+      30% {
+        -webkit-text-stroke: 1px rgba(255, 31, 75, 0.15);
+      }
+
+      100% {
+        -webkit-text-stroke: 1px rgba(0, 0, 0, 0.08);
+        color: transparent;
+      }
+    }
+
+    .message-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 1024px) {
+
+      .hero-h1,
+      .m-copy {
+        font-size: 3rem;
+      }
+
+      .f-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 60px;
+        text-align: center;
+      }
+
+      .f-right {
+        text-align: center;
+      }
+
+      .biz-categories,
+      .workers-grid,
+      .gallery-full,
+      .r-row,
+      .jb-grid {
+        display: flex;
+        flex-direction: column;
+        height: auto !important;
+      }
+
+      .biz-cat-top {
+        padding: 36px 30px 28px;
+      }
+
+      .biz-cat-top-num {
+        font-size: 2.5rem;
+      }
+
+      .biz-cat-top-title {
+        font-size: 1.3rem;
+      }
+
+      .biz-cat-body {
+        padding: 36px 30px 44px;
+      }
+
+      .r-label {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .gallery-item {
+        height: 350px;
+      }
+
+      .wmodal-box {
+        padding: 50px 30px;
+      }
+    }
+
+    /* --- News Bar --- */
+    .news-bar {
+      background: #111;
+      padding: 0;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .news-bar-inner {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .news-bar-label {
+      background: var(--weby-red);
+      color: white;
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.35em;
+      padding: 16px 28px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .news-item {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 14px 36px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: 0.2s;
+      cursor: default;
+    }
+
+    .news-item:last-child {
+      border-bottom: none;
+    }
+
+    .news-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .news-date {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    .news-text {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.05em;
+    }
+
+    .news-tag {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--weby-red);
+      border: 1px solid var(--weby-red);
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header" class="top-transparent">
+    <div class="logo"><img src="./photos/logo.png" alt="WEBY"></div>
+    <nav>
+      <a href="#message">MESSAGE</a>
+      <a href="#people">STORY</a>
+      <a href="#recruit">RECRUIT</a>
+      <a href="#entry" class="nav-entry">ENTRY</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content reveal">
+      <span class="hero-2026">2026 RECRUIT</span>
+      <h1 class="hero-h1">今日よりも明日、<br>大きな社会課題を解決する。</h1>
+    </div>
+    <div class="scroll-line-container">
+      <div class="scroll-line-fill"></div>
+    </div>
+  </section>
+
+  <!-- News Bar -->
+  <div class="news-bar">
+    <div class="news-bar-inner">
+      <div class="news-bar-label">NEWS</div>
+      <div class="news-list">
+        <div class="news-item">
+          <span class="news-date">2025.09.21</span>
+          <span class="news-tag">RECRUIT</span>
+          <span class="news-text">2026年卒中途採用 本選考エントリーを開始しました</span>
+        </div>
+        <div class="news-item">
+          <span class="news-date">2024.08.21</span>
+          <span class="news-tag">RECRUIT</span>
+          <span class="news-text">2026年卒 新卒採用 本選考エントリーを開始しました</span>
+        </div>
+        <div class="news-item">
+          <span class="news-date">2024.08.21</span>
+          <span class="news-tag">RECRUIT</span>
+          <span class="news-text">2026年卒 新卒採用 本選考エントリーを開始しました</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Section -->
+  <section id="message" class="message-section">
+    <div class="m-budo" id="m-budo">武運</div>
+    <div class="container reveal">
+      <span class="m-script">MESSAGE</span>
+      <h2 class="m-copy">明日起こる大きな社会課題を<br>解決するために、<br>今日私たちは<span style="color: var(--weby-red);">信頼を勝ち取る</span>。</h2>
+      <div class="m-detail">
+        <p
+          style="font-weight: 900; color: var(--weby-red); font-size: 1.8rem; margin-bottom: 60px; letter-spacing: 0.3em;">
+          Build Trust.</p>
+        <p>その積み上げた<span style="color: var(--weby-red); font-weight: 700;">信頼</span>こそ私たちの大切な資産です。<br><br>期待に沿う信頼と、<span
+            style="color: var(--weby-red); font-weight: 700;">期待を超える信頼</span>の追求を。<br>IT企業に必要だと考えています。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section: Full-Width Паノラマ Fit -->
+  <section id="facility" class="gallery-section">
+    <div class="gallery-header container reveal">
+      <span class="m-script">ENVIRONMENT</span>
+      <h2 style="font-size: 3.8rem; font-weight: 900; letter-spacing: 0.1em;">働く環境</h2>
+    </div>
+    <div class="gallery-full reveal">
+      <div class="gallery-item">
+        <img src="./facility_photos/sub2.png">
+        <div class="g-label">
+          <span class="g-loc">GINZA / 01</span>
+          <h3 class="g-title">LOBBY</h3>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="./facility_photos/office2.png">
+        <div class="g-label">
+          <span class="g-loc">GINZA / 02</span>
+          <h3 class="g-title">CREATIVE SPACE</h3>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="./facility_photos/office5.png">
+        <div class="g-label">
+          <span class="g-loc">GINZA / 03</span>
+          <h3 class="g-title">RELAXING SPACE</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Section -->
+  <section class="training-section">
+    <div class="container">
+
+      <!-- 上部: セクションタイトル -->
+      <div class="reveal" style="text-align:center; margin-bottom: 70px; position:relative; z-index:1;">
+        <span class="m-script">TRAINING</span>
+        <h2 style="font-size:3.2rem; font-weight:700; color:#111; margin-top:12px;">未経験でも、<em style="font-style:normal; color:var(--weby-red);">確実に</em>育つ。研修制度。</h2>
+        <p style="font-size:0.95rem; color:#888; margin-top:16px; line-height:1.9;">入社研修期間は約<strong style="color:#111;">3ヶ月間</strong>。学習状況に合わせて柔軟にカリキュラムを調整しながら、<br>ベテラン先輩のFBを受けつつビジネスの基礎力を着実に積み上げます。</p>
+      </div>
+
+      <!-- 研修フロー -->
+      <div class="training-flow reveal">
+        <div class="training-flow-item">
+          <div class="training-flow-card">
+            <span class="training-flow-phase">MONTH 01</span>
+            <span class="training-flow-month">1ヶ月目</span>
+            <div class="training-flow-title">基礎理解｜WEBYを理解する</div>
+            <p class="training-flow-desc">業界知識・商材の理解を深め、WEBYの価値観を学ぶ。働くための土台をしっかりと構築。</p>
+          </div>
+        </div>
+        <div class="training-flow-item">
+          <div class="training-flow-card">
+            <span class="training-flow-phase">MONTH 02</span>
+            <span class="training-flow-month">2ヶ月目</span>
+            <div class="training-flow-title">実務理解｜実践的な営業を行う</div>
+            <p class="training-flow-desc">座学・ロールプレイで営業の基礎を習得後、OJTで実践へ。PDCAサイクルを回す経験を積む。</p>
+          </div>
+        </div>
+        <div class="training-flow-item">
+          <div class="training-flow-card">
+            <span class="training-flow-phase">MONTH 03</span>
+            <span class="training-flow-month">3ヶ月目</span>
+            <div class="training-flow-title">自立準備｜独り立ちへの助走</div>
+            <p class="training-flow-desc">営業活動の実践を重ね、自分で考え改善する力を習得。研修終了後は営業メンバーとして自走。</p>
+          </div>
+        </div>
+        <div class="training-flow-item">
+          <div class="training-flow-card">
+            <span class="training-flow-phase">AFTER</span>
+            <span class="training-flow-month">自走</span>
+            <div class="training-flow-title">独立営業メンバーへ</div>
+            <p class="training-flow-desc">担当顧客を持ち、提案からクロージングまで自分で完結。成果が数字で見えてくる。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="training-inner reveal">
+
+        <!-- 左: テキスト -->
+        <div class="training-text">
+          <div class="training-step">
+            <span class="training-step-num">01</span>
+            <div class="training-step-body">
+              <div class="training-step-title">基礎理解｜WEBYを理解する</div>
+              <p class="training-step-desc">入社後1ヶ月間は、業界知識・商材の理解を深め、同時にWEBYの価値観も学びます。ここでは、WEBYで働くための土台をしっかりと作ることができます。</p>
+            </div>
+          </div>
+          <div class="training-step">
+            <span class="training-step-num">02</span>
+            <div class="training-step-body">
+              <div class="training-step-title">実務理解｜実践的な営業を行う</div>
+              <p class="training-step-desc">座学とロールプレイングを通して営業の基礎知識を身につけます。知識を身につけたら、いよいよ実践的な営業（OJT）へ。PDCAサイクルを回す経験を積み、成果を出すための考え方を学ぶ期間です。</p>
+            </div>
+          </div>
+          <div class="training-step">
+            <span class="training-step-num">03</span>
+            <div class="training-step-body">
+              <div class="training-step-title">自立準備｜独り立ちへの助走</div>
+              <p class="training-step-desc">営業活動の実践を重ね、自分で考え改善する力の習得を目指します。独り立ちに向けた最終調整を行い、研修終了後には営業メンバーとして自走できる状態を目指します。</p>
+            </div>
+          </div>
+          <p style="font-size:0.82rem; color:#aaa; line-height:1.9; margin-top:24px; padding-top:24px; border-top:1px solid #eee;">※この研修は、学習状況によって柔軟にスケジュールやカリキュラムが変更されます。ベテランの先輩方からFBを受けながら、じっくりビジネスの基礎力を身につけていきましょう！</p>
+        </div>
+
+        <!-- 右: フォトモザイク -->
+        <div class="training-photos">
+          <div class="training-photo-main">
+            <img src="./trial_photos/team-all.jpeg" alt="研修風景">
+          </div>
+          <div class="training-photo-sub">
+            <img src="./trial_photos/office-scene.jpg" alt="オフィス風景">
+          </div>
+          <div class="training-photo-accent">
+            <img src="./trial_photos/screenshot-office.png" alt="チーム">
+          </div>
+          <div class="training-photo-mini">
+            <img src="./trial_photos/IMG_1548.JPG" alt="研修風景">
+          </div>
+          <div class="training-photo-mini2">
+            <img src="./trial_photos/IMG_1638.JPG" alt="チームメンバー">
+          </div>
+          <div class="training-photo-extra1">
+            <img src="./trial_photos/IMG_1685.JPG" alt="研修風景">
+          </div>
+          <div class="training-photo-extra2">
+            <img src="./trial_photos/IMG_1509.JPG" alt="オフィス">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Intern Alumni Section -->
+  <section class="alumni-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom: 0;">
+        <span class="m-script">INTERN ALUMNI</span>
+        <h2 style="font-size:3.2rem; font-weight:700; color:#111; margin-top:12px;">インターン卒業生の<em style="font-style:normal; color:var(--weby-red);">実績</em>。</h2>
+        <p style="font-size:0.95rem; color:#888; margin-top:16px; line-height:1.9;">WEBYのインターンを経験したメンバーは、各業界のトップ企業・機関へと巣立っています。<br>「本物のビジネス経験」が、次のステージでも活きています。</p>
+      </div>
+
+      <!-- 内定先 -->
+      <div class="alumni-block reveal">
+        <div class="alumni-block-title">DESTINATIONS — 卒業生の主な内定先</div>
+        <div class="alumni-tags">
+          <span class="alumni-tag highlight">Morgan Stanley</span>
+          <span class="alumni-tag highlight">Citigroup</span>
+          <span class="alumni-tag highlight">三井物産</span>
+          <span class="alumni-tag highlight">Deloitte</span>
+          <span class="alumni-tag">SAP</span>
+          <span class="alumni-tag">BCG</span>
+          <span class="alumni-tag">P&amp;G</span>
+          <span class="alumni-tag">ベイカレント・コンサルティング</span>
+          <span class="alumni-tag">アクセンチュア</span>
+          <span class="alumni-tag">三井住友銀行</span>
+          <span class="alumni-tag">ソフトバンク</span>
+          <span class="alumni-tag">サイバーエージェント</span>
+          <span class="alumni-tag">楽天グループ</span>
+        </div>
+      </div>
+
+      <!-- 出身大学 -->
+      <div class="alumni-block reveal">
+        <div class="alumni-block-title">UNIVERSITIES — 在籍インターン生の出身大学</div>
+        <div class="alumni-univ-grid">
+          <div class="alumni-univ-item">東京大学</div>
+          <div class="alumni-univ-item">早稲田大学</div>
+          <div class="alumni-univ-item">慶應義塾大学</div>
+          <div class="alumni-univ-item">一橋大学</div>
+          <div class="alumni-univ-item">東京工業大学</div>
+          <div class="alumni-univ-item">千葉大学</div>
+          <div class="alumni-univ-item">上智大学</div>
+          <div class="alumni-univ-item">東京理科大学</div>
+          <div class="alumni-univ-item">明治大学</div>
+          <div class="alumni-univ-item">青山学院大学</div>
+          <div class="alumni-univ-item">立教大学</div>
+          <div class="alumni-univ-item">中央大学</div>
+          <div class="alumni-univ-item">法政大学</div>
+          <div class="alumni-univ-item">学習院大学</div>
+          <div class="alumni-univ-item">国際基督教大学（ICU）</div>
+          <div class="alumni-univ-item">東京外国語大学</div>
+          <div class="alumni-univ-item">東京農業大学</div>
+          <div class="alumni-univ-item">お茶の水女子大学</div>
+          <div class="alumni-univ-item">日本大学</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workers Story -->
+  <section id="people" class="workers-section">
+    <div class="container reveal">
+      <div style="text-align: center; margin-bottom: 0;">
+        <span class="m-script">WORKERS COLLECTIVE</span>
+        <h2 style="font-size: 3.8rem; font-weight: 700;">情熱が、交差する場所。</h2>
+      </div>
+    </div>
+    <div class="carousel-wrapper reveal">
+      <div class="carousel-track" id="carouselTrack">
+
+        <!-- Slide 1 -->
+        <div class="carousel-slide">
+          <div class="carousel-img">
+            <img src="./member_photos/IMG_1498.JPG" alt="">
+          </div>
+          <div class="carousel-info">
+            <span class="carousel-tag">CUSTOMER SUCCESS</span>
+            <div class="carousel-name">M. O.</div>
+            <p class="carousel-quote">「誰と歩むか」が、<br>人生を左右する。</p>
+            <p class="carousel-detail">
+              アルバイトから正社員へ。カスタマーサクセスとして、クライアントの課題に能動的に向き合い続ける。集客に苦戦していた弁護士事務所の問い合わせが急増した瞬間に、この仕事の本質を見た。</p>
+            <div class="carousel-controls">
+              <button class="carousel-btn" onclick="moveCarousel(-1)">←</button>
+              <button class="carousel-btn" onclick="moveCarousel(1)">→</button>
+              <div class="carousel-dots" id="carouselDots">
+                <div class="carousel-dot active" onclick="goToSlide(0)"></div>
+                <div class="carousel-dot" onclick="goToSlide(1)"></div>
+                <div class="carousel-dot" onclick="goToSlide(2)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <div class="carousel-img">
+            <img src="./member_photos/IMG_1901.JPG" alt="">
+          </div>
+          <div class="carousel-info">
+            <span class="carousel-tag">SALES MANAGER</span>
+            <div class="carousel-name">Y. K.</div>
+            <p class="carousel-quote">限界を超えた先に、<br>本当の自分がいる。</p>
+            <p class="carousel-detail">チームメンバーが初めて契約を取れた日。自分のことより嬉しかった。数字で人を管理するのではなく、人の成長で数字を作る。それがマネージャーとしての信条。</p>
+            <div class="carousel-controls">
+              <button class="carousel-btn" onclick="moveCarousel(-1)">←</button>
+              <button class="carousel-btn" onclick="moveCarousel(1)">→</button>
+              <div class="carousel-dots" id="carouselDots2">
+                <div class="carousel-dot" onclick="goToSlide(0)"></div>
+                <div class="carousel-dot active" onclick="goToSlide(1)"></div>
+                <div class="carousel-dot" onclick="goToSlide(2)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+          <div class="carousel-img">
+            <img src="./member_photos/B.jpg" alt="">
+          </div>
+          <div class="carousel-info">
+            <span class="carousel-tag">DIRECTOR</span>
+            <div class="carousel-name">Y. O.</div>
+            <p class="carousel-quote">期待を超える<br>信頼の追求を。</p>
+            <p class="carousel-detail">自分が設計した組織の仕組みが動き出し、チームが成果を出し続けるとき。会社の「土台」を作るという仕事の責任と醍醐味を、毎日更新し続けている。</p>
+            <div class="carousel-controls">
+              <button class="carousel-btn" onclick="moveCarousel(-1)">←</button>
+              <button class="carousel-btn" onclick="moveCarousel(1)">→</button>
+              <div class="carousel-dots" id="carouselDots3">
+                <div class="carousel-dot" onclick="goToSlide(0)"></div>
+                <div class="carousel-dot" onclick="goToSlide(1)"></div>
+                <div class="carousel-dot active" onclick="goToSlide(2)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Recruit Master (Recovered) -->
+  <section id="recruit" class="recruit-section">
+    <div class="container reveal">
+      <div style="text-align:center; margin-bottom: 0;">
+        <span class="m-script">RECRUIT</span>
+        <h2 style="font-size: 3.4rem; font-weight: 700; margin-top: 12px;">募集要項</h2>
+      </div>
+      <div class="recruit-wrap reveal">
+        <div class="r-row">
+          <div class="r-label">職種</div>
+          <div class="r-data">総合職</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">雇用形態</div>
+          <div class="r-data">正社員（入社後6ヶ月は試用期間）</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">勤務地</div>
+          <div class="r-data">本社（東京都中央区銀座）<br>※沖縄在住の方は那覇支社勤務も可</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">勤務時間</div>
+          <div class="r-data">9:00〜18:00（休憩1時間）</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">給与</div>
+          <div class="r-data">想定年収：初年度350万〜800万円<br>月給：28万〜42万円（固定残業代含む）<br>1年目（25歳）390万／2年目（29歳）520万</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">昇給・賞与</div>
+          <div class="r-data">昇給：年1回<br>賞与：年1〜2回（業績による）</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">休日・休暇</div>
+          <div class="r-data">年間約120日、完全週休2日（土日祝）<br>年末年始・夏季・慶弔・有給（入社時10日）</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">手当</div>
+          <div class="r-data">通勤交通費（月上限15,000円）<br>ランチ補助</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">福利厚生</div>
+          <div class="r-data">社会保険完備、食事補助、ドリンク提供<br>社内イベント、各種表彰制度</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">各種制度</div>
+          <div class="r-data">育児・介護休業（実績あり）<br>健康診断（年1回）</div>
+        </div>
+        <div class="r-row r-wide">
+          <div class="r-label">業務内容</div>
+          <div class="r-data">【営業職】顧客リサーチ・アプローチ・商談・Webコンサルティング提案・契約締結　【コンサルタント】定例MTG・改善提案・データ分析・マーケ施策立案・運用支援　【管理職】チームMG・育成・KPI管理・組織運営</div>
+        </div>
+        <div class="r-row r-wide">
+          <div class="r-label">選考フロー</div>
+          <div class="r-data">【STEP1】説明会・採用選考ご案内　【STEP2】書類選考　【STEP3】一次面接　【STEP4】最終面接 → 内々定</div>
+        </div>
+        <div class="r-row r-wide" id="contact">
+          <div class="r-label">お問い合わせ</div>
+          <div class="r-data">〒104-0051 東京都中央区佃二丁目1番6号 株式会社WEBY　人材開発本部　採用担当　TEL：03-6280-4361　EMAIL：recruit@weby-inc.com</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Job Board Section -->
+  <section class="jobboard-section">
+    <div class="container">
+      <p class="jb-label">FIND US ON JOB BOARDS</p>
+      <div class="jb-grid">
+        <a href="https://job.mynavi.jp/27/pc/search/corp294420/outline.html" target="_blank" rel="noopener"
+          class="jb-card reveal">
+          <img src="./photos/banner-mynavi.png" alt="マイナビ2026 株式会社WEBY採用情報">
+          <div class="jb-card-overlay">
+            <span class="jb-card-cta">採用情報を見る →</span>
+          </div>
+        </a>
+        <a href="https://doda.jp/DodaFront/View/CompanyJobs/j_id__10116656047/" target="_blank" rel="noopener"
+          class="jb-card reveal">
+          <img src="./photos/banner-doda.png" alt="dodaキャンパス 株式会社WEBY採用情報">
+          <div class="jb-card-overlay">
+            <span class="jb-card-cta">採用情報を見る →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container reveal">
+      <div style="text-align: center; position: relative; z-index: 1;">
+        <span class="m-script">FAQ</span>
+        <h2 style="font-size: 3.6rem; font-weight: 700;">よくあるご質問</h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">面接ではどんなことを見ていますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">主に重視しているのは、「自分で考えて行動できるか」という点です。あわせて、物事を目的から逆算して考えられるか、そして前向きに挑戦できる姿勢があるかも見ています。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">入社後の研修はありますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">はい、あります。WEBYでは内定後から長期インターンとして実務に関わることができ、入社後も継続して研修を行います。研修では、業界知識や商材理解に加えて、営業スキルの習得やOJTを通じた実践経験を積んでいきます。最終的には、営業として自立できる状態を目指した設計になっています。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">未経験でも活躍できますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">可能です。実際に未経験からスタートし、営業として成果を出している社員も多く在籍しています。研修やOJTを通じて段階的にスキルを身につけていくため、経験がなくても安心して挑戦できる環境です。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">配属はどのように決まりますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">新卒は総合職として入社し、セールスやカスタマーサクセスなどのポジションに配属されます。本人の適性や希望を踏まえながら、最適なポジションが決定されます。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">社内の雰囲気はどんな感じですか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">WEBYには、オープンでフレンドリーなメンバーが多く、休憩中にも自然とコミュニケーションが生まれる環境があります。一方で業務においては、挑戦志向の高い人が多く、お互いに切磋琢磨しながら成長していける雰囲気があります。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">福利厚生はありますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">はい、あります。食事補助制度やフリードリンク、米・味噌汁の提供など日常を支える制度に加え、書籍購入補助やITツール導入支援など、成長を後押しする制度も整えています。また、社会保険も完備しています。</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (Professional Business Styling) -->
+  <footer id="entry" style="background:#0d0d0d;">
+    <div class="container">
+      <div class="f-bottom">
+        <img src="./photos/logo.png" class="f-logo">
+        <p class="f-copy">&copy; 2025 WEBY Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- Worker Modal -->
+  <div id="worker-modal" class="wmodal-overlay" onclick="closeWorker()">
+    <div class="wmodal-box" onclick="event.stopPropagation()">
+      <button class="wmodal-close" onclick="closeWorker()">&times;</button>
+      <div id="wmodal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const obs = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(e => obs.observe(e));
+
+    // Gallery lightbox
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        const title = item.querySelector('.g-title')?.textContent || '';
+        const loc = item.querySelector('.g-loc')?.textContent || '';
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox-caption').textContent = loc + '  —  ' + title;
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    window.onscroll = () => {
+      const h = document.getElementById('header');
+      if (window.scrollY > 100) { h.classList.add('scrolled'); h.classList.remove('top-transparent'); }
+      else { h.classList.remove('scrolled'); h.classList.add('top-transparent'); }
+    }
+
+    // Worker Modal
+    const workerData = [
+      {
+        tag: "CUSTOMER SUCCESS",
+        name: "M. O.",
+        quote: "「誰と歩むか」が、人生を左右する。",
+        intro: "アルバイトとして入社後、半年で正社員へ。中野社長の下でマーケティングを実践的に学ぶため入社。現在はカスタマーサクセスとして、クライアントへの能動的なサポートと「債務救済」のマーケティング業務を担当。",
+        day: [
+          { time: "09:00", task: "出社・タスク管理、メール確認" },
+          { time: "10:00", task: "お客様との打合せ・商談" },
+          { time: "12:00", task: "休憩" },
+          { time: "13:00", task: "お客様との打合せ・商談" },
+          { time: "17:00", task: "マーケティング業務（債務救済）" },
+          { time: "20:00", task: "退社" }
+        ],
+        reward: "集客に苦戦していた弁護士事務所のお客様から、WEBYのサービスを利用したことで問い合わせが捌ききれないまでに増加し、それに伴い人員を増やし事業拡大することになったというお話をいただいたとき。私たちのサービスがお客様の課題解決に貢献できたことに大きな喜びを感じました。"
+      },
+      {
+        tag: "SALES MANAGER",
+        name: "Y. K.",
+        quote: "限界を超えた先に、本当の自分がいる。",
+        day: [
+          { time: "09:00", task: "朝礼・チーム目標共有" },
+          { time: "10:00", task: "新規顧客へのアプローチ・リサーチ" },
+          { time: "12:00", task: "ランチ（チームで移動も）" },
+          { time: "13:00", task: "商談・ヒアリング（オンライン）" },
+          { time: "15:00", task: "提案書作成・見積調整" },
+          { time: "17:00", task: "メンバーフォロー・報告確認" },
+          { time: "18:00", task: "退勤" }
+        ],
+        reward: "チームメンバーが初めて契約を取れた日。自分のことより嬉しかった。マネージャーとして人の成長に関われることが、今の一番のやりがいです。"
+      },
+      {
+        tag: "DIRECTOR",
+        name: "Y. O.",
+        quote: "期待を超える信頼の追求を。",
+        day: [
+          { time: "09:00", task: "経営会議・戦略確認" },
+          { time: "10:00", task: "各チームKPI進捗レビュー" },
+          { time: "12:00", task: "ランチ（役員と意見交換も）" },
+          { time: "13:00", task: "採用・組織設計の検討" },
+          { time: "15:00", task: "新規事業ブレスト・資料作成" },
+          { time: "17:00", task: "全体振り返り・翌日準備" },
+          { time: "18:00", task: "退勤" }
+        ],
+        reward: "自分が関わった組織の仕組みが機能し、チームが成果を出し続けるとき。会社の「土台」を作っているという実感がやりがいの源泉です。"
+      }
+    ];
+
+    function openWorker(i) {
+      const d = workerData[i];
+      document.getElementById('wmodal-content').innerHTML = `
+        <span class="wm-tag">${d.tag}</span>
+        <h2 class="wm-name">${d.name}</h2>
+        <p class="wm-quote">"${d.quote}"</p>
+        ${d.intro ? `<p class="wm-intro">${d.intro}</p>` : ''}
+        <div class="wm-section">
+          <h3 class="wm-label">A DAY IN THE LIFE</h3>
+          <div class="wm-timeline">
+            ${d.day.map(t => `<div class="wm-trow"><span class="wm-time">${t.time}</span><span class="wm-task">${t.task}</span></div>`).join('')}
+          </div>
+        </div>
+        <div class="wm-section">
+          <h3 class="wm-label">WHAT DRIVES ME</h3>
+          <p class="wm-reward">${d.reward}</p>
+        </div>
+      `;
+      document.getElementById('worker-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeWorker() {
+      document.getElementById('worker-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Budo Animation
+    const budoEl = document.getElementById('m-budo');
+    if (budoEl) {
+      const budoObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { budoEl.classList.add('animate'); } });
+      }, { threshold: 0.3 });
+      budoObs.observe(document.getElementById('message'));
+    }
+
+    // Carousel
+    let currentSlide = 0;
+    const totalSlides = 3;
+
+    function moveCarousel(dir) {
+      currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+      updateCarousel();
+    }
+
+    function goToSlide(idx) {
+      currentSlide = idx;
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      document.getElementById('carouselTrack').style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i % totalSlides === currentSlide);
+      });
+    }
+  </script>
+</body>
+
+</html>

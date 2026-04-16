@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WISE Admin — 活動記録管理</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0F172A;
+      --blue: #1E40AF;
+      --accent: #3B82F6;
+      --bg: #F1F5F9;
+      --white: #ffffff;
+      --border: #E2E8F0;
+      --text: #1E293B;
+      --muted: #64748B;
+      --danger: #EF4444;
+      --success: #10B981;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .admin-header {
+      background: var(--navy);
+      padding: 0 40px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .admin-logo {
+      font-size: 1rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.2em;
+    }
+    .admin-logo span {
+      color: var(--accent);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      margin-left: 12px;
+      font-weight: 400;
+    }
+    .header-back {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    .header-back:hover { color: white; }
+
+    /* ── Layout ── */
+    .admin-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .card-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Form ── */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+    label .req { color: var(--accent); margin-left: 2px; }
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: var(--text);
+      background: #FAFAFA;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+      background: white;
+    }
+    textarea { resize: vertical; min-height: 90px; line-height: 1.7; }
+
+    /* ── Photo Upload ── */
+    .photo-upload {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .photo-upload:hover { border-color: var(--accent); background: rgba(59,130,246,0.03); }
+    .photo-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .photo-upload-icon { font-size: 2rem; margin-bottom: 8px; color: var(--muted); }
+    .photo-upload-label { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+    .photo-upload-label strong { color: var(--accent); }
+
+    .photo-previews {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .photo-preview-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--border);
+    }
+    .photo-preview-item img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .photo-preview-item .remove-photo {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 20px; height: 20px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── Schedule ── */
+    .schedule-list { display: flex; flex-direction: column; gap: 10px; }
+    .schedule-item {
+      display: grid;
+      grid-template-columns: 90px 1fr 32px;
+      gap: 8px;
+      align-items: center;
+    }
+    .schedule-item input[type="text"] { padding: 8px 10px; }
+    .remove-schedule {
+      width: 32px; height: 32px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .remove-schedule:hover { border-color: var(--danger); color: var(--danger); }
+    .add-schedule {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      background: none;
+      border: 1px dashed var(--accent);
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    .add-schedule:hover { background: rgba(59,130,246,0.06); }
+
+    /* ── Submit ── */
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+    }
+    .submit-btn:hover { background: var(--blue); }
+    .submit-btn:active { transform: scale(0.99); }
+
+    /* ── Article List ── */
+    .article-list { display: flex; flex-direction: column; gap: 12px; }
+    .article-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+    .article-item:hover { border-color: var(--accent); }
+    .article-item-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .article-item-date { font-size: 0.72rem; color: var(--muted); }
+    .article-item-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .article-item-title { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+    .article-item-actions { display: flex; gap: 6px; }
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 0.72rem;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: none;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-sm.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: var(--navy);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      z-index: 9999;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error { border-left: 4px solid var(--danger); }
+  </style>
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="admin-logo">WISE <span>ADMIN PANEL</span></div>
+    <a href="wise.html" class="header-back">← サイトに戻る</a>
+  </header>
+
+  <div class="admin-body">
+
+    <!-- Left: Form -->
+    <div>
+      <div class="card">
+        <div class="card-title">新規記事を投稿</div>
+
+        <div class="form-group">
+          <label>タイトル <span class="req">*</span></label>
+          <input type="text" id="f-title" placeholder="例：WISE × 〇〇大学 キャリアセミナーを開催しました">
+        </div>
+
+        <div class="form-group">
+          <label>本文 <span class="req">*</span></label>
+          <textarea id="f-body" rows="5" placeholder="記事の詳細を入力してください。"></textarea>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-group">
+            <label>カテゴリー <span class="req">*</span></label>
+            <select id="f-tag">
+              <option value="EVENT">EVENT</option>
+              <option value="INTERN">INTERN</option>
+              <option value="WORK">WORK</option>
+              <option value="NEWS">NEWS</option>
+              <option value="ALUMNI">ALUMNI</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>日付 <span class="req">*</span></label>
+            <input type="date" id="f-date">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>写真（複数可）</label>
+          <div class="photo-upload" id="photoUpload">
+            <input type="file" id="f-photos" accept="image/*" multiple onchange="handlePhotos(this)">
+            <div class="photo-upload-icon">📷</div>
+            <div class="photo-upload-label"><strong>クリックして写真を選択</strong><br>JPG, PNG対応 / 複数枚選択可</div>
+          </div>
+          <div class="photo-previews" id="photoPreviews"></div>
+        </div>
+
+        <div class="form-group">
+          <label>1日のスケジュール（任意）</label>
+          <div class="schedule-list" id="scheduleList">
+            <div class="schedule-item">
+              <input type="text" placeholder="10:00" class="s-time">
+              <input type="text" placeholder="内容を入力" class="s-content">
+              <button class="remove-schedule" onclick="removeSchedule(this)">×</button>
+            </div>
+          </div>
+          <button class="add-schedule" onclick="addSchedule()">＋ スケジュールを追加</button>
+        </div>
+
+        <button class="submit-btn" onclick="submitArticle()">記事を公開する</button>
+      </div>
+    </div>
+
+    <!-- Right: Article list -->
+    <div>
+      <div class="card">
+        <div class="card-title">公開中の記事 <span id="articleCount" style="color:var(--accent);"></span></div>
+        <div class="article-list" id="articleList">
+          <div class="empty-state">まだ記事がありません</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = 'wise_articles';
+    let uploadedPhotos = []; // base64 array
+
+    // Set today's date as default
+    document.getElementById('f-date').valueAsDate = new Date();
+
+    // ── Photo handling ──
+    function handlePhotos(input) {
+      const files = Array.from(input.files);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          uploadedPhotos.push(e.target.result);
+          renderPreviews();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderPreviews() {
+      const container = document.getElementById('photoPreviews');
+      container.innerHTML = uploadedPhotos.map((src, i) => `
+        <div class="photo-preview-item">
+          <img src="${src}" alt="">
+          <button class="remove-photo" onclick="removePhoto(${i})">×</button>
+        </div>`).join('');
+    }
+
+    function removePhoto(i) {
+      uploadedPhotos.splice(i, 1);
+      renderPreviews();
+    }
+
+    // ── Schedule ──
+    function addSchedule() {
+      const list = document.getElementById('scheduleList');
+      const item = document.createElement('div');
+      item.className = 'schedule-item';
+      item.innerHTML = `
+        <input type="text" placeholder="14:00" class="s-time">
+        <input type="text" placeholder="内容を入力" class="s-content">
+        <button class="remove-schedule" onclick="removeSchedule(this)">×</button>`;
+      list.appendChild(item);
+    }
+
+    function removeSchedule(btn) {
+      const items = document.querySelectorAll('.schedule-item');
+      if (items.length > 1) btn.closest('.schedule-item').remove();
+    }
+
+    // ── Submit ──
+    function submitArticle() {
+      const title   = document.getElementById('f-title').value.trim();
+      const body    = document.getElementById('f-body').value.trim();
+      const tag     = document.getElementById('f-tag').value;
+      const dateVal = document.getElementById('f-date').value;
+
+      if (!title || !body || !dateVal) {
+        showToast('タイトル・本文・日付は必須です', 'error');
+        return;
+      }
+
+      // Format date YYYY.MM.DD
+      const [y, m, d] = dateVal.split('-');
+      const dateStr = `${y}.${m}.${d}`;
+
+      // Collect schedule
+      const schedule = [];
+      document.querySelectorAll('.schedule-item').forEach(item => {
+        const time    = item.querySelector('.s-time').value.trim();
+        const content = item.querySelector('.s-content').value.trim();
+        if (time && content) schedule.push({ time, content });
+      });
+
+      const article = {
+        id:       Date.now(),
+        date:     dateStr,
+        tag,
+        title,
+        excerpt:  body.slice(0, 80) + (body.length > 80 ? '…' : ''),
+        body,
+        photos:   [...uploadedPhotos],
+        schedule,
+        img:      uploadedPhotos[0] || '',
+      };
+
+      const articles = getArticles();
+      articles.unshift(article);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+
+      showToast('記事を公開しました！', 'success');
+      resetForm();
+      renderArticleList();
+    }
+
+    // ── Storage ──
+    function getArticles() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function deleteArticle(id) {
+      if (!confirm('この記事を削除しますか？')) return;
+      const articles = getArticles().filter(a => a.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+      renderArticleList();
+      showToast('記事を削除しました');
+    }
+
+    // ── Render article list ──
+    function renderArticleList() {
+      const articles = getArticles();
+      const list = document.getElementById('articleList');
+      const countEl = document.getElementById('articleCount');
+      countEl.textContent = `(${articles.length})`;
+
+      if (articles.length === 0) {
+        list.innerHTML = '<div class="empty-state">まだ記事がありません</div>';
+        return;
+      }
+
+      list.innerHTML = articles.map(a => `
+        <div class="article-item">
+          <div>
+            <div class="article-item-meta">
+              <span class="article-item-date">${a.date}</span>
+              <span class="article-item-tag">${a.tag}</span>
+            </div>
+            <div class="article-item-title">${a.title}</div>
+          </div>
+          <div class="article-item-actions">
+            <button class="btn-sm danger" onclick="deleteArticle(${a.id})">削除</button>
+          </div>
+        </div>`).join('');
+    }
+
+    // ── Reset form ──
+    function resetForm() {
+      document.getElementById('f-title').value = '';
+      document.getElementById('f-body').value = '';
+      document.getElementById('f-tag').value = 'EVENT';
+      document.getElementById('f-date').valueAsDate = new Date();
+      uploadedPhotos = [];
+      renderPreviews();
+      document.getElementById('scheduleList').innerHTML = `
+        <div class="schedule-item">
+          <input type="text" placeholder="10:00" class="s-time">
+          <input type="text" placeholder="内容を入力" class="s-content">
+          <button class="remove-schedule" onclick="removeSchedule(this)">×</button>
+        </div>`;
+    }
+
+    // ── Toast ──
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = `toast ${type} show`;
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── Init ──
+    renderArticleList();
+  </script>
+
+</body>
+</html>

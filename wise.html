@@ -1,0 +1,3838 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WISE 新卒採用サイト | 知性を、社会の力に変える。</title>
+  <meta name="description" content="WISEの新卒採用サイト。戦略コンサルティングとデジタルソリューションで社会課題を解決する少数精鋭のチームで、あなたの知性を武器にしてください。">
+  <meta property="og:title" content="WISE 新卒採用サイト">
+  <meta property="og:description" content="「知性を、社会の力に変える。」WISE の2027年卒新卒採用情報。">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --wise-navy: #0F172A;
+      --wise-blue: #1E40AF;
+      --wise-accent: #3B82F6;
+      --pure-black: #000000;
+      --pure-white: #FFFFFF;
+      --text-gray: #475569;
+      --line-gray: #E2E8F0;
+      --font-en: 'Times New Roman', 'Georgia', serif;
+      --font-serif: 'Noto Serif JP', 'Source Han Serif JP', serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-serif);
+      color: var(--wise-navy);
+      background: var(--pure-white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.9;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    section { padding: 160px 0; position: relative; }
+
+    /* ── Header ── */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 90px;
+      padding: 0 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: 0.5s ease;
+    }
+
+    header.scrolled {
+      height: 75px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(25px);
+      border-bottom: 1px solid var(--line-gray);
+    }
+
+    header.top-transparent nav a { color: rgba(255,255,255,0.85); }
+    header.scrolled nav a { color: var(--wise-navy); }
+
+    .logo {
+      display: block;
+      text-decoration: none;
+      line-height: 0;
+    }
+
+    .logo img {
+      height: 32px;
+      object-fit: contain;
+      /* スクロール前: 白く見せる */
+      filter: brightness(0) invert(1);
+      transition: filter 0.3s;
+    }
+
+    header.scrolled .logo img {
+      /* スクロール後: ネイビーに戻す */
+      filter: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-family: var(--font-en);
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      margin-left: 45px;
+      transition: 0.3s;
+    }
+
+    .nav-entry {
+      background: var(--wise-blue);
+      color: white !important;
+      padding: 12px 35px;
+      border-radius: 2px;
+    }
+    .nav-entry:hover { background: var(--wise-accent); }
+
+    /* ── Hero ── */
+    .hero {
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('./untitled%20folder/banner-logo/Banner%20top.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-badge {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 0.9rem;
+      letter-spacing: 0.65em;
+      color: rgba(255,255,255,0.65);
+      display: block;
+      width: fit-content;
+      margin: 0 auto 35px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid var(--wise-accent);
+    }
+
+    .hero-h1 {
+      font-size: 4.8rem;
+      font-weight: 900;
+      line-height: 1.55;
+      color: white;
+      letter-spacing: 0.12em;
+      font-family: var(--font-serif);
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .scroll-line-container {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      height: 140px;
+      background: rgba(255,255,255,0.1);
+      overflow: hidden;
+      z-index: 20;
+    }
+
+    .scroll-line-fill {
+      width: 100%;
+      height: 100%;
+      background: var(--wise-accent);
+      transform: translateY(-100%);
+      animation: scrollLineAnim 3s infinite;
+    }
+
+    @keyframes scrollLineAnim {
+      0%   { transform: translateY(-100%); }
+      50%  { transform: translateY(0); }
+      100% { transform: translateY(100%); }
+    }
+
+    /* ── News Bar ── */
+    .news-bar {
+      background: var(--wise-navy);
+      overflow: hidden;
+    }
+
+    .news-bar-inner {
+      display: flex;
+      align-items: stretch;
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .news-bar-label {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+      padding: 22px 40px 22px 0;
+      border-right: 1px solid rgba(255,255,255,0.12);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 0 16px 40px;
+      gap: 4px;
+    }
+
+    .news-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .news-date {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+      white-space: nowrap;
+    }
+
+    .news-tag {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--wise-accent);
+      border: 1px solid var(--wise-accent);
+      padding: 1px 8px;
+      white-space: nowrap;
+    }
+
+    /* ── Events News ── */
+    .events-section {
+      background: #FAFAFA;
+      padding: 80px 0;
+      border-bottom: 1px solid var(--line-gray);
+    }
+
+    .events-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 60px;
+    }
+
+    .events-label-col {
+      flex-shrink: 0;
+      width: 160px;
+    }
+
+    .events-label {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.55em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .events-heading {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--wise-navy);
+      line-height: 1.4;
+    }
+
+    .events-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .event-item {
+      display: grid;
+      grid-template-columns: 120px 90px 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line-gray);
+      text-decoration: none;
+      color: var(--wise-navy);
+      transition: all 0.3s;
+    }
+
+    .event-item:first-child { border-top: 1px solid var(--line-gray); }
+    .event-item:hover { background: #F0F4FF; padding-left: 12px; }
+
+    .event-date {
+      font-family: var(--font-en);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: #999;
+    }
+
+    .event-tag {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--wise-accent);
+      border: 1px solid var(--wise-accent);
+      padding: 3px 10px;
+      text-align: center;
+    }
+
+    .event-title {
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    /* ── About (WISE vs WEBY) ── */
+    .about-section {
+      background: white;
+      padding: 160px 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-top: 80px;
+      border: 1px solid var(--line-gray);
+    }
+
+    .about-col {
+      padding: 60px 56px;
+      position: relative;
+    }
+
+    .about-col:first-child {
+      border-right: 1px solid var(--line-gray);
+    }
+
+    .about-col-badge {
+      font-family: var(--font-en);
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .about-col-name {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--wise-navy);
+      margin-bottom: 28px;
+      font-family: var(--font-en);
+      letter-spacing: 0.08em;
+    }
+
+    .about-col-desc {
+      font-size: 0.95rem;
+      color: var(--text-gray);
+      line-height: 2.3;
+      margin-bottom: 40px;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .about-tag {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      padding: 6px 16px;
+      border: 1px solid var(--line-gray);
+      color: var(--text-gray);
+      border-radius: 2px;
+    }
+
+    .about-relation {
+      margin-top: 60px;
+      background: #F8FAFC;
+      border: 1px solid var(--line-gray);
+      padding: 40px 48px;
+    }
+
+    .about-relation-h {
+      font-family: var(--font-en);
+      font-size: 0.62rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .about-relation-text {
+      font-size: 0.95rem;
+      color: var(--text-gray);
+      line-height: 2.3;
+    }
+
+    /* ── WISE Acronym ── */
+    .acronym-section {
+      background: var(--wise-navy);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .acronym-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .acronym-item {
+      padding: 80px 56px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+
+    .acronym-item:last-child { border-right: none; }
+
+    .acronym-item:hover { background: rgba(59,130,246,0.08); }
+
+    .acronym-letter {
+      font-family: var(--font-en);
+      font-size: 7rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      letter-spacing: -0.05em;
+      transition: color 0.4s;
+    }
+
+    .acronym-item:hover .acronym-letter { color: rgba(59,130,246,0.15); }
+
+    .acronym-index {
+      font-family: var(--font-en);
+      font-size: 0.58rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .acronym-word {
+      font-family: var(--font-en);
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    .acronym-word em {
+      font-style: normal;
+      color: var(--wise-accent);
+    }
+
+    .acronym-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── CEO ── */
+    .ceo-section {
+      background: var(--wise-navy);
+      padding: 80px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ceo-section::before {
+      content: 'MESSAGE';
+      position: absolute;
+      top: 50%;
+      right: -2%;
+      transform: translateY(-50%);
+      font-family: var(--font-en);
+      font-size: 18vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .ceo-inner {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .ceo-photo-wrap {
+      position: relative;
+    }
+
+    .ceo-photo-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .ceo-photo-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(15,23,42,0.95) 0%, transparent 100%);
+      padding: 40px 32px 28px;
+    }
+
+    .ceo-photo-name {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .ceo-photo-title {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+    }
+
+    .ceo-text-col {
+      padding-top: 20px;
+    }
+
+    .ceo-quote {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.75;
+      letter-spacing: 0.05em;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .ceo-quote em {
+      font-style: normal;
+      color: var(--wise-accent);
+    }
+
+    .ceo-body {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 2.4;
+    }
+
+    .ceo-body p + p { margin-top: 28px; }
+
+    .ceo-body strong {
+      color: white;
+      font-weight: 700;
+    }
+
+    .ceo-sig {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .ceo-sig-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .ceo-sig-name {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── Career Track ── */
+    .career-section {
+      background: var(--wise-navy);
+      padding: 160px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .career-section::before {
+      content: 'CAREERS';
+      position: absolute;
+      bottom: -60px;
+      left: -2%;
+      font-family: var(--font-en);
+      font-size: 18vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+    }
+
+    .career-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-top: 80px;
+    }
+
+    .career-col-label {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 36px;
+    }
+
+    /* 内定先 — marquee ticker */
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+
+    .offer-ticker-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .offer-ticker-wrap::before,
+    .offer-ticker-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 60px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .offer-ticker-wrap::before { left: 0;  background: linear-gradient(to right,  var(--wise-navy), transparent); }
+    .offer-ticker-wrap::after  { right: 0; background: linear-gradient(to left, var(--wise-navy), transparent); }
+
+    .offer-ticker {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      animation: tickerScroll 22s linear infinite;
+    }
+
+    .offer-ticker:hover { animation-play-state: paused; }
+
+    @keyframes tickerScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .offer-chip {
+      font-family: var(--font-en);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 22px;
+      white-space: nowrap;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .offer-chip:hover {
+      background: var(--wise-accent);
+      border-color: var(--wise-accent);
+    }
+
+    /* 出身大学 — tag cloud */
+    .uni-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .uni-tag {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 8px 18px;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .uni-tag:hover {
+      color: white;
+      border-color: var(--wise-accent);
+      background: rgba(59,130,246,0.12);
+    }
+
+    .uni-tag.top {
+      color: white;
+      border-color: rgba(255,255,255,0.3);
+      font-weight: 700;
+    }
+
+    /* ── Infographic ── */
+    .infographic-section {
+      background: var(--wise-navy);
+      padding: 160px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .infographic-section::before {
+      content: '30';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-en);
+      font-size: 40vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    /* Hero stat row */
+    .info-hero {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+      gap: 0;
+      margin-top: 80px;
+      margin-bottom: 80px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .info-hero-divider {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .info-hero-stat {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .info-hero-num {
+      font-family: var(--font-en);
+      font-size: 6rem;
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+      display: block;
+      letter-spacing: -0.03em;
+    }
+
+    .info-hero-num span {
+      font-size: 2.5rem;
+      color: var(--wise-accent);
+    }
+
+    .info-hero-label {
+      font-family: var(--font-en);
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: rgba(255,255,255,0.4);
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* Bottom grid */
+    .info-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* Gender — split bar */
+
+    .gender-label {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 36px;
+    }
+
+    .gender-split-bar {
+      height: 10px;
+      display: flex;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .gender-split-men {
+      background: var(--wise-blue);
+      transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
+      width: 0;
+    }
+    .gender-split-men.animated { width: 66.7%; }
+
+    .gender-split-women {
+      flex: 1;
+      background: rgba(147,197,253,0.5);
+    }
+
+    .gender-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .gender-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .gender-big-num {
+      font-family: var(--font-en);
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+      min-width: 80px;
+    }
+
+    .gender-row-right { display: flex; flex-direction: column; }
+
+    .gender-row-en {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.35);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .gender-row-jp {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .gender-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    /* Department vertical bars */
+
+    .dept-chart-label {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 36px;
+    }
+
+    .dept-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      height: 200px;
+    }
+
+    .dept-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .dept-col-count {
+      font-family: var(--font-en);
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+    }
+
+    .dept-col-bar-wrap {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      display: flex;
+      align-items: flex-end;
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+      overflow: hidden;
+    }
+
+    .dept-col-bar {
+      width: 100%;
+      transition: height 1.4s cubic-bezier(0.16,1,0.3,1);
+      height: 0;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .dept-col-bar.animated { height: var(--bar-h); }
+
+    .dept-col-name {
+      font-family: var(--font-en);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+    }
+
+    /* Grade strip */
+    .grade-strip-wrap {
+      margin-top: 60px;
+      padding-top: 60px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .grade-strip-label {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 36px;
+    }
+
+    .grade-strip {
+      display: flex;
+      height: 64px;
+      width: 100%;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+
+    .grade-strip-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
+      width: 0 !important;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .grade-strip-seg.animated { width: var(--seg-w) !important; }
+
+    .grade-strip-seg-inner {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: white;
+    }
+
+    .grade-strip-leg {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .grade-strip-leg-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .grade-strip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Journal ── */
+    .journal-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .j-filter {
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      padding: 8px 20px;
+      border: 1px solid var(--line-gray);
+      background: transparent;
+      color: var(--text-gray);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .j-filter:hover, .j-filter.active {
+      background: var(--wise-navy);
+      border-color: var(--wise-navy);
+      color: white;
+    }
+    .journal-section {
+      background: #F8FAFC;
+      padding: 160px 0 80px;
+    }
+
+    .journal-carousel-wrap {
+      margin-top: 80px;
+      position: relative;
+    }
+
+    .journal-carousel-track-outer {
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .journal-carousel-track-outer:active { cursor: grabbing; }
+
+    .journal-carousel-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    .journal-card {
+      background: white;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line-gray);
+      transition: box-shadow 0.4s;
+      text-decoration: none;
+      color: var(--wise-navy);
+      flex-shrink: 0;
+      width: 360px;
+    }
+
+    .journal-card:hover {
+      box-shadow: 0 20px 40px rgba(15,23,42,0.1);
+    }
+
+    .journal-card-img {
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .journal-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s ease;
+    }
+
+    .journal-card:hover .journal-card-img img { transform: scale(1.06); }
+
+    .journal-card-body {
+      padding: 28px 30px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .journal-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .journal-card-date {
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: #aaa;
+    }
+
+    .journal-card-tag {
+      font-family: var(--font-en);
+      font-size: 0.56rem;
+      letter-spacing: 0.3em;
+      color: var(--wise-accent);
+      border: 1px solid var(--wise-accent);
+      padding: 2px 9px;
+    }
+
+    .journal-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .journal-card-excerpt {
+      font-size: 0.82rem;
+      color: var(--text-gray);
+      line-height: 1.9;
+      flex: 1;
+    }
+
+    .journal-card-arrow {
+      margin-top: 20px;
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--wise-accent);
+    }
+
+    .journal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .journal-nav-btn {
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--line-gray);
+      background: white;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--wise-navy);
+      transition: all 0.3s;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .journal-nav-btn:hover { background: var(--wise-blue); border-color: var(--wise-blue); color: white; }
+
+    .journal-nav-count {
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #bbb;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* ── Message ── */
+    .message-section {
+      background: white;
+      padding: 200px 0;
+      text-align: center;
+    }
+
+    .m-script {
+      font-family: var(--font-en);
+      font-weight: 900;
+      color: var(--wise-blue);
+      font-size: 1.1rem;
+      letter-spacing: 0.6em;
+      display: block;
+      margin-bottom: 60px;
+    }
+
+    .m-copy {
+      font-size: 3.6rem;
+      font-weight: 700;
+      line-height: 1.8;
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      letter-spacing: 0.1em;
+      color: var(--wise-navy);
+      font-family: var(--font-serif);
+    }
+
+    .m-accent { color: var(--wise-accent); }
+
+    .m-detail {
+      font-size: 1.25rem;
+      line-height: 2.6;
+      max-width: 950px;
+      margin: 0 auto;
+      color: var(--text-gray);
+    }
+
+    /* ── Gallery ── */
+    .gallery-section {
+      padding: 120px 0;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .gallery-header {
+      margin-bottom: 80px;
+      text-align: center;
+    }
+
+    .gallery-full {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .gallery-item {
+      position: relative;
+      height: 450px;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 1.5s ease;
+      filter: brightness(0.88);
+    }
+
+    .gallery-item:hover img { transform: scale(1.05); filter: brightness(1); }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,23,42,0.65) 0%, transparent 40%);
+    }
+
+    .g-label {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      color: white;
+      z-index: 10;
+      text-align: left;
+    }
+
+    .g-loc {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 0.8rem;
+      letter-spacing: 0.4em;
+      color: var(--wise-accent);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .g-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    /* Lightbox */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      display: block;
+      animation: lightboxIn 0.3s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    @keyframes lightboxIn {
+      from { opacity: 0; transform: scale(0.93); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.45);
+      white-space: nowrap;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      font-size: 1.8rem;
+      color: rgba(255,255,255,0.6);
+      background: none;
+      border: none;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: var(--wise-accent); }
+
+    /* ── Business ── */
+    .business-section {
+      background: #F8FAFC;
+      padding: 160px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .business-section::before {
+      content: 'BUSINESS';
+      position: absolute;
+      top: 50%;
+      left: -2%;
+      transform: translateY(-50%);
+      font-family: var(--font-en);
+      font-size: 20vw;
+      font-weight: 900;
+      color: rgba(30,64,175,0.04);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .biz-categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .biz-category {
+      background: white;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .biz-cat-top {
+      background: linear-gradient(135deg, var(--wise-navy) 60%, #1e3a8a 100%);
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .biz-cat-top::before {
+      content: attr(data-num);
+      position: absolute;
+      right: -10px;
+      top: -20px;
+      font-family: var(--font-en);
+      font-size: 10rem;
+      font-weight: 900;
+      color: rgba(59,130,246,0.12);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .biz-cat-top::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--wise-accent);
+    }
+
+    .biz-cat-top-en {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: rgba(59,130,246,0.8);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .biz-cat-top-num {
+      font-family: var(--font-en);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--wise-accent);
+      line-height: 1;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .biz-cat-top-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+
+    .biz-cat-body {
+      padding: 48px 48px 56px;
+      flex: 1;
+      border: 1px solid #eee;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .biz-service {
+      padding: 24px 0;
+      border-bottom: 1px solid #f0f0f0;
+      position: relative;
+      transition: 0.3s;
+    }
+    .biz-service:first-child { padding-top: 0; }
+    .biz-service:last-child  { border-bottom: none; padding-bottom: 0; }
+    .biz-service:hover { padding-left: 10px; }
+    .biz-service:hover .biz-service-name { color: var(--wise-accent); }
+
+    .biz-service-tag {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .biz-service-icon { color: var(--wise-accent); margin-right: 10px; font-size: 1.1rem; }
+
+    .biz-service-name {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #111;
+      display: block;
+      margin-bottom: 8px;
+      transition: color 0.3s;
+    }
+
+    .biz-service-desc {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.9;
+      margin-top: 6px;
+    }
+
+    .biz-highlight .biz-service-name { color: var(--wise-blue); }
+
+    /* ── Training ── */
+    .training-section {
+      background: #FAFAFA;
+      padding: 120px 0 160px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .training-flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .training-flow-item {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .training-flow-item:not(:last-child) .training-flow-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: -20px;
+      width: 0; height: 0;
+      border-top: 50px solid transparent;
+      border-bottom: 50px solid transparent;
+      border-left: 20px solid #fff;
+      z-index: 3;
+      filter: drop-shadow(2px 0 0 #eee);
+    }
+
+    .training-flow-card {
+      background: white;
+      border: 1px solid #e8ecf0;
+      padding: 32px 28px 32px 32px;
+      flex: 1;
+      position: relative;
+      overflow: visible;
+    }
+
+    .training-flow-phase {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .training-flow-month {
+      font-family: var(--font-en);
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--wise-navy);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .training-flow-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .training-flow-desc {
+      font-size: 0.82rem;
+      color: #777;
+      line-height: 1.8;
+    }
+
+    .training-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .training-step {
+      display: flex;
+      gap: 28px;
+      padding: 32px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .training-step:last-of-type { border-bottom: none; }
+
+    .training-step-num {
+      font-family: var(--font-en);
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: rgba(59,130,246,0.18);
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 52px;
+    }
+
+    .training-step-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--wise-navy);
+      margin-bottom: 12px;
+    }
+
+    .training-step-desc {
+      font-size: 0.92rem;
+      color: #666;
+      line-height: 2;
+    }
+
+    .training-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 260px 200px;
+      gap: 12px;
+    }
+
+    .training-photo-main {
+      grid-column: 1 / 3;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .training-photo-sub,
+    .training-photo-sub2,
+    .training-photo-sub3,
+    .training-photo-sub4 { border-radius: 4px; overflow: hidden; }
+
+    .training-photos img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── Workers Story ── */
+    .workers-section { background: white; overflow: hidden; }
+
+    .carousel-wrapper { overflow: hidden; }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 700px;
+    }
+
+    .carousel-img {
+      overflow: hidden;
+    }
+    .carousel-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.5s ease;
+    }
+    .carousel-slide:hover .carousel-img img { transform: scale(1.05); }
+
+    .carousel-info {
+      padding: 80px 80px 80px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #FAFAFA;
+    }
+
+    .carousel-tag {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .carousel-name {
+      font-family: var(--font-en);
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: var(--wise-navy);
+      margin-bottom: 28px;
+      line-height: 1;
+    }
+
+    .carousel-quote {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.7;
+      color: var(--wise-navy);
+      margin-bottom: 32px;
+      letter-spacing: 0.05em;
+    }
+
+    .carousel-detail {
+      font-size: 0.95rem;
+      color: var(--text-gray);
+      line-height: 2.1;
+      margin-bottom: 40px;
+    }
+
+    .career-timeline {
+      margin-bottom: 40px;
+    }
+
+    .career-label {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .career-steps { display: flex; flex-direction: column; gap: 12px; }
+
+    .career-step-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .career-step-num {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 0.8rem;
+      background: var(--wise-blue);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .career-step-year {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--wise-navy);
+    }
+
+    .career-step-body {
+      font-size: 0.8rem;
+      color: var(--text-gray);
+      padding-left: 36px;
+    }
+
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .carousel-btn {
+      width: 52px;
+      height: 52px;
+      border: 2px solid var(--wise-navy);
+      background: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--wise-navy);
+      transition: all 0.3s;
+      border-radius: 50%;
+    }
+    .carousel-btn:hover { background: var(--wise-blue); border-color: var(--wise-blue); color: white; }
+
+    .carousel-dots { display: flex; gap: 8px; margin-left: 8px; }
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .carousel-dot.active { background: var(--wise-blue); width: 28px; border-radius: 4px; }
+
+    /* ── Three Pillars ── */
+    .pillars-section {
+      background: var(--wise-navy);
+      padding: 80px 0 160px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pillars-inner {
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 100px;
+      align-items: center;
+      margin-top: 80px;
+    }
+
+    .pillars-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .pillar-item {
+      padding: 44px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .pillar-item:first-child { padding-top: 0; }
+    .pillar-item:last-child  { border-bottom: none; padding-bottom: 0; }
+
+    .pillar-num {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--wise-accent);
+      padding-top: 6px;
+    }
+
+    .pillar-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+      font-family: var(--font-en);
+    }
+
+    .pillar-desc {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 2.1;
+    }
+
+    /* Venn diagram */
+    .pillars-venn {
+      position: relative;
+      width: 440px;
+      height: 400px;
+      flex-shrink: 0;
+    }
+
+    .venn-circle {
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      color: white;
+      mix-blend-mode: screen;
+    }
+
+    .venn-innovation {
+      background: radial-gradient(circle at 60% 60%, #B5943A, #7A5F1A);
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.88;
+    }
+
+    .venn-frontliner {
+      background: radial-gradient(circle at 40% 60%, #0F4C75, #0A2F50);
+      bottom: 0;
+      right: 0;
+      opacity: 0.88;
+    }
+
+    .venn-heritage {
+      background: radial-gradient(circle at 60% 40%, #7B1D1D, #4A0F0F);
+      bottom: 0;
+      left: 0;
+      opacity: 0.88;
+    }
+
+    .venn-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -30%);
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-en);
+      font-size: 0.55rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+    }
+
+    /* dotted orbit */
+    .venn-orbit {
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,0.1);
+      animation: vennRotate 20s linear infinite;
+    }
+
+    @keyframes vennRotate { to { transform: rotate(360deg); } }
+
+    /* ── Selection Flow ── */
+    .flow-section {
+      background: white;
+      padding: 120px 0;
+    }
+
+    /* ── 通常フロー ── */
+    .flow-label {
+      font-family: var(--font-en);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: var(--text-gray);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .flow-steps {
+      display: flex;
+      align-items: stretch;
+      position: relative;
+    }
+
+    .flow-step {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flow-card {
+      background: white;
+      border: 2px solid var(--wise-navy);
+      padding: 28px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+      position: relative;
+    }
+
+    .flow-step:not(:last-child) .flow-card::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -16px;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-left: 16px solid var(--wise-navy);
+      z-index: 2;
+    }
+
+    .flow-step-num {
+      font-family: var(--font-en);
+      font-size: 0.52rem;
+      letter-spacing: 0.4em;
+      color: var(--wise-accent);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .flow-step-label {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--wise-navy);
+      line-height: 1.5;
+      letter-spacing: 0.05em;
+    }
+
+    .flow-step-sub {
+      font-family: var(--font-en);
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: rgba(15,23,42,0.35);
+      margin-top: 8px;
+      display: block;
+    }
+
+    .flow-step.skip .flow-card {
+      background: rgba(15,23,42,0.25);
+      border: 1.5px dashed rgba(255,255,255,0.2);
+    }
+
+    .flow-step.skip .flow-step-label { color: rgba(255,255,255,0.35); }
+    .flow-step.skip .flow-card::after { border-left-color: rgba(15,23,42,0.25); }
+
+    .flow-step:last-child .flow-card { background: var(--wise-blue); }
+
+    /* ── HP応募フロー ── */
+    .flow-hp-wrap {
+      margin-top: 24px;
+      background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+      border: 1.5px solid #BFDBFE;
+      border-radius: 10px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .flow-hp-badge {
+      background: var(--wise-accent);
+      color: white;
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      padding: 6px 14px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .flow-hp-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+    }
+
+    .flow-hp-step {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+    }
+
+    .flow-hp-card {
+      flex: 1;
+      background: var(--wise-navy);
+      border-radius: 6px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+
+    .flow-hp-card.skip {
+      background: transparent;
+      border: 1.5px dashed #CBD5E1;
+      position: relative;
+    }
+
+    .flow-hp-card.skip::before {
+      content: 'SKIP';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--wise-accent);
+      color: white;
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .flow-hp-card-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 0.03em;
+    }
+
+    .flow-hp-card.skip .flow-hp-card-label { color: #94A3B8; }
+
+    .flow-hp-arrow {
+      color: #94A3B8;
+      font-size: 0.75rem;
+      padding: 0 8px;
+      flex-shrink: 0;
+    }
+
+    .flow-hp-highlight { background: var(--wise-blue) !important; }
+
+    .flow-hp-note {
+      font-size: 0.82rem;
+      color: var(--wise-blue);
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Recruit ── */
+    .recruit-section { background: white; }
+
+    .recruit-wrap {
+      margin-top: 80px;
+      border: 1px solid var(--line-gray);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .r-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid var(--line-gray);
+    }
+    .r-row:last-child { border-bottom: none; }
+
+    .r-label {
+      background: #F8FAFC;
+      padding: 28px 32px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--wise-navy);
+      letter-spacing: 0.05em;
+      border-right: 1px solid var(--line-gray);
+      display: flex;
+      align-items: center;
+    }
+
+    .r-data {
+      padding: 28px 40px;
+      font-size: 0.92rem;
+      color: #333;
+      line-height: 1.9;
+      display: flex;
+      align-items: center;
+    }
+
+    .r-wide .r-data { align-items: flex-start; }
+
+    /* ── Job Board ── */
+    .jobboard-section {
+      background: #F8FAFC;
+      padding: 80px 0;
+    }
+
+    .jb-label {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .jb-grid {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .jb-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      display: block;
+      width: 280px;
+      height: 100px;
+      border: 1px solid var(--line-gray);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.4s;
+    }
+    .jb-card:hover { box-shadow: 0 12px 40px rgba(30,64,175,0.15); transform: translateY(-4px); }
+    .jb-card img { max-width: 200px; max-height: 60px; object-fit: contain; }
+
+    .jb-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(30,64,175,0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: 0.3s;
+    }
+    .jb-card:hover .jb-card-overlay { opacity: 1; }
+
+    .jb-card-cta {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      color: white;
+      font-weight: 700;
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+      background: white;
+      padding: 160px 0;
+    }
+
+    .faq-list { margin-top: 80px; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--line-gray);
+      overflow: hidden;
+    }
+
+    .faq-q {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 32px 0;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .faq-q:hover { color: var(--wise-blue); }
+
+    .faq-q-mark {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: var(--wise-accent);
+      flex-shrink: 0;
+    }
+
+    .faq-q-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .faq-icon {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--line-gray);
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--wise-navy);
+      transition: all 0.3s;
+    }
+    .faq-icon::before { width: 12px; height: 2px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .faq-icon::after  { width: 2px; height: 12px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .faq-item.open .faq-icon { background: var(--wise-blue); border-color: var(--wise-blue); }
+    .faq-item.open .faq-icon::before,
+    .faq-item.open .faq-icon::after { background: white; }
+    .faq-item.open .faq-icon::after { opacity: 0; }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .faq-item.open .faq-a { max-height: 300px; }
+
+    .faq-a-inner {
+      display: flex;
+      gap: 24px;
+      padding: 0 0 32px;
+    }
+
+    .faq-a-mark {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: var(--wise-navy);
+      flex-shrink: 0;
+    }
+
+    .faq-a-text {
+      font-size: 0.98rem;
+      color: var(--text-gray);
+      line-height: 2.1;
+      padding-top: 6px;
+    }
+
+    /* ── Footer / Entry ── */
+    footer {
+      background: var(--wise-navy);
+      padding: 120px 0 60px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 80px;
+      margin-bottom: 80px;
+    }
+
+    .footer-cta-label {
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      letter-spacing: 0.6em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .footer-cta-title {
+      font-size: 3rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+
+    .footer-cta-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 2;
+    }
+
+    .footer-entry-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--wise-accent);
+      color: white;
+      text-decoration: none;
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      padding: 22px 60px;
+      border-radius: 2px;
+      transition: all 0.3s;
+      margin-top: 48px;
+      align-self: center;
+    }
+    .footer-entry-btn:hover { background: #60a5fa; transform: translateY(-3px); }
+
+    .f-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .f-logo {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .f-copy {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Departments ── */
+    .dept-section {
+      background: var(--wise-navy);
+      padding: 160px 0;
+    }
+
+    .dept-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+      margin-top: 80px;
+    }
+
+    .dept-card {
+      position: relative;
+      height: 520px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .dept-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: brightness(0.65);
+    }
+
+    .dept-card:hover img {
+      transform: scale(1.08);
+      filter: brightness(0.5);
+    }
+
+    .dept-card-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px 36px;
+      background: linear-gradient(to top, rgba(15,23,42,0.85) 0%, transparent 55%);
+      transition: background 0.5s;
+    }
+
+    .dept-card:hover .dept-card-overlay {
+      background: linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(30,64,175,0.2) 100%);
+    }
+
+    .dept-card-en {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 10px;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: all 0.4s 0.05s;
+    }
+
+    .dept-card:hover .dept-card-en {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .dept-card-name {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    .dept-card-cta {
+      font-family: var(--font-en);
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      color: rgba(255,255,255,0);
+      transition: color 0.4s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dept-card-cta::after {
+      content: '→';
+      transition: transform 0.3s;
+    }
+
+    .dept-card:hover .dept-card-cta {
+      color: rgba(255,255,255,0.75);
+    }
+
+    .dept-card:hover .dept-card-cta::after {
+      transform: translateX(6px);
+    }
+
+    /* ── Department Modal ── */
+    .dept-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.85);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-y: auto;
+    }
+
+    .dept-modal-overlay.open { display: flex; }
+
+    .dept-modal-box {
+      background: white;
+      max-width: 860px;
+      width: 100%;
+      position: relative;
+      animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .dept-modal-close {
+      position: sticky;
+      top: 0;
+      float: right;
+      margin: 20px 24px 0 0;
+      font-size: 1.6rem;
+      color: rgba(255,255,255,0.7);
+      background: var(--wise-navy);
+      border: none;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .dept-modal-close:hover { background: var(--wise-blue); }
+
+    .dept-modal-hero {
+      height: 280px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .dept-modal-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.6);
+    }
+
+    .dept-modal-hero-text {
+      position: absolute;
+      bottom: 36px;
+      left: 48px;
+    }
+
+    .dept-modal-en {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.55em;
+      color: var(--wise-accent);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .dept-modal-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.05em;
+    }
+
+    .dept-modal-body {
+      padding: 48px 48px 60px;
+    }
+
+    .dept-modal-desc {
+      font-size: 1rem;
+      color: var(--text-gray);
+      line-height: 2.2;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--line-gray);
+    }
+
+    .dept-modal-h {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: var(--wise-accent);
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .dept-job-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+
+    .dept-job-item {
+      padding: 28px 32px;
+      background: #F8FAFC;
+      border-left: 3px solid var(--wise-accent);
+    }
+
+    .dept-job-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--wise-navy);
+      margin-bottom: 12px;
+    }
+
+    .dept-job-body {
+      font-size: 0.9rem;
+      color: var(--text-gray);
+      line-height: 2;
+    }
+
+    .dept-req-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line-gray);
+      margin-top: 40px;
+    }
+
+    .dept-req-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.92rem;
+      color: var(--wise-navy);
+      line-height: 1.7;
+    }
+
+    .dept-req-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--wise-accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .hero-h1 { font-size: 3.2rem; }
+      .m-copy  { font-size: 2.4rem; }
+      .biz-categories { grid-template-columns: 1fr; }
+      .carousel-slide { grid-template-columns: 1fr; }
+      .carousel-img { height: 380px; }
+      .training-inner { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      header { padding: 0 30px; }
+      .container { padding: 0 24px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="header" class="top-transparent">
+    <a href="#" class="logo">
+      <img src="./untitled%20folder/banner-logo/banner%20logo.png" alt="WISE">
+    </a>
+    <nav>
+      <a href="#about">ABOUT</a>
+      <a href="#departments">DEPARTMENTS</a>
+      <a href="#journal">JOURNAL</a>
+
+      <a href="#recruit">RECRUIT</a>
+      <a href="https://weby.app.n8n.cloud/form/3286f067-5ae9-454c-965c-405a702493ee" target="_blank" rel="noopener" class="nav-entry">ENTRY</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content reveal">
+      <span class="hero-badge">2027 RECRUIT</span>
+      <h1 class="hero-h1">未来を拓く、<br>行動の総量を。</h1>
+      <p class="hero-sub">The more you act, the more the future opens up.</p>
+    </div>
+    <div class="scroll-line-container">
+      <div class="scroll-line-fill"></div>
+    </div>
+  </section>
+
+  <!-- News Bar -->
+  <div class="news-bar">
+    <div class="news-bar-inner">
+      <div class="news-bar-label">NEWS</div>
+      <div class="news-list">
+        <div class="news-item">
+          <span class="news-date">2026.04.01</span>
+          <span class="news-tag">RECRUIT</span>
+          <span>2027年卒 新卒採用 本選考エントリーを開始しました</span>
+        </div>
+        <div class="news-item">
+          <span class="news-date">2026.03.15</span>
+          <span class="news-tag">EVENT</span>
+          <span>会社説明会（オンライン）を開催します。ご参加お待ちしております</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Events News -->
+  <section class="events-section">
+    <div class="container reveal">
+      <div class="events-inner">
+        <div class="events-label-col">
+          <span class="events-label">RECENT EVENTS</span>
+          <h2 class="events-heading">最近の<br>活動</h2>
+        </div>
+        <div class="events-list" id="eventsList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Message -->
+  <section id="message" class="message-section">
+    <div class="container reveal">
+      <span class="m-script">MESSAGE</span>
+      <h2 class="m-copy">
+        問いを立て、解を創り、<br>
+        世界を<span class="m-accent">前進させる</span>。
+      </h2>
+      <div class="m-detail">
+        <p style="font-weight: 900; color: var(--wise-blue); font-size: 1.7rem; margin-bottom: 60px; letter-spacing: 0.25em;">
+          Think Sharp. Act Bold.
+        </p>
+        <p>
+          WISEが求めるのは、答えを探す人ではなく、<strong style="color: var(--wise-navy); font-weight: 700;">問いそのものを設計できる人</strong>です。<br><br>
+          変化を恐れず、複雑な課題に知性と情熱でぶつかり続ける。<br>
+          そんな少数精鋭のチームと共に、社会に本物の価値を生み出しましょう。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WISE Acronym -->
+  <section class="acronym-section">
+    <div class="acronym-grid">
+
+      <div class="acronym-item reveal">
+        <span class="acronym-letter">W</span>
+        <span class="acronym-index">W —</span>
+        <span class="acronym-word"><em>W</em>EBY</span>
+        <p class="acronym-desc">WISEはWEBYのグループ組織として生まれた。WEBYの事業基盤・クライアントネットワーク・実務ノウハウを活かしながら、独立した組織として機能する。</p>
+      </div>
+
+      <div class="acronym-item reveal" style="transition-delay:0.1s;">
+        <span class="acronym-letter">I</span>
+        <span class="acronym-index">I —</span>
+        <span class="acronym-word"><em>I</em>nternship</span>
+        <p class="acronym-desc">学生が主体となって実務に関わるインターンシッププログラム。「ガクチカ作り」ではなく、本物の成果にコミットする実践の場を提供する。</p>
+      </div>
+
+      <div class="acronym-item reveal" style="transition-delay:0.2s;">
+        <span class="acronym-letter">S</span>
+        <span class="acronym-index">S —</span>
+        <span class="acronym-word"><em>S</em>elf-driving</span>
+        <p class="acronym-desc">指示を待つのではなく、自ら課題を定義し、動き、改善し続ける。自走できる人材を育てることがWISEの核心にある。</p>
+      </div>
+
+      <div class="acronym-item reveal" style="transition-delay:0.3s;">
+        <span class="acronym-letter">E</span>
+        <span class="acronym-index">E —</span>
+        <span class="acronym-word"><em>E</em>xperience</span>
+        <p class="acronym-desc">学んだことを実務で試し、失敗から学び、成果を積み上げる。机上の知識ではなく、現場での経験こそが人を変える。</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About: WISE Organization -->
+  <section id="about" class="about-section">
+    <div class="container reveal">
+      <div style="text-align: center;">
+        <span class="m-script">ORGANIZATION</span>
+        <h2 style="font-size: 3.4rem; font-weight: 900; color: var(--wise-navy); margin-top: 12px;">組織概要</h2>
+      </div>
+
+      <!-- Lead -->
+      <div class="reveal" style="margin-top: 80px; max-width: 900px; margin-left: auto; margin-right: auto; text-align: center; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray);">
+        <p style="font-size: 1.45rem; font-weight: 700; line-height: 2; color: var(--wise-navy); letter-spacing: 0.04em;">
+          WISEは、学生人材を活用して企業の業務を内製化し、<br>
+          そこから蓄積したノウハウをもとに<br>
+          外部収益へと展開していく事業開発組織です。
+        </p>
+      </div>
+
+      <!-- Origin -->
+      <div class="reveal" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray); align-items: start;">
+        <div>
+          <span class="about-col-badge">ORIGIN</span>
+          <div style="font-size: 1.6rem; font-weight: 900; color: var(--wise-navy); line-height: 1.3; font-family: var(--font-en);">How<br>We<br>Started</div>
+        </div>
+        <div>
+          <p style="font-size: 1rem; color: var(--text-gray); line-height: 2.4;">
+            もともとは、WEBYが外部に委託していた営業やマーケティング業務を、学生主体で内製化するところからスタートしました。これにより、コストの最適化だけでなく、実務ベースのナレッジを組織内に蓄積することを目的としていました。
+          </p>
+        </div>
+      </div>
+
+      <!-- Now -->
+      <div class="reveal" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray); align-items: start;">
+        <div>
+          <span class="about-col-badge">CURRENT PHASE</span>
+          <div style="font-size: 1.6rem; font-weight: 900; color: var(--wise-navy); line-height: 1.3; font-family: var(--font-en);">Year<br>Two</div>
+        </div>
+        <div>
+          <p style="font-size: 1rem; color: var(--text-gray); line-height: 2.4; margin-bottom: 32px;">
+            現在はその2年目のフェーズにあたり、内製化した業務の再現性を高めながら、組織としての機能を拡張しています。セールス・マーケティングといった既存の業務に加えて、今年からはコーポレート部門を立ち上げ、人事やSNS運用、イベント企画など、組織そのものを成長させる機能も内製化しています。
+          </p>
+          <p style="font-size: 1rem; color: var(--text-gray); line-height: 2.4;">
+            また、IT・AI領域にも注力しており、業務効率化だけでなく、将来的なプロダクト化や新規事業創出を見据えた開発も進めています。<strong style="color: var(--wise-navy); font-weight: 700;">WISE初のサービスも現在構想中</strong>です。
+          </p>
+        </div>
+      </div>
+
+      <!-- Vision -->
+      <div class="reveal" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; align-items: start;">
+        <div>
+          <span class="about-col-badge">VISION</span>
+          <div style="font-size: 1.6rem; font-weight: 900; color: var(--wise-navy); line-height: 1.3; font-family: var(--font-en);">Where<br>We're<br>Going</div>
+        </div>
+        <div>
+          <p style="font-size: 1rem; color: var(--text-gray); line-height: 2.4;">
+            「学生でも再現性高く成果を出せる仕組み」と「AIを組み合わせた業務モデル」を外部企業にも提供することで、内製化組織から外販型のビジネスへと展開し、継続的に粗利を生み出す事業へとスケールさせていくことを目指しています。
+          </p>
+          <div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 10px;">
+            <span class="about-tag">SALES</span>
+            <span class="about-tag">MARKETING</span>
+            <span class="about-tag">CORPORATE</span>
+            <span class="about-tag">IT / AI</span>
+            <span class="about-tag">NEW BUSINESS</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="facility" class="gallery-section">
+    <div class="gallery-header container reveal">
+      <span class="m-script">ENVIRONMENT</span>
+      <h2 style="font-size: 3.6rem; font-weight: 900; letter-spacing: 0.1em; color: var(--wise-navy);">働く環境</h2>
+    </div>
+    <div class="gallery-full reveal">
+      <div class="gallery-item">
+        <img src="./untitled%20folder/facility%20photos/サブ２.png" alt="オフィスロビー">
+        <div class="g-label">
+          <span class="g-loc">TOKYO / 01</span>
+          <h3 class="g-title">LOBBY</h3>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="./untitled%20folder/facility%20photos/２%20(1).png" alt="クリエイティブスペース">
+        <div class="g-label">
+          <span class="g-loc">TOKYO / 02</span>
+          <h3 class="g-title">CREATIVE SPACE</h3>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="./untitled%20folder/facility%20photos/３.png" alt="ミーティングルーム">
+        <div class="g-label">
+          <span class="g-loc">TOKYO / 03</span>
+          <h3 class="g-title">MEETING ROOM</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business -->
+  <!-- Training -->
+  <section class="training-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom: 70px; position:relative; z-index:1;">
+        <span class="m-script">TRAINING</span>
+        <h2 style="font-size:3.2rem; font-weight:700; color:var(--wise-navy); margin-top:12px;">
+          未経験でも、<em style="font-style:normal; color:var(--wise-accent);">確実に</em>成長できる。研修制度。
+        </h2>
+        <p style="font-size:0.95rem; color:#888; margin-top:16px; line-height:1.9;">
+          入社研修期間は約<strong style="color:var(--wise-navy);">3ヶ月間</strong>。個人の学習状況に合わせた柔軟なカリキュラムで、<br>先輩社員のメンタリングを受けながら確実にビジネスの基礎力を積み上げます。
+        </p>
+      </div>
+
+      <!-- 研修フロー -->
+      <div class="training-flow reveal">
+        <div class="training-flow-item">
+          <div class="training-flow-card">
+            <span class="training-flow-phase">MONTH 01</span>
+            <span class="training-flow-month">1ヶ月目</span>
+            <div class="training-flow-title">基礎理解｜WISEを理解する</div>
+            <p class="training-flow-desc">事業・業界・価値観を徹底的にインプット。WISEで働くための思考の土台を構築。</p>
+          </div>
+        </div>
+        <div class="training-flow-item">
+          <div class="training-flow-card">
+            <span class="training-flow-phase">MONTH 02</span>
+            <span class="training-flow-month">2ヶ月目</span>
+            <div class="training-flow-title">実務理解｜現場で考える力をつける</div>
+            <p class="training-flow-desc">OJTで実践経験を積みながら、仮説思考・構造化・提案力を磨く。</p>
+          </div>
+        </div>
+        <div class="training-flow-item">
+          <div class="training-flow-card">
+            <span class="training-flow-phase">MONTH 03</span>
+            <span class="training-flow-month">3ヶ月目</span>
+            <div class="training-flow-title">自立準備｜独り立ちへの助走</div>
+            <p class="training-flow-desc">自分で課題を定義し解決まで完結させる力を育成。研修後は即戦力として自走。</p>
+          </div>
+        </div>
+        <div class="training-flow-item">
+          <div class="training-flow-card">
+            <span class="training-flow-phase">AFTER</span>
+            <span class="training-flow-month">自走</span>
+            <div class="training-flow-title">プロフェッショナルへ</div>
+            <p class="training-flow-desc">担当プロジェクトを持ち、クライアントに直接価値を届ける。成果が可視化される。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="training-inner reveal">
+        <div class="training-text">
+          <div class="training-step">
+            <span class="training-step-num">01</span>
+            <div>
+              <div class="training-step-title">基礎理解｜WISEを理解する</div>
+              <p class="training-step-desc">入社後1ヶ月間は、WISEの事業・業界・価値観を徹底的に学びます。コンサルティングの思考フレームワークから、クライアントへの向き合い方まで、WISEらしいプロフェッショナルの土台を作ります。</p>
+            </div>
+          </div>
+          <div class="training-step">
+            <span class="training-step-num">02</span>
+            <div>
+              <div class="training-step-title">実務理解｜現場で考える力をつける</div>
+              <p class="training-step-desc">座学とロールプレイで基礎を固めた後、OJTで実案件に関わります。仮説を立て、検証し、提案へ落とし込む──思考のサイクルを現場で実践し、真のビジネス力を身につけます。</p>
+            </div>
+          </div>
+          <div class="training-step">
+            <span class="training-step-num">03</span>
+            <div>
+              <div class="training-step-title">自立準備｜独り立ちへの助走</div>
+              <p class="training-step-desc">課題の発見から解決策の実行まで、自分で完結させる経験を積みます。先輩のフィードバックを受けながら、研修終了後にプロフェッショナルとして自走できる状態を目指します。</p>
+            </div>
+          </div>
+          <p style="font-size:0.82rem; color:#aaa; line-height:1.9; margin-top:24px; padding-top:24px; border-top:1px solid #eee;">
+            ※研修内容は個人の成長ペースや適性に応じて柔軟に調整します。先輩社員によるメンタリングを通じて、確実にレベルアップできる環境を整えています。
+          </p>
+        </div>
+        <div class="training-photos">
+          <div class="training-photo-main">
+            <img src="./untitled%20folder/intern-photos/IMG_1958.JPG" alt="研修風景">
+          </div>
+          <div class="training-photo-sub">
+            <img src="./untitled%20folder/intern-photos/intern%201.JPG" alt="インターン風景">
+          </div>
+          <div class="training-photo-sub2">
+            <img src="./untitled%20folder/intern-photos/intern%202.JPG" alt="インターン風景">
+          </div>
+          <div class="training-photo-sub3">
+            <img src="./untitled%20folder/intern-photos/IMG_1670.JPG" alt="インターン風景">
+          </div>
+          <div class="training-photo-sub4">
+            <img src="./untitled%20folder/intern-photos/IMG_2000.JPG" alt="インターン風景">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Departments -->
+  <section id="departments" class="dept-section">
+    <div class="container reveal" style="text-align:center;">
+      <span class="m-script" style="color: var(--wise-accent);">OUR DEPARTMENTS</span>
+      <h2 style="font-size: 3.6rem; font-weight: 900; color: white; margin-top: 12px;">部門紹介</h2>
+      <p style="font-size: 0.95rem; color: rgba(255,255,255,0.5); margin-top: 20px; letter-spacing: 0.05em;">
+        写真をクリックすると、各部門の詳細をご覧いただけます。
+      </p>
+    </div>
+    <div class="dept-grid container reveal">
+
+      <div class="dept-card" onclick="openDept('marketing')">
+        <img src="./untitled%20folder/member-photos/marketing.jpg" alt="マーケティング部門">
+        <div class="dept-card-overlay">
+          <span class="dept-card-en">MARKETING</span>
+          <h3 class="dept-card-name">マーケティング部門</h3>
+          <span class="dept-card-cta">詳細を見る</span>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="openDept('sales')">
+        <img src="./untitled%20folder/member-photos/sales.jpg" alt="セールス部門">
+        <div class="dept-card-overlay">
+          <span class="dept-card-en">SALES</span>
+          <h3 class="dept-card-name">セールス部門</h3>
+          <span class="dept-card-cta">詳細を見る</span>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="openDept('iTS')">
+        <img src="./untitled%20folder/member-photos/iTS.JPG" alt="ITS部門">
+        <div class="dept-card-overlay">
+          <span class="dept-card-en">ITS</span>
+          <h3 class="dept-card-name">ITS部門</h3>
+          <span class="dept-card-cta">詳細を見る</span>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="openDept('corporate')">
+        <img src="./untitled%20folder/member-photos/corporate.jpg" alt="コーポレート部門">
+        <div class="dept-card-overlay">
+          <span class="dept-card-en">CORPORATE</span>
+          <h3 class="dept-card-name">コーポレート部門</h3>
+          <span class="dept-card-cta">詳細を見る</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Department Modal -->
+  <div id="dept-modal" class="dept-modal-overlay" onclick="closeDept(event)">
+    <div class="dept-modal-box" onclick="event.stopPropagation()">
+      <button class="dept-modal-close" onclick="closeDept()">&times;</button>
+      <div class="dept-modal-hero">
+        <img id="dept-modal-img" src="" alt="">
+        <div class="dept-modal-hero-text">
+          <span class="dept-modal-en" id="dept-modal-en"></span>
+          <h2 class="dept-modal-title" id="dept-modal-name"></h2>
+        </div>
+      </div>
+      <div class="dept-modal-body">
+        <p class="dept-modal-desc" id="dept-modal-desc"></p>
+        <span class="dept-modal-h">RESPONSIBILITIES</span>
+        <div class="dept-job-list" id="dept-modal-jobs"></div>
+        <span class="dept-modal-h" style="margin-top:40px; display:block;">WHAT WE LOOK FOR</span>
+        <ul class="dept-req-list" id="dept-modal-reqs"></ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- CEO Message -->
+  <section class="ceo-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom:60px;">
+        <span class="m-script" style="color:var(--wise-accent);">REPRESENTATIVE MESSAGE</span>
+        <h2 style="font-size:3.4rem;font-weight:900;color:white;margin-top:12px;">代表メッセージ</h2>
+      </div>
+      <div class="ceo-inner reveal">
+        <div class="ceo-photo-wrap">
+          <img src="./untitled%20folder/member-photos/ceo.JPG" alt="冨樫怜">
+          <div class="ceo-photo-label">
+            <span class="ceo-photo-name">冨樫 怜</span>
+            <span class="ceo-photo-title">PROGRAM REPRESENTATIVE</span>
+          </div>
+        </div>
+        <div class="ceo-text-col">
+          <p class="ceo-quote">
+            <em>自ら行動しない限り、選択肢は増えない。</em>
+          </p>
+          <div class="ceo-body">
+            <p>私もまだ正直何かを成し遂げたわけではないので、今も将来に迷いながら進んでいる、一人の学生です。ただ、そんな私でも、組織の代表として強く感じていることがあります。それは、<strong>自ら行動しない限り、選択肢は増えないし、チャンスを掴む権利も生まれない</strong>ということです。極論、これに関しては必ずしもビジネスである必要はないと思っています。何かに本気で向き合う経験なら何でもいい。大切なのは、頭の中で考え続けることではなく、手足を動かしてみることだと思います。</p>
+            <p>そこで、今インターンを検討している方に対しては、正直、迷っているなら一度飛び込んでみるのも一つの選択肢だと思っています。WISEは、いわゆる「ガクチカ作り」のための場ではありません。<strong>本気で成果に向き合い、責任を持ち、挑戦して失敗して、また挑戦する</strong>——そうした経験を積める環境だと思っています。できるかどうかではなく、やるかやらないか。その一歩を踏み出す場所の一つとして、WISEがあれば嬉しいです。</p>
+          </div>
+          <div class="ceo-sig">
+            <div class="ceo-sig-line"></div>
+            <span class="ceo-sig-name">REI TOGASHI — REPRESENTATIVE, WISE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Career Track -->
+  <section class="career-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center; position:relative; z-index:1;">
+        <span class="m-script" style="color:var(--wise-accent);">TRACK RECORD</span>
+        <h2 style="font-size:3.4rem;font-weight:900;color:white;margin-top:12px;">OBの実績</h2>
+        <p style="font-size:0.88rem;color:rgba(255,255,255,0.4);margin-top:16px;letter-spacing:0.05em;">WISEを経験したインターン生が活躍する企業・出身大学</p>
+      </div>
+
+      <div class="reveal">
+
+        <!-- 内定先 -->
+        <span class="career-col-label">CAREER DESTINATIONS</span>
+        <p style="font-size:0.9rem;color:rgba(255,255,255,0.45);margin-bottom:32px;line-height:1.8;">卒業後の主な内定・就職先</p>
+        <div class="offer-grid" style="margin-bottom:60px;">
+          <span class="offer-chip">BCG</span>
+          <span class="offer-chip">Citigroup</span>
+          <span class="offer-chip">三菱商事</span>
+          <span class="offer-chip">三井物産</span>
+          <span class="offer-chip">SAP</span>
+          <span class="offer-chip">P&amp;G</span>
+          <span class="offer-chip">ベイカレント</span>
+          <span class="offer-chip">アクセンチュア</span>
+          <span class="offer-chip">三井住友銀行</span>
+          <span class="offer-chip">ソフトバンク</span>
+          <span class="offer-chip">サイバーエージェント</span>
+          <span class="offer-chip">楽天グループ</span>
+          <span class="offer-chip">Morgan Stanley</span>
+          <span class="offer-chip">野村證券</span>
+          <span class="offer-chip">みずほFG</span>
+          <span class="offer-chip">東京海上HD</span>
+          <span class="offer-chip">リクルート</span>
+          <span class="offer-chip">Sony</span>
+          <span class="offer-chip">富士通</span>
+          <span class="offer-chip">NTTデータ</span>
+          <span class="offer-chip">デロイト</span>
+          <span class="offer-chip">KPMG</span>
+          <span class="offer-chip">電通</span>
+          <span class="offer-chip">日本IBM</span>
+          <span class="offer-chip">LINE Yahoo</span>
+        </div>
+
+        <!-- 出身大学 -->
+        <span class="career-col-label">UNIVERSITIES</span>
+        <p style="font-size:0.9rem;color:rgba(255,255,255,0.45);margin-bottom:32px;margin-top:8px;line-height:1.8;">インターン生の出身大学</p>
+        <div class="uni-cloud">
+          <span class="uni-tag top">東京大学</span>
+          <span class="uni-tag top">早稲田大学</span>
+          <span class="uni-tag top">慶應義塾大学</span>
+          <span class="uni-tag top">一橋大学</span>
+          <span class="uni-tag top">東京工業大学</span>
+          <span class="uni-tag top">国際基督教大学</span>
+          <span class="uni-tag">上智大学</span>
+          <span class="uni-tag">東京外国語大学</span>
+          <span class="uni-tag">千葉大学</span>
+          <span class="uni-tag">東京理科大学</span>
+          <span class="uni-tag">明治大学</span>
+          <span class="uni-tag">青山学院大学</span>
+          <span class="uni-tag">立教大学</span>
+          <span class="uni-tag">中央大学</span>
+          <span class="uni-tag">法政大学</span>
+          <span class="uni-tag">学習院大学</span>
+          <span class="uni-tag">東京農業大学</span>
+          <span class="uni-tag">お茶の水女子大学</span>
+          <span class="uni-tag">日本大学</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Journal -->
+  <section id="journal" class="journal-section">
+    <div class="container">
+      <div class="reveal" style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 32px;">
+        <div>
+          <span class="m-script" style="text-align:left;">JOURNAL</span>
+          <h2 style="font-size: 3.4rem; font-weight: 900; color: var(--wise-navy); margin-top: 12px;">活動記録</h2>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-gray); padding-bottom: 8px;">← スワイプして見る →</p>
+      </div>
+      <div class="journal-filters reveal" id="journalFilters">
+        <button class="j-filter active" data-filter="ALL">ALL</button>
+        <button class="j-filter" data-filter="EVENT">EVENT</button>
+        <button class="j-filter" data-filter="INTERN">INTERN</button>
+        <button class="j-filter" data-filter="WORK">WORK</button>
+        <button class="j-filter" data-filter="NEWS">NEWS</button>
+        <button class="j-filter" data-filter="ALUMNI">ALUMNI</button>
+      </div>
+      <div class="journal-carousel-wrap reveal">
+        <div class="journal-carousel-track-outer" id="journalOuter">
+          <div class="journal-carousel-track" id="journalTrack"></div>
+        </div>
+        <div class="journal-nav">
+          <span class="journal-nav-count" id="journalCount">1 / 6</span>
+          <button class="journal-nav-btn" id="journalPrev">←</button>
+          <button class="journal-nav-btn" id="journalNext">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selection Flow -->
+  <section class="flow-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom:60px;">
+        <span class="m-script">SELECTION FLOW</span>
+        <h2 style="font-size:3.4rem;font-weight:900;color:var(--wise-navy);margin-top:12px;">選考フロー</h2>
+      </div>
+
+      <!-- 通常選考 -->
+      <div class="reveal">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+          <span style="font-size:1.1rem; font-weight:900; color:var(--wise-navy); letter-spacing:0.05em;">通常選考</span>
+          <span class="flow-label" style="margin-bottom:0;">STANDARD FLOW</span>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 01</span>
+              <span class="flow-step-label">エントリー</span>
+              <span class="flow-step-sub">ENTRY</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 02</span>
+              <span class="flow-step-label">書類選考</span>
+              <span class="flow-step-sub">DOCUMENT</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 03</span>
+              <span class="flow-step-label">1次面接</span>
+              <span class="flow-step-sub">1ST INTERVIEW</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 04</span>
+              <span class="flow-step-label">2次面接</span>
+              <span class="flow-step-sub">2ND INTERVIEW</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 05</span>
+              <span class="flow-step-label">1-DAY<br>インターン</span>
+              <span class="flow-step-sub">TRIAL DAY</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card" style="background:var(--wise-navy); border-color:var(--wise-navy);">
+              <span class="flow-step-num">STEP 06</span>
+              <span class="flow-step-label" style="color:white;">内定</span>
+              <span class="flow-step-sub" style="color:rgba(255,255,255,0.4);">OFFER</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 特別選考（HP応募） -->
+      <div class="reveal" style="margin-top:48px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+          <span style="font-size:1.1rem; font-weight:900; color:var(--wise-navy); letter-spacing:0.05em;">特別選考</span>
+          <span class="flow-label" style="margin-bottom:0; color:var(--wise-accent);">HP APPLY ONLY — 書類選考スキップ</span>
+          <span style="background:var(--wise-accent); color:white; font-size:0.6rem; font-weight:700; letter-spacing:0.1em; padding:4px 12px; border-radius:20px;">このサイトから応募で適用</span>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 01</span>
+              <span class="flow-step-label">エントリー</span>
+              <span class="flow-step-sub">ENTRY</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card" style="background:#F1F5F9; border:2px dashed #CBD5E1; opacity:0.5; position:relative;">
+              <span style="position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--wise-accent); color:white; font-size:0.5rem; font-weight:700; letter-spacing:0.15em; padding:2px 10px; border-radius:20px; white-space:nowrap;">SKIP</span>
+              <span class="flow-step-num" style="text-decoration:line-through;">STEP 02</span>
+              <span class="flow-step-label" style="text-decoration:line-through; color:var(--wise-navy);">書類選考</span>
+              <span class="flow-step-sub">DOCUMENT</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 02</span>
+              <span class="flow-step-label">1次面接</span>
+              <span class="flow-step-sub">1ST INTERVIEW</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 03</span>
+              <span class="flow-step-label">2次面接</span>
+              <span class="flow-step-sub">2ND INTERVIEW</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card">
+              <span class="flow-step-num">STEP 04</span>
+              <span class="flow-step-label">1-DAY<br>インターン</span>
+              <span class="flow-step-sub">TRIAL DAY</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-card" style="background:var(--wise-navy); border-color:var(--wise-navy);">
+              <span class="flow-step-num">STEP 05</span>
+              <span class="flow-step-label" style="color:white;">内定</span>
+              <span class="flow-step-sub" style="color:rgba(255,255,255,0.4);">OFFER</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recruit -->
+  <section id="recruit" class="recruit-section">
+    <div class="container reveal">
+      <div style="text-align:center; margin-bottom: 0;">
+        <span class="m-script">RECRUIT</span>
+        <h2 style="font-size: 3.4rem; font-weight: 700; margin-top: 12px; color: var(--wise-navy);">募集要項</h2>
+      </div>
+      <div class="recruit-wrap reveal">
+        <div class="r-row">
+          <div class="r-label">職種</div>
+          <div class="r-data">マーケター / 営業 / メディア企画 / 人事 / エンジニア / 経営企画</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">雇用形態</div>
+          <div class="r-data">インターン</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">勤務地</div>
+          <div class="r-data">本社　※リモートワーク不可</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">勤務時間</div>
+          <div class="r-data">9:00〜18:00（休憩1時間）　※フレックスタイム制度あり</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">時給</div>
+          <div class="r-data">1,240円〜1,800円</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">休日・休暇</div>
+          <div class="r-data">年間120日以上、完全週休2日（土日祝）<br>年末年始・夏季・慶弔・有給（入社時10日付与）</div>
+        </div>
+        <div class="r-row">
+          <div class="r-label">手当</div>
+          <div class="r-data">通勤交通費（月15,000円まで支給）　書籍購入補助　資格取得支援</div>
+        </div>
+
+        <div class="r-row r-wide">
+          <div class="r-label">選考フロー</div>
+          <div class="r-data">【STEP1】エントリー受付　【STEP2】書類選考　【STEP3】1次面接　【STEP4】2次面接　【STEP5】1-DAYインターン　【STEP6】内定</div>
+        </div>
+        <div class="r-row r-wide" id="contact">
+          <div class="r-label">お問い合わせ</div>
+          <div class="r-data">株式会社WISE　採用担当<br>EMAIL：wiserecruit.intern@gmail.com</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container reveal">
+      <div style="text-align: center; position: relative; z-index: 1;">
+        <span class="m-script">FAQ</span>
+        <h2 style="font-size: 3.4rem; font-weight: 700; color: var(--wise-navy);">よくあるご質問</h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">どんな学生が活躍できますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">学部・専攻・経験は問いません。「なぜ？」と問い続ける知的好奇心と、課題に向き合い続ける粘り強さがあれば活躍できます。文系・理系問わず、多様なバックグラウンドのメンバーが在籍しています。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">未経験でもコンサルタントやエンジニアになれますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">はい。WISEでは3ヶ月間の研修プログラムで基礎から実務まで体系的に学べます。実際に未経験から入社し、現在プロジェクトリーダーとして活躍しているメンバーも多くいます。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">入社後の配属はどのように決まりますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">研修期間中のパフォーマンスと本人の希望・適性を総合的に判断して配属を決定します。コンサルタント・エンジニア・マーケターの3コースから、入社後も希望に応じて転換できる柔軟な制度があります。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">面接では何を重視していますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">思考の深さと、課題への向き合い方を重視します。正解を持っているかではなく、「なぜそう考えるのか」「どう乗り越えようとしたのか」を聞かせてください。スペックより、あなた自身の言葉を聞かせてください。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">社内の雰囲気はどんな感じですか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">少数精鋭のため、意見が通りやすくフラットな文化があります。職位に関わらず議論を歓迎し、ベストな答えを追い求める雰囲気です。一方でスピードと成果へのコミットメントは高く、互いに刺激し合いながら成長できる環境です。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-mark">Q.</span>
+            <span class="faq-q-text">リモートワークはできますか？</span>
+            <span class="faq-icon"></span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <span class="faq-a-mark">A.</span>
+              <p class="faq-a-text">研修期間はオフィス出社を基本としていますが、配属後はプロジェクトの状況に応じてリモートワークを活用できます。チームとのコミュニケーションを大切にしながら、柔軟な働き方を実現しています。</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Instagram -->
+  <section style="background:#F8FAFC; padding:120px 0;">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom:60px;">
+        <span class="m-script">FOLLOW US</span>
+        <h2 style="font-size:3rem;font-weight:900;color:var(--wise-navy);margin-top:12px;">SNS</h2>
+        <div style="display:flex;align-items:center;justify-content:center;gap:32px;margin-top:28px;flex-wrap:wrap;">
+          <a href="https://www.instagram.com/wise_intern/" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-en);font-size:0.78rem;letter-spacing:0.3em;color:var(--wise-navy);text-decoration:none;padding:14px 28px;border:1px solid var(--line-gray);transition:all 0.3s;"
+             onmouseover="this.style.background='#E1306C';this.style.color='white';this.style.borderColor='#E1306C'"
+             onmouseout="this.style.background='';this.style.color='var(--wise-navy)';this.style.borderColor='var(--line-gray)'">
+            <i class="fa-brands fa-instagram" style="font-size:1.1rem;"></i>
+            @wise_intern
+          </a>
+          <a href="https://www.linkedin.com/company/wise-program/?viewAsMember=true" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-en);font-size:0.78rem;letter-spacing:0.3em;color:var(--wise-navy);text-decoration:none;padding:14px 28px;border:1px solid var(--line-gray);transition:all 0.3s;"
+             onmouseover="this.style.background='#0A66C2';this.style.color='white';this.style.borderColor='#0A66C2'"
+             onmouseout="this.style.background='';this.style.color='var(--wise-navy)';this.style.borderColor='var(--line-gray)'">
+            <i class="fa-brands fa-linkedin" style="font-size:1.1rem;"></i>
+            WISE PROGRAM
+          </a>
+        </div>
+      </div>
+      <!-- Instagram embed feed -->
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;overflow:hidden;align-items:start;">
+        <!-- 実際の投稿が入ったら埋め込みタグに差し替えてください -->
+        <!-- 仮プレースホルダー -->
+        <a href="https://www.instagram.com/wise_intern/" target="_blank" rel="noopener"
+           style="display:block;text-decoration:none;overflow:hidden;">
+          <img src="./instagram%20photos/Screenshot%202026-04-16%20at%2011.23.43.png" alt=""
+               style="width:100%;height:auto;display:block;opacity:0.9;transition:opacity 0.3s;"
+               onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+        </a>
+        <a href="https://www.instagram.com/wise_intern/" target="_blank" rel="noopener"
+           style="display:block;text-decoration:none;overflow:hidden;">
+          <img src="./instagram%20photos/Screenshot%202026-04-16%20at%2011.24.17.png" alt=""
+               style="width:100%;height:auto;display:block;opacity:0.9;transition:opacity 0.3s;"
+               onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+        </a>
+        <a href="https://www.instagram.com/wise_intern/" target="_blank" rel="noopener"
+           style="display:block;text-decoration:none;overflow:hidden;">
+          <img src="./instagram%20photos/Screenshot%202026-04-16%20at%2011.24.28.png" alt=""
+               style="width:100%;height:auto;display:block;opacity:0.9;transition:opacity 0.3s;"
+               onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+        </a>
+        <a href="https://www.instagram.com/wise_intern/" target="_blank" rel="noopener"
+           style="display:block;text-decoration:none;overflow:hidden;">
+          <img src="./instagram%20photos/Screenshot%202026-04-16%20at%2011.24.43.png" alt=""
+               style="width:100%;height:auto;display:block;opacity:0.9;transition:opacity 0.3s;"
+               onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+        </a>
+      </div>
+      <div class="reveal" style="text-align:center;margin-top:48px;">
+        <a href="https://www.instagram.com/wise_intern/" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line-gray);padding:16px 40px;font-family:var(--font-en);font-size:0.72rem;letter-spacing:0.35em;color:var(--wise-navy);text-decoration:none;transition:all 0.3s;"
+           onmouseover="this.style.background='var(--wise-navy)';this.style.color='white';this.style.borderColor='var(--wise-navy)'"
+           onmouseout="this.style.background='';this.style.color='var(--wise-navy)';this.style.borderColor='var(--line-gray)'">
+          <i class="fa-brands fa-instagram"></i>
+          VIEW MORE ON INSTAGRAM
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer / Entry -->
+  <footer id="entry">
+    <div class="container">
+      <div class="footer-top reveal">
+        <div>
+          <span class="footer-cta-label">ENTRY 2027</span>
+          <h2 class="footer-cta-title">あなたの知性を、<br>WISEで解き放て。</h2>
+          <p class="footer-cta-sub">
+            選考に関するご質問・エントリーはこちらから。<br>
+            あなたのチャレンジを、チーム全員で待っています。
+          </p>
+          <a href="https://weby.app.n8n.cloud/form/3286f067-5ae9-454c-965c-405a702493ee" target="_blank" rel="noopener" class="footer-entry-btn">
+            エントリーする →
+          </a>
+        </div>
+      </div>
+      <div class="f-bottom">
+        <span class="f-logo">WISE</span>
+        <div style="display:flex;align-items:center;gap:20px;">
+          <a href="https://www.instagram.com/wise_intern/" target="_blank" rel="noopener"
+             style="color:rgba(255,255,255,0.4);font-size:1.2rem;text-decoration:none;transition:color 0.3s;"
+             onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/wise-program/?viewAsMember=true" target="_blank" rel="noopener"
+             style="color:rgba(255,255,255,0.4);font-size:1.2rem;text-decoration:none;transition:color 0.3s;"
+             onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+        </div>
+        <p class="f-copy">&copy; 2026 WISE Inc. All rights reserved.</p>
+        <a href="javascript:void(0)" onclick="adminLogin()" style="color:rgba(255,255,255,0.08);font-size:0.65rem;letter-spacing:0.15em;text-decoration:none;font-family:var(--font-en);transition:color 0.3s;" onmouseover="this.style.color='rgba(255,255,255,0.3)'" onmouseout="this.style.color='rgba(255,255,255,0.08)'">ADMIN</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <script src="departments.js"></script>
+  <script>
+    lucide.createIcons();
+
+    // ── Infographic animation ────────────────────────────────
+    const infoObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        // vertical dept bars
+        e.target.querySelectorAll('.dept-col-bar').forEach(b => b.classList.add('animated'));
+        // grade strip segments
+        e.target.querySelectorAll('.grade-strip-seg').forEach(b => b.classList.add('animated'));
+        // gender bar
+        const gb = document.getElementById('genderBar');
+        if (gb) gb.classList.add('animated');
+        infoObs.unobserve(e.target);
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.infographic-section').forEach(el => infoObs.observe(el));
+
+    // ── Shared Activity Data ──────────────────────────────────
+    const ACTIVITIES = [
+      {
+        date: '2026.03.28', tag: 'EVENT',
+        title: 'WISE × 〇〇大学 キャリアセミナーを開催しました',
+        excerpt: '〇〇大学にてWISEのメンバーが登壇し、実務経験と成長について学生と対話しました。',
+        img: './untitled%20folder/intern-photos/IMG_1958.JPG'
+      },
+      {
+        date: '2026.03.15', tag: 'INTERN',
+        title: 'インターン生がマーケティング施策の成果発表を行いました',
+        excerpt: 'マーケティング部門のインターン生が3ヶ月間の取り組みをメンバー全員の前でプレゼンしました。',
+        img: './untitled%20folder/intern-photos/intern%201.JPG'
+      },
+      {
+        date: '2026.02.20', tag: 'EVENT',
+        title: '社内交流イベント「WISE Meetup #03」を実施しました',
+        excerpt: '部門を超えたメンバーが集まり、プロジェクトのシェアやフリーディスカッションを行いました。',
+        img: './untitled%20folder/intern-photos/intern%202.JPG'
+      },
+      {
+        date: '2026.01.30', tag: 'NEWS',
+        title: '2027年卒インターンシップ募集を開始しました',
+        excerpt: '今年度のインターンシップ生の募集を正式に開始。説明会の日程など詳細はこちらから。',
+        img: './untitled%20folder/event-photos/Copy%20of%20L1002568%20(1).jpg'
+      },
+      {
+        date: '2025.12.10', tag: 'WORK',
+        title: 'マーケティング部門、SEO施策で流入数2.8倍を達成。',
+        excerpt: '4ヶ月間のPDCAサイクルの結果、自社メディアの月間オーガニック流入が大幅に増加しました。',
+        img: './untitled%20folder/member-photos/marketing.jpg'
+      },
+      {
+        date: '2025.11.05', tag: 'ITS',
+        title: 'ITS部門、社内業務自動化プロジェクトを始動。',
+        excerpt: '定型業務のAI化に向けたプロトタイプ開発をスタート。将来的な外部展開を見据えた設計を進めています。',
+        img: './untitled%20folder/member-photos/iTS.JPG'
+      },
+      {
+        date: '2025.10.01', tag: 'ALUMNI',
+        title: '卒業生インタビュー｜BCG内定　T.K.さんの軌跡',
+        excerpt: 'WISEでの実務経験がコンサルへの道を拓いた。インターン時代に培った思考力と、自走する力について語ってもらいました。',
+        img: './untitled%20folder/member-photos/sales.jpg'
+      },
+      {
+        date: '2025.09.15', tag: 'ALUMNI',
+        title: '卒業生インタビュー｜三菱商事内定　A.M.さんが語るWISE',
+        excerpt: '「ここで働いた経験が、面接での一番の武器になった」。商社志望だった彼女がWISEで得たものとは。',
+        img: './untitled%20folder/member-photos/corporate.jpg'
+      },
+    ];
+
+    // Merge admin articles from localStorage
+    try {
+      const stored = JSON.parse(localStorage.getItem('wise_articles')) || [];
+      stored.forEach(a => ACTIVITIES.unshift(a));
+    } catch(e) {}
+
+    // Render Recent Events (top 4)
+    const eventsList = document.getElementById('eventsList');
+    if (eventsList) {
+      ACTIVITIES.slice(0, 4).forEach(a => {
+        eventsList.innerHTML += `
+          <a href="#journal" class="event-item">
+            <span class="event-date">${a.date}</span>
+            <span class="event-tag">${a.tag}</span>
+            <span class="event-title">${a.title}</span>
+          </a>`;
+      });
+    }
+
+    // Journal Cards rendered via renderJournal() after filters init
+
+    // ── Journal Filter ────────────────────────────────────────
+    function renderJournal(filter) {
+      const filtered = filter === 'ALL' ? ACTIVITIES : ACTIVITIES.filter(a => a.tag === filter);
+      const track = document.getElementById('journalTrack');
+      track.innerHTML = '';
+      filtered.forEach(a => {
+        track.innerHTML += `
+          <a href="#" class="journal-card">
+            <div class="journal-card-img"><img src="${a.img}" alt=""></div>
+            <div class="journal-card-body">
+              <div class="journal-card-meta">
+                <span class="journal-card-date">${a.date}</span>
+                <span class="journal-card-tag">${a.tag}</span>
+              </div>
+              <h3 class="journal-card-title">${a.title}</h3>
+              <p class="journal-card-excerpt">${a.excerpt}</p>
+              <span class="journal-card-arrow">READ MORE →</span>
+            </div>
+          </a>`;
+      });
+      const countEl = document.getElementById('journalCount');
+      if (countEl) countEl.textContent = `1 / ${filtered.length}`;
+      // reset carousel position
+      const t = document.getElementById('journalTrack');
+      if (t) t.style.transform = 'translateX(0)';
+    }
+
+    document.querySelectorAll('.j-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.j-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderJournal(btn.dataset.filter);
+      });
+    });
+    renderJournal('ALL');
+
+    // ── Journal Carousel ──────────────────────────────────────
+    (function() {
+      const outer   = document.getElementById('journalOuter');
+      const track   = document.getElementById('journalTrack');
+      const prev    = document.getElementById('journalPrev');
+      const next    = document.getElementById('journalNext');
+      const countEl = document.getElementById('journalCount');
+      const cards   = track.querySelectorAll('.journal-card');
+      const total   = cards.length;
+      if (countEl) countEl.textContent = `1 / ${total}`;
+      const CARD_W  = 360 + 24; // card width + gap
+      let current   = 0;
+
+      function goTo(n) {
+        const max = total - Math.floor(outer.offsetWidth / CARD_W);
+        current = Math.max(0, Math.min(n, max));
+        track.style.transform = `translateX(-${current * CARD_W}px)`;
+        countEl.textContent = `${current + 1} / ${total}`;
+      }
+
+      prev.addEventListener('click', () => goTo(current - 1));
+      next.addEventListener('click', () => goTo(current + 1));
+
+      // drag / swipe
+      let startX = 0, dragging = false, startOffset = 0;
+
+      outer.addEventListener('mousedown', e => {
+        dragging = true; startX = e.clientX;
+        startOffset = current * CARD_W;
+        track.style.transition = 'none';
+      });
+      outer.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        track.style.transform = `translateX(-${startOffset - (e.clientX - startX)}px)`;
+      });
+      outer.addEventListener('mouseup', e => {
+        if (!dragging) return;
+        dragging = false;
+        track.style.transition = '';
+        const diff = e.clientX - startX;
+        if (Math.abs(diff) > 60) goTo(diff < 0 ? current + 1 : current - 1);
+        else goTo(current);
+      });
+      outer.addEventListener('mouseleave', () => { if (dragging) { dragging = false; track.style.transition = ''; goTo(current); } });
+
+      outer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startOffset = current * CARD_W; track.style.transition = 'none'; }, {passive:true});
+      outer.addEventListener('touchmove',  e => { track.style.transform = `translateX(-${startOffset - (e.touches[0].clientX - startX)}px)`; }, {passive:true});
+      outer.addEventListener('touchend',   e => {
+        track.style.transition = '';
+        const diff = e.changedTouches[0].clientX - startX;
+        if (Math.abs(diff) > 60) goTo(diff < 0 ? current + 1 : current - 1);
+        else goTo(current);
+      });
+    })();
+
+    // ── Department Modal ──────────────────────────────────────
+    function openDept(key) {
+      const d = DEPARTMENTS[key];
+      if (!d) return;
+
+      document.getElementById('dept-modal-img').src  = d.photo;
+      document.getElementById('dept-modal-en').textContent   = d.en;
+      document.getElementById('dept-modal-name').textContent = d.name;
+      document.getElementById('dept-modal-desc').textContent = d.description;
+
+      const jobsEl = document.getElementById('dept-modal-jobs');
+      jobsEl.innerHTML = d.jobs.map(j =>
+        `<div class="dept-job-item">
+          <div class="dept-job-title">${j.title}</div>
+          <div class="dept-job-body">${j.body}</div>
+        </div>`
+      ).join('');
+
+      const reqsEl = document.getElementById('dept-modal-reqs');
+      reqsEl.innerHTML = d.requirements.map(r =>
+        `<li class="dept-req-item">${r}</li>`
+      ).join('');
+
+      document.getElementById('dept-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDept(e) {
+      if (e && e.target !== document.getElementById('dept-modal') && !e.target.classList.contains('dept-modal-close')) return;
+      document.getElementById('dept-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeDept({ target: document.getElementById('dept-modal') });
+        closeLightbox();
+      }
+    });
+
+    // Reveal
+    const obs = new IntersectionObserver(
+      es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(e => obs.observe(e));
+
+    // Header scroll
+    window.addEventListener('scroll', () => {
+      const h = document.getElementById('header');
+      if (window.scrollY > 80) {
+        h.classList.add('scrolled');
+        h.classList.remove('top-transparent');
+      } else {
+        h.classList.remove('scrolled');
+        h.classList.add('top-transparent');
+      }
+    });
+
+    // Gallery lightbox
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        const title = item.querySelector('.g-title')?.textContent || '';
+        const loc   = item.querySelector('.g-loc')?.textContent || '';
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox-caption').textContent = loc + '  —  ' + title;
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ESC key — lightbox (dept ESC is handled above)
+
+    // FAQ
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item   = q.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // Carousel
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const total  = slides.length;
+
+    function renderDots() {
+      document.querySelectorAll('.carousel-dots').forEach(dotsEl => {
+        dotsEl.innerHTML = '';
+        for (let i = 0; i < total; i++) {
+          const d = document.createElement('button');
+          d.className = 'carousel-dot' + (i === currentSlide ? ' active' : '');
+          d.onclick = () => goTo(i);
+          dotsEl.appendChild(d);
+        }
+      });
+    }
+
+    function goTo(n) {
+      currentSlide = (n + total) % total;
+      document.getElementById('carouselTrack').style.transform = `translateX(-${currentSlide * 100}%)`;
+      renderDots();
+    }
+
+    function moveCarousel(dir) { goTo(currentSlide + dir); }
+
+    renderDots();
+
+    function adminLogin() {
+      const pw = prompt('パスワードを入力してください');
+      if (pw === 'weby0000') {
+        window.location.href = 'admin.html';
+      } else if (pw !== null) {
+        alert('パスワードが違います');
+      }
+    }
+  </script>
+</body>
+</html>
