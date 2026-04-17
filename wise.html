@@ -235,7 +235,7 @@
 /* ── Events News ── */
     .events-section {
       background: var(--wise-navy);
-      padding: 80px 0;
+      padding: 40px 0;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
@@ -3133,12 +3133,17 @@
         <h2 style="font-size:3.4rem;font-weight:900;color:var(--wise-navy);margin-top:12px;">選考フロー</h2>
       </div>
 
-      <!-- 通常選考 -->
+      <!-- 統合選考フロー -->
+      <div class="reveal" style="margin-bottom:24px; display:flex; align-items:center; gap:24px; justify-content:center;">
+        <span style="display:flex; align-items:center; gap:8px; font-size:0.78rem; color:var(--wise-navy);">
+          <span style="display:inline-block; width:12px; height:12px; background:var(--wise-navy); border-radius:2px;"></span>通常・特別 共通
+        </span>
+        <span style="display:flex; align-items:center; gap:8px; font-size:0.78rem; color:var(--text-gray);">
+          <span style="display:inline-block; width:12px; height:12px; border:2px dashed #CBD5E1; border-radius:2px;"></span>通常のみ（特別はスキップ）
+        </span>
+        <span style="background:var(--wise-accent); color:white; font-size:0.6rem; font-weight:700; letter-spacing:0.1em; padding:4px 12px; border-radius:20px;">このサイトから応募 → 特別選考適用</span>
+      </div>
       <div class="reveal">
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
-          <span style="font-size:1.1rem; font-weight:900; color:var(--wise-navy); letter-spacing:0.05em;">通常選考</span>
-          <span class="flow-label" style="margin-bottom:0;">STANDARD FLOW</span>
-        </div>
         <div class="flow-steps">
           <div class="flow-step">
             <div class="flow-card">
@@ -3148,9 +3153,10 @@
             </div>
           </div>
           <div class="flow-step">
-            <div class="flow-card">
+            <div class="flow-card" style="background:#F8FAFC; border:2px dashed #CBD5E1; position:relative;">
+              <span style="position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:#94A3B8; color:white; font-size:0.5rem; font-weight:700; letter-spacing:0.15em; padding:2px 10px; border-radius:20px; white-space:nowrap;">特別はSKIP</span>
               <span class="flow-step-num">STEP 02</span>
-              <span class="flow-step-label">書類選考</span>
+              <span class="flow-step-label" style="color:#94A3B8;">書類選考</span>
               <span class="flow-step-sub">DOCUMENT</span>
             </div>
           </div>
@@ -3178,60 +3184,6 @@
           <div class="flow-step">
             <div class="flow-card" style="background:var(--wise-navy); border-color:var(--wise-navy);">
               <span class="flow-step-num">STEP 06</span>
-              <span class="flow-step-label" style="color:white;">内定</span>
-              <span class="flow-step-sub" style="color:rgba(255,255,255,0.4);">OFFER</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 特別選考（HP応募） -->
-      <div class="reveal" style="margin-top:48px;">
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
-          <span style="font-size:1.1rem; font-weight:900; color:var(--wise-navy); letter-spacing:0.05em;">特別選考</span>
-          <span class="flow-label" style="margin-bottom:0; color:var(--wise-accent);">HP APPLY ONLY — 書類選考スキップ</span>
-          <span style="background:var(--wise-accent); color:white; font-size:0.6rem; font-weight:700; letter-spacing:0.1em; padding:4px 12px; border-radius:20px;">このサイトから応募で適用</span>
-        </div>
-        <div class="flow-steps">
-          <div class="flow-step">
-            <div class="flow-card">
-              <span class="flow-step-num">STEP 01</span>
-              <span class="flow-step-label">エントリー</span>
-              <span class="flow-step-sub">ENTRY</span>
-            </div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-card" style="background:#F1F5F9; border:2px dashed #CBD5E1; opacity:0.5; position:relative;">
-              <span style="position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--wise-accent); color:white; font-size:0.5rem; font-weight:700; letter-spacing:0.15em; padding:2px 10px; border-radius:20px; white-space:nowrap;">SKIP</span>
-              <span class="flow-step-num" style="text-decoration:line-through;">STEP 02</span>
-              <span class="flow-step-label" style="text-decoration:line-through; color:var(--wise-navy);">書類選考</span>
-              <span class="flow-step-sub">DOCUMENT</span>
-            </div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-card">
-              <span class="flow-step-num">STEP 02</span>
-              <span class="flow-step-label">1次面接</span>
-              <span class="flow-step-sub">1ST INTERVIEW</span>
-            </div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-card">
-              <span class="flow-step-num">STEP 03</span>
-              <span class="flow-step-label">2次面接</span>
-              <span class="flow-step-sub">2ND INTERVIEW</span>
-            </div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-card">
-              <span class="flow-step-num">STEP 04</span>
-              <span class="flow-step-label">1-DAY<br>インターン</span>
-              <span class="flow-step-sub">TRIAL DAY</span>
-            </div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-card" style="background:var(--wise-navy); border-color:var(--wise-navy);">
-              <span class="flow-step-num">STEP 05</span>
               <span class="flow-step-label" style="color:white;">内定</span>
               <span class="flow-step-sub" style="color:rgba(255,255,255,0.4);">OFFER</span>
             </div>
@@ -3280,11 +3232,11 @@
 
         <div class="r-row r-wide">
           <div class="r-label">選考フロー</div>
-          <div class="r-data">【STEP1】エントリー受付　【STEP2】書類選考　【STEP3】1次面接　【STEP4】2次面接　【STEP5】1-DAYインターン　【STEP6】内定</div>
+          <div class="r-data">【STEP1】エントリー　【STEP2】書類選考（通常のみ／特別はスキップ）　【STEP3】1次面接　【STEP4】2次面接　【STEP5】1-DAYインターン　【STEP6】内定</div>
         </div>
         <div class="r-row r-wide" id="contact">
           <div class="r-label">お問い合わせ</div>
-          <div class="r-data">株式会社WISE　採用担当<br>EMAIL：wiserecruit.intern@gmail.com</div>
+          <div class="r-data">株式会社WEBY　採用担当<br>EMAIL：wiserecruit.intern@gmail.com</div>
         </div>
       </div>
     </div>
