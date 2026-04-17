@@ -205,71 +205,11 @@
       100% { transform: translateY(100%); }
     }
 
-    /* ── News Bar ── */
-    .news-bar {
-      background: var(--wise-navy);
-      overflow: hidden;
-    }
-
-    .news-bar-inner {
-      display: flex;
-      align-items: stretch;
-      max-width: 1260px;
-      margin: 0 auto;
-      padding: 0 40px;
-    }
-
-    .news-bar-label {
-      font-family: var(--font-en);
-      font-weight: 900;
-      font-size: 0.7rem;
-      letter-spacing: 0.5em;
-      color: var(--wise-accent);
-      padding: 22px 40px 22px 0;
-      border-right: 1px solid rgba(255,255,255,0.12);
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-    }
-
-    .news-list {
-      display: flex;
-      flex-direction: column;
-      padding: 16px 0 16px 40px;
-      gap: 4px;
-    }
-
-    .news-item {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.75);
-    }
-
-    .news-date {
-      font-family: var(--font-en);
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.45);
-      white-space: nowrap;
-    }
-
-    .news-tag {
-      font-family: var(--font-en);
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      color: var(--wise-accent);
-      border: 1px solid var(--wise-accent);
-      padding: 1px 8px;
-      white-space: nowrap;
-    }
-
-    /* ── Events News ── */
+/* ── Events News ── */
     .events-section {
-      background: #FAFAFA;
+      background: var(--wise-navy);
       padding: 80px 0;
-      border-bottom: 1px solid var(--line-gray);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .events-inner {
@@ -295,7 +235,7 @@
     .events-heading {
       font-size: 1.4rem;
       font-weight: 700;
-      color: var(--wise-navy);
+      color: rgba(255,255,255,0.9);
       line-height: 1.4;
     }
 
@@ -312,20 +252,20 @@
       align-items: center;
       gap: 24px;
       padding: 20px 0;
-      border-bottom: 1px solid var(--line-gray);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
       text-decoration: none;
-      color: var(--wise-navy);
+      color: rgba(255,255,255,0.8);
       transition: all 0.3s;
     }
 
-    .event-item:first-child { border-top: 1px solid var(--line-gray); }
-    .event-item:hover { background: #F0F4FF; padding-left: 12px; }
+    .event-item:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+    .event-item:hover { background: rgba(255,255,255,0.05); padding-left: 12px; }
 
     .event-date {
       font-family: var(--font-en);
       font-size: 0.78rem;
       letter-spacing: 0.08em;
-      color: #999;
+      color: rgba(255,255,255,0.4);
     }
 
     .event-tag {
@@ -341,6 +281,7 @@
     .event-title {
       font-size: 0.92rem;
       line-height: 1.6;
+      color: rgba(255,255,255,0.8);
     }
 
     /* ── About (WISE vs WEBY) ── */
@@ -2671,33 +2612,27 @@
   </section>
 
   <!-- News Bar -->
-  <div class="news-bar">
-    <div class="news-bar-inner">
-      <div class="news-bar-label">NEWS</div>
-      <div class="news-list">
-        <div class="news-item">
-          <span class="news-date">2026.04.01</span>
-          <span class="news-tag">RECRUIT</span>
-          <span>2027年卒 新卒採用 本選考エントリーを開始しました</span>
-        </div>
-        <div class="news-item">
-          <span class="news-date">2026.03.15</span>
-          <span class="news-tag">EVENT</span>
-          <span>会社説明会（オンライン）を開催します。ご参加お待ちしております</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Events News -->
   <section class="events-section">
     <div class="container reveal">
       <div class="events-inner">
         <div class="events-label-col">
-          <span class="events-label">RECENT EVENTS</span>
-          <h2 class="events-heading">最近の<br>活動</h2>
+          <span class="events-label">NEWS & EVENTS</span>
+          <h2 class="events-heading">最新<br>ニュース</h2>
         </div>
-        <div class="events-list" id="eventsList"></div>
+        <div class="events-list">
+          <a href="#entry" class="event-item">
+            <span class="event-date">2026.04.01</span>
+            <span class="event-tag">RECRUIT</span>
+            <span class="event-title">2027年卒 新卒採用 本選考エントリーを開始しました</span>
+          </a>
+          <a href="#" class="event-item">
+            <span class="event-date">2026.03.15</span>
+            <span class="event-tag">EVENT</span>
+            <span class="event-title">会社説明会（オンライン）を開催します。ご参加お待ちしております</span>
+          </a>
+          <div id="eventsList"></div>
+        </div>
       </div>
     </div>
   </section>
