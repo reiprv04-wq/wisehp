@@ -131,9 +131,16 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url('./untitled%20folder/banner-logo/Banner%20top.png');
+      background: url('./untitled%20folder/banner-logo/final%20banner.jpg');
       background-size: cover;
       background-position: center;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
     }
 
     .hero-content {
