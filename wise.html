@@ -1903,6 +1903,7 @@
     .flow-steps {
       display: flex;
       align-items: stretch;
+      gap: 0;
       position: relative;
     }
 
@@ -1916,63 +1917,80 @@
     .flow-card {
       background: white;
       border: 2px solid var(--wise-navy);
-      padding: 28px 16px 24px;
+      border-right: none;
+      padding: 36px 20px 32px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      min-height: 260px;
       height: 100%;
       position: relative;
+    }
+
+    .flow-step:last-child .flow-card {
+      border-right: 2px solid var(--wise-navy);
     }
 
     .flow-step:not(:last-child) .flow-card::after {
       content: '';
       position: absolute;
       top: 50%;
-      right: -16px;
+      right: -18px;
       transform: translateY(-50%);
       width: 0; height: 0;
-      border-top: 18px solid transparent;
-      border-bottom: 18px solid transparent;
-      border-left: 16px solid var(--wise-navy);
-      z-index: 2;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 18px solid var(--wise-navy);
+      z-index: 3;
+    }
+
+    .flow-step:not(:last-child) .flow-card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 17px solid transparent;
+      border-bottom: 17px solid transparent;
+      border-left: 14px solid white;
+      z-index: 4;
     }
 
     .flow-step-num {
       font-family: var(--font-en);
-      font-size: 0.52rem;
-      letter-spacing: 0.4em;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
       color: var(--wise-accent);
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       display: block;
     }
 
     .flow-step-label {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 900;
       color: var(--wise-navy);
-      line-height: 1.5;
+      line-height: 1.6;
       letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+
+    .flow-step-desc {
+      font-size: 0.72rem;
+      color: var(--text-gray);
+      line-height: 1.8;
+      flex: 1;
     }
 
     .flow-step-sub {
       font-family: var(--font-en);
       font-size: 0.5rem;
       letter-spacing: 0.3em;
-      color: rgba(15,23,42,0.35);
-      margin-top: 8px;
+      color: rgba(15,23,42,0.3);
+      margin-top: 16px;
       display: block;
     }
-
-    .flow-step.skip .flow-card {
-      background: rgba(15,23,42,0.25);
-      border: 1.5px dashed rgba(255,255,255,0.2);
-    }
-
-    .flow-step.skip .flow-step-label { color: rgba(255,255,255,0.35); }
-    .flow-step.skip .flow-card::after { border-left-color: rgba(15,23,42,0.25); }
-
-    .flow-step:last-child .flow-card { background: var(--wise-blue); }
 
     /* ── HP応募フロー ── */
     .flow-hp-wrap {
@@ -3149,14 +3167,16 @@
             <div class="flow-card">
               <span class="flow-step-num">STEP 01</span>
               <span class="flow-step-label">エントリー</span>
+              <span class="flow-step-desc">フォームから必要事項を入力して応募。志望動機・自己PRを記入。</span>
               <span class="flow-step-sub">ENTRY</span>
             </div>
           </div>
           <div class="flow-step">
-            <div class="flow-card" style="background:#F8FAFC; border:2px dashed #CBD5E1; position:relative;">
+            <div class="flow-card" style="background:#F8FAFC; border-left:2px dashed #CBD5E1; border-top:2px dashed #CBD5E1; border-bottom:2px dashed #CBD5E1; position:relative;">
               <span style="position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:#94A3B8; color:white; font-size:0.5rem; font-weight:700; letter-spacing:0.15em; padding:2px 10px; border-radius:20px; white-space:nowrap;">特別はSKIP</span>
-              <span class="flow-step-num">STEP 02</span>
+              <span class="flow-step-num" style="color:#CBD5E1;">STEP 02</span>
               <span class="flow-step-label" style="color:#94A3B8;">書類選考</span>
+              <span class="flow-step-desc" style="color:#CBD5E1;">提出書類をもとに一次スクリーニングを実施。通常選考のみ。</span>
               <span class="flow-step-sub">DOCUMENT</span>
             </div>
           </div>
@@ -3164,6 +3184,7 @@
             <div class="flow-card">
               <span class="flow-step-num">STEP 03</span>
               <span class="flow-step-label">1次面接</span>
+              <span class="flow-step-desc">担当者との30分面接。志望理由・これまでの経験をもとに話し合う。</span>
               <span class="flow-step-sub">1ST INTERVIEW</span>
             </div>
           </div>
@@ -3171,6 +3192,7 @@
             <div class="flow-card">
               <span class="flow-step-num">STEP 04</span>
               <span class="flow-step-label">2次面接</span>
+              <span class="flow-step-desc">代表との面接。思考力・自走力・WISEとのカルチャーフィットを確認。</span>
               <span class="flow-step-sub">2ND INTERVIEW</span>
             </div>
           </div>
@@ -3178,14 +3200,16 @@
             <div class="flow-card">
               <span class="flow-step-num">STEP 05</span>
               <span class="flow-step-label">1-DAY<br>インターン</span>
+              <span class="flow-step-desc">実際の業務を1日体験。チームとの相性・仕事スタイルを双方確認。</span>
               <span class="flow-step-sub">TRIAL DAY</span>
             </div>
           </div>
           <div class="flow-step">
-            <div class="flow-card" style="background:var(--wise-navy); border-color:var(--wise-navy);">
-              <span class="flow-step-num">STEP 06</span>
+            <div class="flow-card" style="background:var(--wise-navy); border-left:2px solid var(--wise-navy); border-top:2px solid var(--wise-navy); border-bottom:2px solid var(--wise-navy); border-right:2px solid var(--wise-navy);">
+              <span class="flow-step-num" style="color:var(--wise-accent);">STEP 06</span>
               <span class="flow-step-label" style="color:white;">内定</span>
-              <span class="flow-step-sub" style="color:rgba(255,255,255,0.4);">OFFER</span>
+              <span class="flow-step-desc" style="color:rgba(255,255,255,0.55);">条件・開始日を調整のうえ、正式オファーを発行。一緒に動き始めよう。</span>
+              <span class="flow-step-sub" style="color:rgba(255,255,255,0.3);">OFFER</span>
             </div>
           </div>
         </div>
