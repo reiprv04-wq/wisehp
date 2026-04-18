@@ -111,19 +111,22 @@
       display: block;
       text-decoration: none;
       line-height: 0;
+      background: white;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    header.top-transparent .logo {
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     }
 
     .logo img {
-      height: 52px;
+      height: 48px;
       object-fit: contain;
-      /* スクロール前: 白く見せる */
-      filter: brightness(0) invert(1);
-      transition: filter 0.3s;
-    }
-
-    header.scrolled .logo img {
-      /* スクロール後: ネイビーに戻す */
       filter: none;
+      transition: none;
     }
 
     nav a {
