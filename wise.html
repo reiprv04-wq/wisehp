@@ -2445,105 +2445,7 @@
     }
 
     /* ── Department Modal ── */
-    /* ── Journal Article Modal ── */
-    .article-modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(15,23,42,0.85);
-      z-index: 9100;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 60px 20px 60px;
-      overflow-y: auto;
-    }
-    .article-modal-overlay.open { display: flex; }
 
-    .article-modal-box {
-      background: white;
-      width: 100%;
-      max-width: 820px;
-      position: relative;
-      border-radius: 2px;
-    }
-
-    .article-modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 40px;
-      height: 40px;
-      background: var(--wise-navy);
-      color: white;
-      border: none;
-      font-size: 1.4rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      border-radius: 2px;
-      transition: background 0.2s;
-    }
-    .article-modal-close:hover { background: var(--wise-accent); }
-
-    .article-modal-hero {
-      position: relative;
-      width: 100%;
-      height: 380px;
-      overflow: hidden;
-    }
-    .article-modal-hero img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-    }
-    .article-modal-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(15,23,42,0.75) 0%, transparent 60%);
-    }
-    .article-modal-hero-text {
-      position: absolute;
-      bottom: 28px;
-      left: 36px;
-      right: 80px;
-    }
-    .article-modal-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-    .article-modal-date {
-      font-family: var(--font-en);
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 0.08em;
-    }
-    .article-modal-tag {
-      font-family: var(--font-en);
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      color: var(--wise-accent);
-      border: 1px solid var(--wise-accent);
-      padding: 3px 10px;
-    }
-    .article-modal-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: white;
-      line-height: 1.4;
-    }
-    .article-modal-body {
-      padding: 36px 40px 48px;
-    }
-    .article-modal-excerpt {
-      font-size: 1rem;
-      line-height: 1.9;
-      color: var(--wise-navy);
-    }
 
     .dept-modal-overlay {
       display: none;
@@ -3083,26 +2985,6 @@
   </section>
 
   <!-- Department Modal -->
-  <!-- Journal Article Modal -->
-  <div id="article-modal" class="article-modal-overlay" onclick="closeArticle(event)">
-    <div class="article-modal-box" onclick="event.stopPropagation()">
-      <button class="article-modal-close" onclick="closeArticle()">&times;</button>
-      <div class="article-modal-hero">
-        <img id="article-modal-img" src="" alt="">
-        <div class="article-modal-hero-overlay"></div>
-        <div class="article-modal-hero-text">
-          <div class="article-modal-meta">
-            <span class="article-modal-date" id="article-modal-date"></span>
-            <span class="article-modal-tag" id="article-modal-tag"></span>
-          </div>
-          <h2 class="article-modal-title" id="article-modal-title"></h2>
-        </div>
-      </div>
-      <div class="article-modal-body">
-        <p class="article-modal-excerpt" id="article-modal-excerpt"></p>
-      </div>
-    </div>
-  </div>
 
   <div id="dept-modal" class="dept-modal-overlay" onclick="closeDept(event)">
     <div class="dept-modal-box" onclick="event.stopPropagation()">
@@ -3613,49 +3495,57 @@
         date: '2026.03.28', tag: 'EVENT',
         title: 'WISE × 〇〇大学 キャリアセミナーを開催しました',
         excerpt: '〇〇大学にてWISEのメンバーが登壇し、実務経験と成長について学生と対話しました。',
-        img: './untitled%20folder/intern-photos/IMG_1958.JPG'
+        img: './untitled%20folder/intern-photos/IMG_1958.JPG',
+        url: ''
       },
       {
         date: '2026.03.15', tag: 'INTERN',
         title: 'インターン生がマーケティング施策の成果発表を行いました',
         excerpt: 'マーケティング部門のインターン生が3ヶ月間の取り組みをメンバー全員の前でプレゼンしました。',
-        img: './untitled%20folder/intern-photos/intern%201.JPG'
+        img: './untitled%20folder/intern-photos/intern%201.JPG',
+        url: ''
       },
       {
         date: '2026.02.20', tag: 'EVENT',
         title: '社内交流イベント「WISE Meetup #03」を実施しました',
         excerpt: '部門を超えたメンバーが集まり、プロジェクトのシェアやフリーディスカッションを行いました。',
-        img: './untitled%20folder/intern-photos/intern%202.JPG'
+        img: './untitled%20folder/intern-photos/intern%202.JPG',
+        url: ''
       },
       {
         date: '2026.01.30', tag: 'NEWS',
         title: '2027年卒インターンシップ募集を開始しました',
         excerpt: '今年度のインターンシップ生の募集を正式に開始。説明会の日程など詳細はこちらから。',
-        img: './untitled%20folder/event-photos/Copy%20of%20L1002568%20(1).jpg'
+        img: './untitled%20folder/event-photos/Copy%20of%20L1002568%20(1).jpg',
+        url: ''
       },
       {
         date: '2025.12.10', tag: 'WORK',
         title: 'マーケティング部門、SEO施策で流入数2.8倍を達成。',
         excerpt: '4ヶ月間のPDCAサイクルの結果、自社メディアの月間オーガニック流入が大幅に増加しました。',
-        img: './untitled%20folder/member-photos/marketing.jpg'
+        img: './untitled%20folder/member-photos/marketing.jpg',
+        url: ''
       },
       {
         date: '2025.11.05', tag: 'ITS',
         title: 'ITS部門、社内業務自動化プロジェクトを始動。',
         excerpt: '定型業務のAI化に向けたプロトタイプ開発をスタート。将来的な外部展開を見据えた設計を進めています。',
-        img: './untitled%20folder/member-photos/iTS.JPG'
+        img: './untitled%20folder/member-photos/iTS.JPG',
+        url: ''
       },
       {
         date: '2025.10.01', tag: 'ALUMNI',
         title: '卒業生インタビュー｜BCG内定　T.K.さんの軌跡',
         excerpt: 'WISEでの実務経験がコンサルへの道を拓いた。インターン時代に培った思考力と、自走する力について語ってもらいました。',
-        img: './untitled%20folder/member-photos/sales.jpg'
+        img: './untitled%20folder/member-photos/sales.jpg',
+        url: ''
       },
       {
         date: '2025.09.15', tag: 'ALUMNI',
         title: '卒業生インタビュー｜三菱商事内定　A.M.さんが語るWISE',
         excerpt: '「ここで働いた経験が、面接での一番の武器になった」。商社志望だった彼女がWISEで得たものとは。',
-        img: './untitled%20folder/member-photos/corporate.jpg'
+        img: './untitled%20folder/member-photos/corporate.jpg',
+        url: ''
       },
     ];
 
@@ -3685,10 +3575,9 @@
       const filtered = filter === 'ALL' ? ACTIVITIES : ACTIVITIES.filter(a => a.tag === filter);
       const track = document.getElementById('journalTrack');
       track.innerHTML = '';
-      filtered.forEach((a, i) => {
-        const idx = ACTIVITIES.indexOf(a);
+      filtered.forEach(a => {
         track.innerHTML += `
-          <div class="journal-card" style="cursor:pointer;" onclick="openArticle(ACTIVITIES[${idx}])">
+          <a href="${a.url || '#'}" target="_blank" rel="noopener" class="journal-card">
             <div class="journal-card-img"><img src="${a.img}" alt=""></div>
             <div class="journal-card-body">
               <div class="journal-card-meta">
@@ -3699,7 +3588,7 @@
               <p class="journal-card-excerpt">${a.excerpt}</p>
               <span class="journal-card-arrow">READ MORE →</span>
             </div>
-          </div>`;
+          </a>`;
       });
       const countEl = document.getElementById('journalCount');
       if (countEl) countEl.textContent = `1 / ${filtered.length}`;
@@ -3772,23 +3661,6 @@
       });
     })();
 
-    // ── Journal Article Modal ─────────────────────────────────
-    function openArticle(a) {
-      document.getElementById('article-modal-img').src      = a.img;
-      document.getElementById('article-modal-date').textContent = a.date;
-      document.getElementById('article-modal-tag').textContent  = a.tag;
-      document.getElementById('article-modal-title').textContent   = a.title;
-      document.getElementById('article-modal-excerpt').textContent = a.excerpt;
-      document.getElementById('article-modal').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeArticle(e) {
-      if (e && e.target !== document.getElementById('article-modal') && !e.target.classList.contains('article-modal-close')) return;
-      document.getElementById('article-modal').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
     // ── Department Modal ──────────────────────────────────────
     function openDept(key) {
       const d = DEPARTMENTS[key];
@@ -3824,7 +3696,6 @@
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
-        closeArticle({ target: document.getElementById('article-modal') });
         closeDept({ target: document.getElementById('dept-modal') });
         closeLightbox();
       }
