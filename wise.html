@@ -2445,6 +2445,106 @@
     }
 
     /* ── Department Modal ── */
+    /* ── Journal Article Modal ── */
+    .article-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.85);
+      z-index: 9100;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 60px 20px 60px;
+      overflow-y: auto;
+    }
+    .article-modal-overlay.open { display: flex; }
+
+    .article-modal-box {
+      background: white;
+      width: 100%;
+      max-width: 820px;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    .article-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      background: var(--wise-navy);
+      color: white;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .article-modal-close:hover { background: var(--wise-accent); }
+
+    .article-modal-hero {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+    }
+    .article-modal-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .article-modal-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,23,42,0.75) 0%, transparent 60%);
+    }
+    .article-modal-hero-text {
+      position: absolute;
+      bottom: 28px;
+      left: 36px;
+      right: 80px;
+    }
+    .article-modal-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .article-modal-date {
+      font-family: var(--font-en);
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.08em;
+    }
+    .article-modal-tag {
+      font-family: var(--font-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--wise-accent);
+      border: 1px solid var(--wise-accent);
+      padding: 3px 10px;
+    }
+    .article-modal-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1.4;
+    }
+    .article-modal-body {
+      padding: 36px 40px 48px;
+    }
+    .article-modal-excerpt {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--wise-navy);
+    }
+
     .dept-modal-overlay {
       display: none;
       position: fixed;
@@ -2983,6 +3083,27 @@
   </section>
 
   <!-- Department Modal -->
+  <!-- Journal Article Modal -->
+  <div id="article-modal" class="article-modal-overlay" onclick="closeArticle(event)">
+    <div class="article-modal-box" onclick="event.stopPropagation()">
+      <button class="article-modal-close" onclick="closeArticle()">&times;</button>
+      <div class="article-modal-hero">
+        <img id="article-modal-img" src="" alt="">
+        <div class="article-modal-hero-overlay"></div>
+        <div class="article-modal-hero-text">
+          <div class="article-modal-meta">
+            <span class="article-modal-date" id="article-modal-date"></span>
+            <span class="article-modal-tag" id="article-modal-tag"></span>
+          </div>
+          <h2 class="article-modal-title" id="article-modal-title"></h2>
+        </div>
+      </div>
+      <div class="article-modal-body">
+        <p class="article-modal-excerpt" id="article-modal-excerpt"></p>
+      </div>
+    </div>
+  </div>
+
   <div id="dept-modal" class="dept-modal-overlay" onclick="closeDept(event)">
     <div class="dept-modal-box" onclick="event.stopPropagation()">
       <button class="dept-modal-close" onclick="closeDept()">&times;</button>
@@ -3564,9 +3685,10 @@
       const filtered = filter === 'ALL' ? ACTIVITIES : ACTIVITIES.filter(a => a.tag === filter);
       const track = document.getElementById('journalTrack');
       track.innerHTML = '';
-      filtered.forEach(a => {
+      filtered.forEach((a, i) => {
+        const idx = ACTIVITIES.indexOf(a);
         track.innerHTML += `
-          <a href="#" class="journal-card">
+          <div class="journal-card" style="cursor:pointer;" onclick="openArticle(ACTIVITIES[${idx}])">
             <div class="journal-card-img"><img src="${a.img}" alt=""></div>
             <div class="journal-card-body">
               <div class="journal-card-meta">
@@ -3577,7 +3699,7 @@
               <p class="journal-card-excerpt">${a.excerpt}</p>
               <span class="journal-card-arrow">READ MORE →</span>
             </div>
-          </a>`;
+          </div>`;
       });
       const countEl = document.getElementById('journalCount');
       if (countEl) countEl.textContent = `1 / ${filtered.length}`;
@@ -3650,6 +3772,23 @@
       });
     })();
 
+    // ── Journal Article Modal ─────────────────────────────────
+    function openArticle(a) {
+      document.getElementById('article-modal-img').src      = a.img;
+      document.getElementById('article-modal-date').textContent = a.date;
+      document.getElementById('article-modal-tag').textContent  = a.tag;
+      document.getElementById('article-modal-title').textContent   = a.title;
+      document.getElementById('article-modal-excerpt').textContent = a.excerpt;
+      document.getElementById('article-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeArticle(e) {
+      if (e && e.target !== document.getElementById('article-modal') && !e.target.classList.contains('article-modal-close')) return;
+      document.getElementById('article-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
     // ── Department Modal ──────────────────────────────────────
     function openDept(key) {
       const d = DEPARTMENTS[key];
@@ -3685,6 +3824,7 @@
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
+        closeArticle({ target: document.getElementById('article-modal') });
         closeDept({ target: document.getElementById('dept-modal') });
         closeLightbox();
       }
