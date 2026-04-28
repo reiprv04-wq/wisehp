@@ -2610,7 +2610,113 @@
       margin-top: 8px;
     }
 
-    /* ── Responsive ── */
+    /* ── Hamburger ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1100;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: white;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+    header.scrolled .hamburger span { background: var(--wise-navy); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: white !important; }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: white !important; }
+
+    /* ── Mobile Nav Overlay ── */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--wise-navy);
+      z-index: 1050;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--font-en);
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      width: 78%;
+      text-align: center;
+      transition: color 0.3s;
+    }
+    .mobile-nav a:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+    .mobile-nav a:hover { color: var(--wise-accent); }
+    .mobile-nav .mob-entry {
+      background: var(--wise-accent);
+      color: white !important;
+      margin-top: 28px;
+      border-radius: 3px;
+      width: 78%;
+      border: none;
+    }
+
+    /* ── Sticky Mobile Bar ── */
+    .sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #fff;
+      border-top: 1px solid var(--line-gray);
+      z-index: 900;
+      height: 58px;
+    }
+    .sticky-bar-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      height: 100%;
+    }
+    .sticky-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border: none;
+      background: none;
+      cursor: pointer;
+      gap: 2px;
+      transition: background 0.2s;
+    }
+    .sticky-btn + .sticky-btn { border-left: 1px solid var(--line-gray); }
+    .sticky-btn-en {
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: var(--wise-navy);
+    }
+    .sticky-btn-jp {
+      font-size: 0.58rem;
+      color: var(--text-gray);
+      letter-spacing: 0.02em;
+    }
+    .sticky-btn.is-entry { background: var(--wise-accent); }
+    .sticky-btn.is-entry .sticky-btn-en,
+    .sticky-btn.is-entry .sticky-btn-jp { color: white; }
+    .sticky-btn.is-intern .sticky-btn-en { color: var(--wise-accent); }
+
+    /* ── Responsive: Tablet ── */
     @media (max-width: 1024px) {
       .hero-h1 { font-size: 3.2rem; }
       .m-copy  { font-size: 2.4rem; }
@@ -2621,6 +2727,212 @@
       .footer-top { grid-template-columns: 1fr; }
       header { padding: 0 30px; }
       .container { padding: 0 24px; }
+      .acronym-grid { grid-template-columns: repeat(2, 1fr); }
+      .ceo-inner { grid-template-columns: 1fr; gap: 48px; }
+      .career-grid { grid-template-columns: 1fr; gap: 48px; }
+      .dept-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-full { grid-template-columns: repeat(2, 1fr); }
+      .info-bottom { grid-template-columns: 1fr; gap: 48px; }
+      .pillars-inner { grid-template-columns: 1fr; }
+      .pillars-venn { display: none; }
+    }
+
+    /* ── Responsive: Mobile ── */
+    @media (max-width: 768px) {
+      body { padding-bottom: 58px; }
+      .container { padding: 0 18px; }
+      section { padding: 72px 0; }
+
+      /* Header */
+      header { padding: 0 18px; height: 60px; }
+      header.scrolled { height: 54px; }
+      header nav { display: none; }
+      .hamburger { display: flex; }
+      .logo img { height: 40px; }
+
+      /* Hero */
+      .hero-h1 { font-size: 2.15rem; line-height: 1.5; letter-spacing: 0.05em; }
+      .hero-badge { font-size: 0.65rem; letter-spacing: 0.28em; margin-bottom: 18px; }
+      .hero-sub { font-size: 0.78rem; letter-spacing: 0.12em; }
+      .scroll-line-container { height: 80px; }
+
+      /* Events */
+      .events-section { padding: 24px 0 0; }
+      .events-inner { flex-direction: column; gap: 18px; }
+      .events-label-col { width: 100%; }
+      .events-heading { font-size: 1.1rem; }
+      .event-item { grid-template-columns: 96px 64px 1fr; gap: 8px; padding: 13px 0; }
+      .event-date { font-size: 0.68rem; }
+      .event-title { font-size: 0.82rem; }
+
+      /* Message */
+      .message-section { padding: 80px 0; }
+      .m-script { font-size: 0.82rem; letter-spacing: 0.4em; margin-bottom: 28px; }
+      .m-copy { font-size: 1.85rem; line-height: 1.62; margin-bottom: 36px; }
+      .m-detail { font-size: 1rem; line-height: 2; }
+
+      /* Acronym */
+      .acronym-grid { grid-template-columns: 1fr 1fr; }
+      .acronym-item { padding: 32px 20px; }
+      .acronym-letter { font-size: 4rem; }
+      .acronym-word { font-size: 1.1rem; }
+      .acronym-desc { font-size: 0.77rem; line-height: 1.7; }
+
+      /* About */
+      .about-section { padding: 72px 0; }
+      .about-section h2 { font-size: 2rem !important; }
+      .about-lead { margin-top: 40px !important; padding-bottom: 40px !important; }
+      .about-lead p { font-size: 1.05rem !important; line-height: 1.9 !important; }
+      .about-row { display: block !important; margin-top: 40px !important; padding-bottom: 40px !important; }
+      .about-row > div:first-child { margin-bottom: 20px; }
+      .about-row > div:first-child div[style] { font-size: 1.2rem !important; }
+
+      /* Gallery */
+      .gallery-section { padding: 72px 0; }
+      .gallery-header { margin-bottom: 40px; }
+      .gallery-header h2 { font-size: 2.2rem !important; }
+      .gallery-full { grid-template-columns: 1fr; }
+      .gallery-item { height: 260px; }
+
+      /* Business */
+      .business-section { padding: 72px 0; }
+      .business-section h2 { font-size: 2rem !important; }
+      .biz-categories { margin-top: 40px; }
+      .biz-cat-top { padding: 32px 28px 28px; }
+      .biz-cat-body { padding: 28px 28px 36px; }
+
+      /* Training */
+      .training-section { padding: 72px 0 96px; }
+      .training-section h2 { font-size: 1.75rem !important; }
+      .training-section h2 em { display: inline; }
+      .training-flow { flex-direction: column; gap: 4px; margin-bottom: 48px; }
+      .training-flow-item:not(:last-child) .training-flow-card::after { display: none; }
+      .training-flow-card { padding: 22px 18px; }
+      .training-inner { grid-template-columns: 1fr; gap: 40px; }
+      .training-photos {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 170px 130px;
+      }
+      .training-photo-main { grid-column: 1 / -1; }
+      .training-photo-sub3, .training-photo-sub4 { display: none; }
+
+      /* Workers Carousel */
+      .carousel-slide { grid-template-columns: 1fr; min-height: auto; }
+      .carousel-img { height: 250px; }
+      .carousel-info { padding: 32px 20px; }
+      .carousel-quote { font-size: 1.2rem; line-height: 1.65; }
+      .carousel-name { font-size: 1.7rem; }
+      .carousel-detail { font-size: 0.88rem; }
+
+      /* Career */
+      .career-section { padding: 72px 0; }
+      .career-section h2 { font-size: 2rem !important; }
+      .career-grid { grid-template-columns: 1fr; gap: 40px; }
+
+      /* Infographic */
+      .infographic-section { padding: 72px 0; }
+      .infographic-section h2 { font-size: 2rem !important; }
+      .info-hero { grid-template-columns: 1fr 1fr 1fr; }
+      .info-hero-divider { display: none; }
+      .info-hero-num { font-size: 3.6rem; }
+      .info-hero-num span { font-size: 1.8rem; }
+      .info-hero-label { font-size: 0.55rem; }
+      .info-bottom { grid-template-columns: 1fr; gap: 40px; }
+      .dept-chart { height: 150px; }
+      .grade-strip { height: 48px; }
+
+      /* Departments */
+      .dept-section { padding: 72px 0; }
+      .dept-section h2 { font-size: 2.2rem !important; }
+      .dept-grid { grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 40px; }
+      .dept-card { height: 300px; }
+      .dept-card-name { font-size: 1rem; }
+      .dept-card-overlay { padding: 28px 20px; }
+      .dept-modal-body { padding: 32px 24px 48px; }
+      .dept-modal-title { font-size: 1.7rem; }
+
+      /* Pillars */
+      .pillars-section { padding: 72px 0 80px; }
+      .pillars-inner { grid-template-columns: 1fr; gap: 0; margin-top: 40px; }
+      .pillars-venn { display: none; }
+      .pillar-title { font-size: 1.3rem; }
+
+      /* Selection Flow */
+      .flow-section { padding: 72px 0; }
+      .flow-section h2 { font-size: 2rem !important; }
+      .flow-steps { flex-direction: column; gap: 0; }
+      .flow-card {
+        border-right: 2px solid var(--wise-navy) !important;
+        border-bottom: none;
+        min-height: 120px;
+        padding: 24px 18px;
+      }
+      .flow-step:not(:last-child) .flow-card::after,
+      .flow-step:not(:last-child) .flow-card::before { display: none; }
+      .flow-hp-wrap { flex-direction: column; gap: 14px; }
+      .flow-hp-steps { flex-wrap: wrap; gap: 6px; }
+
+      /* Recruit */
+      .recruit-section { padding: 72px 0; }
+      .recruit-section h2 { font-size: 2rem !important; }
+      .r-row { grid-template-columns: 1fr; }
+      .r-label {
+        border-right: none;
+        border-bottom: 1px solid var(--line-gray);
+        padding: 16px 20px;
+      }
+      .r-data { padding: 18px 20px; align-items: flex-start; }
+
+      /* Journal */
+      .journal-section { padding: 72px 0 48px; }
+      .journal-section h2 { font-size: 2.2rem !important; }
+      .journal-card { width: 256px; }
+      .journal-card-img { height: 170px; }
+
+      /* FAQ */
+      .faq-section { padding: 72px 0; }
+      .faq-section h2 { font-size: 2rem !important; }
+      .faq-q { gap: 14px; padding: 24px 0; }
+      .faq-q-text { font-size: 0.92rem; }
+
+      /* CEO */
+      .ceo-section { padding: 60px 0; }
+      .ceo-inner { grid-template-columns: 1fr; gap: 32px; }
+      .ceo-quote { font-size: 1.2rem; }
+      .ceo-body { font-size: 0.87rem; }
+      .ceo-sig { margin-top: 40px; padding-top: 28px; }
+
+      /* Footer */
+      footer { padding: 64px 0 96px; }
+      .footer-top { grid-template-columns: 1fr; gap: 0; margin-bottom: 40px; }
+      .footer-cta-title { font-size: 1.9rem; }
+      .footer-cta-sub { font-size: 0.87rem; }
+      .footer-entry-btn { padding: 16px 36px; font-size: 0.78rem; margin-top: 28px; display: inline-flex; }
+      .f-bottom { flex-direction: column; gap: 14px; text-align: center; }
+
+      /* Sticky bar visible */
+      .sticky-bar { display: block; }
+    }
+
+    /* ── Responsive: Small Mobile ── */
+    @media (max-width: 480px) {
+      .container { padding: 0 14px; }
+      .hero-h1 { font-size: 1.8rem; }
+      .m-copy { font-size: 1.6rem; }
+      .acronym-grid { grid-template-columns: 1fr; }
+      .dept-grid { grid-template-columns: 1fr; }
+      .dept-card { height: 240px; }
+      .info-hero { grid-template-columns: 1fr; }
+      .info-hero-num { font-size: 4rem; }
+      .training-photos { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .training-photo-main,
+      .training-photo-sub,
+      .training-photo-sub2 { height: 190px; }
+      .gallery-item { height: 220px; }
+      .carousel-img { height: 210px; }
+      .carousel-quote { font-size: 1.05rem; }
+      .footer-cta-title { font-size: 1.65rem; }
+      .event-item { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
     }
   </style>
 </head>
@@ -2635,11 +2947,22 @@
       <a href="#about">ABOUT</a>
       <a href="#departments">DEPARTMENTS</a>
       <a href="#journal">JOURNAL</a>
-
       <a href="#recruit">RECRUIT</a>
       <a href="https://weby.app.n8n.cloud/form/3286f067-5ae9-454c-965c-405a702493ee" target="_blank" rel="noopener" class="nav-entry">ENTRY</a>
     </nav>
+    <button class="hamburger" id="hamburger" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
   </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" class="mob-link">ABOUT</a>
+    <a href="#departments" class="mob-link">DEPARTMENTS</a>
+    <a href="#journal" class="mob-link">JOURNAL</a>
+    <a href="#recruit" class="mob-link">RECRUIT</a>
+    <a href="https://weby.app.n8n.cloud/form/3286f067-5ae9-454c-965c-405a702493ee" target="_blank" rel="noopener" class="mob-entry">ENTRY</a>
+  </div>
 
   <!-- Hero -->
   <section class="hero" style="margin-bottom:0;">
@@ -2745,7 +3068,7 @@
       </div>
 
       <!-- Lead -->
-      <div class="reveal" style="margin-top: 80px; max-width: 900px; margin-left: auto; margin-right: auto; text-align: center; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray);">
+      <div class="reveal about-lead" style="margin-top: 80px; max-width: 900px; margin-left: auto; margin-right: auto; text-align: center; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray);">
         <p style="font-size: 1.45rem; font-weight: 700; line-height: 2; color: var(--wise-navy); letter-spacing: 0.04em;">
           WISEは、学生人材を活用して企業の業務を内製化し、<br>
           そこから蓄積したノウハウをもとに<br>
@@ -2754,7 +3077,7 @@
       </div>
 
       <!-- Origin -->
-      <div class="reveal" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray); align-items: start;">
+      <div class="reveal about-row" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray); align-items: start;">
         <div>
           <span class="about-col-badge">ORIGIN</span>
           <div style="font-size: 1.6rem; font-weight: 900; color: var(--wise-navy); line-height: 1.3; font-family: var(--font-en);">How<br>We<br>Started</div>
@@ -2767,7 +3090,7 @@
       </div>
 
       <!-- Now -->
-      <div class="reveal" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray); align-items: start;">
+      <div class="reveal about-row" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; padding-bottom: 80px; border-bottom: 1px solid var(--line-gray); align-items: start;">
         <div>
           <span class="about-col-badge">CURRENT PHASE</span>
           <div style="font-size: 1.6rem; font-weight: 900; color: var(--wise-navy); line-height: 1.3; font-family: var(--font-en);">Year<br>Two</div>
@@ -2783,7 +3106,7 @@
       </div>
 
       <!-- Vision -->
-      <div class="reveal" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; align-items: start;">
+      <div class="reveal about-row" style="display: grid; grid-template-columns: 200px 1fr; gap: 60px; margin-top: 80px; align-items: start;">
         <div>
           <span class="about-col-badge">VISION</span>
           <div style="font-size: 1.6rem; font-weight: 900; color: var(--wise-navy); line-height: 1.3; font-family: var(--font-en);">Where<br>We're<br>Going</div>
@@ -3426,6 +3749,24 @@
     </div>
   </section>
 
+  <!-- Sticky Mobile Bar -->
+  <div class="sticky-bar">
+    <div class="sticky-bar-inner">
+      <a href="#recruit" class="sticky-btn">
+        <span class="sticky-btn-en">募集要項</span>
+        <span class="sticky-btn-jp">REQUIREMENTS</span>
+      </a>
+      <a href="#entry" class="sticky-btn is-intern">
+        <span class="sticky-btn-en">長期インターン</span>
+        <span class="sticky-btn-jp">週2〜・学年不問</span>
+      </a>
+      <a href="https://weby.app.n8n.cloud/form/3286f067-5ae9-454c-965c-405a702493ee" target="_blank" rel="noopener" class="sticky-btn is-entry">
+        <span class="sticky-btn-en">ENTRY</span>
+        <span class="sticky-btn-jp">約3分</span>
+      </a>
+    </div>
+  </div>
+
   <!-- Footer / Entry -->
   <footer id="entry">
     <div class="container">
@@ -3785,6 +4126,22 @@
         alert('パスワードが違います');
       }
     }
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
   </script>
 </body>
 </html>
