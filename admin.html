@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WISE Admin — 活動記録管理</title>
+  <title>WISE Admin — 記事管理</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -90,6 +90,18 @@
       border-bottom: 1px solid var(--border);
     }
 
+    /* ── Section separator ── */
+    .section-sep {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin: 28px 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
     /* ── Form ── */
     .form-group {
       margin-bottom: 20px;
@@ -104,6 +116,7 @@
     }
     label .req { color: var(--accent); margin-left: 2px; }
     input[type="text"],
+    input[type="url"],
     input[type="date"],
     select,
     textarea {
@@ -125,49 +138,78 @@
     }
     textarea { resize: vertical; min-height: 90px; line-height: 1.7; }
 
-    /* ── Photo Upload ── */
-    .photo-upload {
-      border: 2px dashed var(--border);
-      border-radius: 10px;
-      padding: 28px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      position: relative;
-    }
-    .photo-upload:hover { border-color: var(--accent); background: rgba(59,130,246,0.03); }
-    .photo-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .photo-upload-icon { font-size: 2rem; margin-bottom: 8px; color: var(--muted); }
-    .photo-upload-label { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
-    .photo-upload-label strong { color: var(--accent); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-    .photo-previews {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 12px;
+    /* ── Compact photo upload (single slot) ── */
+    .compact-upload {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
-    .photo-preview-item {
-      position: relative;
-      aspect-ratio: 1;
-      border-radius: 6px;
-      overflow: hidden;
-      background: var(--border);
-    }
-    .photo-preview-item img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .photo-preview-item .remove-photo {
-      position: absolute;
-      top: 4px; right: 4px;
-      width: 20px; height: 20px;
-      background: rgba(0,0,0,0.6);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 0.7rem;
+    .compact-upload-trigger {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      background: #FAFAFA;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .compact-upload-trigger:hover { border-color: var(--accent); }
+    .compact-upload-trigger input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: none;
+      background: none;
+    }
+    .compact-upload-trigger img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .compact-upload-icon {
+      font-size: 1.4rem;
+      color: var(--muted);
+      pointer-events: none;
+    }
+    .compact-upload-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .compact-upload-meta strong { color: var(--accent); font-size: 0.75rem; }
+
+    /* ── Q&A block ── */
+    .qa-admin-block {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .qa-admin-block label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .qa-admin-block .qa-q { margin-bottom: 10px; }
+    .qa-admin-block .qa-photo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
     }
 
     /* ── Schedule ── */
@@ -179,7 +221,7 @@
       align-items: center;
     }
     .schedule-item input[type="text"] { padding: 8px 10px; }
-    .remove-schedule {
+    .remove-row {
       width: 32px; height: 32px;
       background: none;
       border: 1px solid var(--border);
@@ -190,8 +232,8 @@
       display: flex; align-items: center; justify-content: center;
       transition: all 0.2s;
     }
-    .remove-schedule:hover { border-color: var(--danger); color: var(--danger); }
-    .add-schedule {
+    .remove-row:hover { border-color: var(--danger); color: var(--danger); }
+    .add-row-btn {
       margin-top: 10px;
       font-size: 0.78rem;
       color: var(--accent);
@@ -203,7 +245,20 @@
       width: 100%;
       transition: background 0.2s;
     }
-    .add-schedule:hover { background: rgba(59,130,246,0.06); }
+    .add-row-btn:hover { background: rgba(59,130,246,0.06); }
+
+    /* ── Related links row ── */
+    .link-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr 32px;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    /* ── Template sections ── */
+    .tpl-section { display: none; }
+    .tpl-section.active { display: block; }
 
     /* ── Submit ── */
     .submit-btn {
@@ -252,6 +307,19 @@
       padding: 2px 6px;
       border-radius: 3px;
     }
+    .article-item-tpl {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: white;
+    }
+    .tpl-intern  { background: #0ea5e9; }
+    .tpl-alumni  { background: #8b5cf6; }
+    .tpl-event   { background: #f59e0b; }
+    .tpl-press   { background: #10b981; }
+
     .article-item-title { font-size: 0.85rem; font-weight: 600; color: var(--text); }
     .article-item-actions { display: flex; gap: 6px; }
     .btn-sm {
@@ -296,6 +364,7 @@
     .toast.success { border-left: 4px solid var(--success); }
     .toast.error { border-left: 4px solid var(--danger); }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -306,65 +375,437 @@
 
   <div class="admin-body">
 
-    <!-- Left: Form -->
+    <!-- ══════ Left: Form ══════ -->
     <div>
       <div class="card">
         <div class="card-title">新規記事を投稿</div>
 
+        <!-- Template selector -->
         <div class="form-group">
-          <label>タイトル <span class="req">*</span></label>
-          <input type="text" id="f-title" placeholder="例：WISE × 〇〇大学 キャリアセミナーを開催しました">
+          <label>テンプレートを選択 <span class="req">*</span></label>
+          <select id="f-template" onchange="switchTemplate(this.value)">
+            <option value="intern">インターンシップ体験談</option>
+            <option value="alumni">OB・OG インタビュー</option>
+            <option value="event">社内イベントレポート</option>
+            <option value="press">プレス・社外掲載</option>
+          </select>
         </div>
 
-        <div class="form-group">
-          <label>本文 <span class="req">*</span></label>
-          <textarea id="f-body" rows="5" placeholder="記事の詳細を入力してください。"></textarea>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div class="form-group">
-            <label>カテゴリー <span class="req">*</span></label>
-            <select id="f-tag">
-              <option value="EVENT">EVENT</option>
-              <option value="INTERN">INTERN</option>
-              <option value="WORK">WORK</option>
-              <option value="NEWS">NEWS</option>
-              <option value="ALUMNI">ALUMNI</option>
-            </select>
-          </div>
+        <!-- Common fields -->
+        <div class="two-col">
           <div class="form-group">
             <label>日付 <span class="req">*</span></label>
             <input type="date" id="f-date">
           </div>
-        </div>
-
-        <div class="form-group">
-          <label>写真（複数可）</label>
-          <div class="photo-upload" id="photoUpload">
-            <input type="file" id="f-photos" accept="image/*" multiple onchange="handlePhotos(this)">
-            <div class="photo-upload-icon">📷</div>
-            <div class="photo-upload-label"><strong>クリックして写真を選択</strong><br>JPG, PNG対応 / 複数枚選択可</div>
+          <div class="form-group">
+            <label>カテゴリータグ <span class="req">*</span></label>
+            <select id="f-tag">
+              <option value="INTERN">INTERN</option>
+              <option value="ALUMNI">ALUMNI</option>
+              <option value="EVENT">EVENT</option>
+              <option value="NEWS">NEWS</option>
+              <option value="WORK">WORK</option>
+            </select>
           </div>
-          <div class="photo-previews" id="photoPreviews"></div>
         </div>
 
         <div class="form-group">
-          <label>1日のスケジュール（任意）</label>
-          <div class="schedule-list" id="scheduleList">
+          <label>カードサムネイル</label>
+          <div class="compact-upload">
+            <div class="compact-upload-trigger" id="thumb-trigger">
+              <span class="compact-upload-icon" id="thumb-icon">📷</span>
+              <img id="thumb-preview" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <input type="file" accept="image/*" onchange="uploadPhoto('thumb', this)">
+            </div>
+            <div class="compact-upload-meta">
+              <strong>クリックして選択</strong><br>
+              カード一覧に表示されるサムネイル画像
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>カード抜粋テキスト</label>
+          <textarea id="f-excerpt" rows="3" placeholder="カードに表示される短い説明文（省略可）"></textarea>
+        </div>
+
+        <!-- ════ INTERN SECTION ════ -->
+        <div class="tpl-section active" id="sec-intern">
+          <div class="section-sep">ヒーロー情報</div>
+
+          <div class="form-group">
+            <label>キャッチコピー</label>
+            <textarea id="intern-catchcopy" rows="2" placeholder="例：挑戦する場所が、自分を変える。"></textarea>
+          </div>
+          <div class="form-group">
+            <label>部門</label>
+            <input type="text" id="intern-dept" placeholder="例：セールス部門">
+          </div>
+          <div class="two-col">
+            <div class="form-group">
+              <label>名前（英語）</label>
+              <input type="text" id="intern-nameEn" placeholder="TARO YAMADA">
+            </div>
+            <div class="form-group">
+              <label>名前（日本語）</label>
+              <input type="text" id="intern-nameJa" placeholder="山田 太郎">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>大学・学部</label>
+            <input type="text" id="intern-university" placeholder="○○大学 | ○○学部 | ○○卒">
+          </div>
+          <div class="form-group">
+            <label>ヒーロー写真</label>
+            <div class="compact-upload">
+              <div class="compact-upload-trigger">
+                <span class="compact-upload-icon" id="icon-intern-heroPhoto">📷</span>
+                <img id="prev-intern-heroPhoto" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('intern-heroPhoto', this)">
+              </div>
+              <div class="compact-upload-meta"><strong>クリックして選択</strong><br>ヒーロー背景画像</div>
+            </div>
+          </div>
+
+          <div class="section-sep">入社理由・業務内容</div>
+
+          <div class="form-group">
+            <label>入社した理由</label>
+            <textarea id="intern-reason" rows="5" placeholder="入社した理由を入力してください。"></textarea>
+          </div>
+          <div class="form-group">
+            <label>具体的な業務とやりがい</label>
+            <textarea id="intern-work" rows="5" placeholder="業務内容ややりがいを入力してください。"></textarea>
+          </div>
+          <div class="form-group">
+            <label>バナーラベル</label>
+            <input type="text" id="intern-bannerLabel" placeholder="Internship for Self-Driving Experience">
+          </div>
+
+          <div class="section-sep">Q&amp;A（5問）</div>
+
+          <!-- Q1 -->
+          <div class="qa-admin-block">
+            <label>Q1</label>
+            <input type="text" class="qa-q" id="intern-q1-q" value="ご自身から見たWISEとはどのような組織ですか">
+            <textarea class="qa-a" id="intern-q1-a" rows="4" placeholder="回答を入力"></textarea>
+            <div class="qa-photo-row">
+              <div class="compact-upload-trigger" style="width:60px;height:60px;">
+                <span class="compact-upload-icon" id="icon-intern-q1Photo" style="font-size:1rem;">📷</span>
+                <img id="prev-intern-q1Photo" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('intern-q1Photo', this)">
+              </div>
+              <span style="font-size:0.75rem;color:var(--muted);">Q1 写真（任意）</span>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="qa-admin-block">
+            <label>Q2</label>
+            <input type="text" class="qa-q" id="intern-q2-q" value="WISEでどういうところが一番成長したか">
+            <textarea class="qa-a" id="intern-q2-a" rows="4" placeholder="回答を入力"></textarea>
+          </div>
+
+          <!-- Q3 -->
+          <div class="qa-admin-block">
+            <label>Q3</label>
+            <input type="text" class="qa-q" id="intern-q3-q" value="将来の展望を教えてください">
+            <textarea class="qa-a" id="intern-q3-a" rows="4" placeholder="回答を入力"></textarea>
+          </div>
+
+          <!-- Q4 -->
+          <div class="qa-admin-block">
+            <label>Q4</label>
+            <input type="text" class="qa-q" id="intern-q4-q" value="業務上で大事にしていることを教えてください">
+            <textarea class="qa-a" id="intern-q4-a" rows="4" placeholder="回答を入力"></textarea>
+            <div class="qa-photo-row">
+              <div class="compact-upload-trigger" style="width:60px;height:60px;">
+                <span class="compact-upload-icon" id="icon-intern-q4Photo" style="font-size:1rem;">📷</span>
+                <img id="prev-intern-q4Photo" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('intern-q4Photo', this)">
+              </div>
+              <span style="font-size:0.75rem;color:var(--muted);">Q4 写真（任意）</span>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="qa-admin-block">
+            <label>Q5</label>
+            <input type="text" class="qa-q" id="intern-q5-q" value="最大のつまずきと学びを教えてください">
+            <textarea class="qa-a" id="intern-q5-a" rows="4" placeholder="回答を入力"></textarea>
+            <div class="qa-photo-row">
+              <div class="compact-upload-trigger" style="width:60px;height:60px;">
+                <span class="compact-upload-icon" id="icon-intern-q5Photo" style="font-size:1rem;">📷</span>
+                <img id="prev-intern-q5Photo" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('intern-q5Photo', this)">
+              </div>
+              <span style="font-size:0.75rem;color:var(--muted);">Q5 写真（任意）</span>
+            </div>
+          </div>
+
+          <div class="section-sep">1日のスケジュール</div>
+          <div class="schedule-list" id="intern-scheduleList">
             <div class="schedule-item">
               <input type="text" placeholder="10:00" class="s-time">
               <input type="text" placeholder="内容を入力" class="s-content">
-              <button class="remove-schedule" onclick="removeSchedule(this)">×</button>
+              <button class="remove-row" onclick="removeRow(this)">×</button>
             </div>
           </div>
-          <button class="add-schedule" onclick="addSchedule()">＋ スケジュールを追加</button>
+          <button class="add-row-btn" onclick="addScheduleRow('intern-scheduleList')">＋ スケジュールを追加</button>
         </div>
+        <!-- /sec-intern -->
+
+        <!-- ════ ALUMNI SECTION ════ -->
+        <div class="tpl-section" id="sec-alumni">
+          <div class="section-sep">ヒーロー情報</div>
+
+          <div class="form-group">
+            <label>キャッチコピー</label>
+            <textarea id="alumni-catchcopy" rows="2" placeholder="例：WISEで育てた力が、今の自分を支えている。"></textarea>
+          </div>
+          <div class="form-group">
+            <label>入社先・会社名</label>
+            <input type="text" id="alumni-company" placeholder="入社先 / 株式会社〇〇">
+          </div>
+          <div class="two-col">
+            <div class="form-group">
+              <label>名前（英語）</label>
+              <input type="text" id="alumni-nameEn" placeholder="TARO YAMADA">
+            </div>
+            <div class="form-group">
+              <label>名前（日本語）</label>
+              <input type="text" id="alumni-nameJa" placeholder="山田 太郎">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>大学・学部</label>
+            <input type="text" id="alumni-university" placeholder="○○大学 ○○学部 ○○年卒">
+          </div>
+          <div class="form-group">
+            <label>ヒーロー写真</label>
+            <div class="compact-upload">
+              <div class="compact-upload-trigger">
+                <span class="compact-upload-icon" id="icon-alumni-heroPhoto">📷</span>
+                <img id="prev-alumni-heroPhoto" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('alumni-heroPhoto', this)">
+              </div>
+              <div class="compact-upload-meta"><strong>クリックして選択</strong><br>ヒーロー背景画像</div>
+            </div>
+          </div>
+
+          <div class="section-sep">キャリア・経験</div>
+
+          <div class="form-group">
+            <label>現在の仕事・キャリア</label>
+            <textarea id="alumni-career" rows="5" placeholder="現在の仕事やキャリアについて入力してください。"></textarea>
+          </div>
+          <div class="form-group">
+            <label>WISEでの経験</label>
+            <textarea id="alumni-wiseExp" rows="5" placeholder="WISEでのインターン経験について入力してください。"></textarea>
+          </div>
+          <div class="form-group">
+            <label>バナーラベル</label>
+            <input type="text" id="alumni-bannerLabel" placeholder="From WISE to the World">
+          </div>
+
+          <div class="section-sep">Q&amp;A（5問）</div>
+
+          <!-- Alumni Q1 -->
+          <div class="qa-admin-block">
+            <label>Q1</label>
+            <input type="text" class="qa-q" id="alumni-q1-q" value="WISEでのインターン時代を一言で表すとどんな時間でしたか">
+            <textarea class="qa-a" id="alumni-q1-a" rows="4" placeholder="回答を入力"></textarea>
+          </div>
+
+          <!-- Alumni Q2 -->
+          <div class="qa-admin-block">
+            <label>Q2</label>
+            <input type="text" class="qa-q" id="alumni-q2-q" value="WISEでの経験が現在のキャリアに活きていると感じることは何ですか">
+            <textarea class="qa-a" id="alumni-q2-a" rows="4" placeholder="回答を入力"></textarea>
+          </div>
+
+          <!-- Alumni Q3 -->
+          <div class="qa-admin-block">
+            <label>Q3</label>
+            <input type="text" class="qa-q" id="alumni-q3-q" value="インターン時代に最も印象に残っている出来事を教えてください">
+            <textarea class="qa-a" id="alumni-q3-a" rows="4" placeholder="回答を入力"></textarea>
+          </div>
+
+          <!-- Alumni Q4 -->
+          <div class="qa-admin-block">
+            <label>Q4</label>
+            <input type="text" class="qa-q" id="alumni-q4-q" value="社会人として大切にしている価値観や仕事への姿勢を教えてください">
+            <textarea class="qa-a" id="alumni-q4-a" rows="4" placeholder="回答を入力"></textarea>
+          </div>
+
+          <!-- Alumni Q5 -->
+          <div class="qa-admin-block">
+            <label>Q5</label>
+            <input type="text" class="qa-q" id="alumni-q5-q" value="これからWISEでのインターンを考えている学生へメッセージをお願いします">
+            <textarea class="qa-a" id="alumni-q5-a" rows="4" placeholder="回答を入力"></textarea>
+          </div>
+        </div>
+        <!-- /sec-alumni -->
+
+        <!-- ════ EVENT SECTION ════ -->
+        <div class="tpl-section" id="sec-event">
+          <div class="section-sep">イベント基本情報</div>
+
+          <div class="form-group">
+            <label>イベントタイトル</label>
+            <input type="text" id="event-eventTitle" placeholder="例：WISE 2025 サマーインターン決起集会">
+          </div>
+          <div class="form-group">
+            <label>開催場所</label>
+            <input type="text" id="event-location" placeholder="WISE OFFICE">
+          </div>
+          <div class="form-group">
+            <label>概要タイトル</label>
+            <input type="text" id="event-overviewTitle" placeholder="イベントの概要タイトルを入力">
+          </div>
+          <div class="form-group">
+            <label>概要テキスト</label>
+            <textarea id="event-overviewText" rows="4" placeholder="イベントの概要を入力してください。"></textarea>
+          </div>
+
+          <div class="section-sep">フォト（最大3枚）</div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+            <div>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px;font-weight:600;">写真1（メイン）</div>
+              <div class="compact-upload-trigger" style="width:100%;height:100px;">
+                <span class="compact-upload-icon" id="icon-event-photo1">📷</span>
+                <img id="prev-event-photo1" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('event-photo1', this)">
+              </div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px;font-weight:600;">写真2</div>
+              <div class="compact-upload-trigger" style="width:100%;height:100px;">
+                <span class="compact-upload-icon" id="icon-event-photo2">📷</span>
+                <img id="prev-event-photo2" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('event-photo2', this)">
+              </div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px;font-weight:600;">写真3</div>
+              <div class="compact-upload-trigger" style="width:100%;height:100px;">
+                <span class="compact-upload-icon" id="icon-event-photo3">📷</span>
+                <img id="prev-event-photo3" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('event-photo3', this)">
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="form-group">
+              <label>レポート左カラム</label>
+              <textarea id="event-reportLeft" rows="4" placeholder="左カラムのレポートを入力"></textarea>
+            </div>
+            <div class="form-group">
+              <label>レポート右カラム</label>
+              <textarea id="event-reportRight" rows="4" placeholder="右カラムのレポートを入力"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>プルクォート</label>
+            <textarea id="event-pullQuote" rows="2" placeholder="印象的な一言やイベントのハイライト"></textarea>
+          </div>
+          <div class="form-group">
+            <label>引用者</label>
+            <input type="text" id="event-pullQuoteAttr" placeholder="参加者コメント">
+          </div>
+          <div class="form-group">
+            <label>クロージングテキスト</label>
+            <textarea id="event-closingText" rows="3" placeholder="締めのメッセージを入力してください。"></textarea>
+          </div>
+        </div>
+        <!-- /sec-event -->
+
+        <!-- ════ PRESS SECTION ════ -->
+        <div class="tpl-section" id="sec-press">
+          <div class="section-sep">プレス基本情報</div>
+
+          <div class="form-group">
+            <label>タイトル</label>
+            <input type="text" id="press-pressTitle" placeholder="例：WISEが〇〇メディアに掲載されました">
+          </div>
+          <div class="form-group">
+            <label>媒体名・イベント名</label>
+            <input type="text" id="press-mediaName" placeholder="例：Forbes Japan">
+          </div>
+          <div class="two-col">
+            <div class="form-group">
+              <label>掲載カテゴリ</label>
+              <input type="text" id="press-pressCategory" placeholder="例：メディア掲載">
+            </div>
+            <div class="form-group">
+              <label>掲載URL・開催場所</label>
+              <input type="text" id="press-urlVenue" placeholder="https://...">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>概要テキスト</label>
+            <textarea id="press-overviewText" rows="4" placeholder="記事・イベントの概要を入力してください。"></textarea>
+          </div>
+
+          <div class="section-sep">フォト（最大2枚）</div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+            <div>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px;font-weight:600;">写真1</div>
+              <div class="compact-upload-trigger" style="width:100%;height:100px;">
+                <span class="compact-upload-icon" id="icon-press-photo1">📷</span>
+                <img id="prev-press-photo1" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('press-photo1', this)">
+              </div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px;font-weight:600;">写真2</div>
+              <div class="compact-upload-trigger" style="width:100%;height:100px;">
+                <span class="compact-upload-icon" id="icon-press-photo2">📷</span>
+                <img id="prev-press-photo2" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <input type="file" accept="image/*" onchange="uploadPhoto('press-photo2', this)">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>詳細レポート</label>
+            <textarea id="press-detailText" rows="6" placeholder="詳細なレポートを入力してください。"></textarea>
+          </div>
+          <div class="form-group">
+            <label>タグ（カンマ区切り）</label>
+            <input type="text" id="press-tags" placeholder="WISE, カテゴリ, イベント">
+          </div>
+
+          <div class="section-sep">関連リンク（最大3件）</div>
+          <div id="press-linkList">
+            <div class="link-item">
+              <input type="text" placeholder="リンクのテキスト" class="link-text">
+              <input type="text" placeholder="https://..." class="link-url">
+              <button class="remove-row" onclick="removeRow(this)">×</button>
+            </div>
+          </div>
+          <button class="add-row-btn" onclick="addLinkRow()">＋ リンクを追加</button>
+
+          <div class="section-sep">元記事・ソース情報</div>
+          <div class="form-group">
+            <label>ソースタイトル</label>
+            <input type="text" id="press-sourceTitle" placeholder="元記事のタイトルを入力">
+          </div>
+          <div class="form-group">
+            <label>ソースURL</label>
+            <input type="text" id="press-sourceUrl" placeholder="https://...">
+          </div>
+        </div>
+        <!-- /sec-press -->
 
         <button class="submit-btn" onclick="submitArticle()">記事を公開する</button>
       </div>
     </div>
 
-    <!-- Right: Article list -->
+    <!-- ══════ Right: Article list ══════ -->
     <div>
       <div class="card">
         <div class="card-title">公開中の記事 <span id="articleCount" style="color:var(--accent);"></span></div>
@@ -379,118 +820,278 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = 'wise_articles';
-    let uploadedPhotos = []; // base64 array
+    const { createClient } = supabase;
+    const db = createClient(
+      'https://kcxbnaaccjwqjkkvhrvm.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjeGJuYWFjY2p3cWpra3ZocnZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwMDAyMTQsImV4cCI6MjA5MzU3NjIxNH0.3mmxurljtN4cqrs7q1SF6mxFgbNmJMaeq8IYroJcaNM'
+    );
+    const photoStore = {};
 
     // Set today's date as default
     document.getElementById('f-date').valueAsDate = new Date();
 
-    // ── Photo handling ──
-    function handlePhotos(input) {
-      const files = Array.from(input.files);
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = e => {
-          uploadedPhotos.push(e.target.result);
-          renderPreviews();
-        };
-        reader.readAsDataURL(file);
+    // ══════════════════════════════════════════
+    // Template switching
+    // ══════════════════════════════════════════
+    function switchTemplate(tpl) {
+      ['intern', 'alumni', 'event', 'press'].forEach(t => {
+        const el = document.getElementById('sec-' + t);
+        if (el) el.classList.toggle('active', t === tpl);
       });
+
+      const tagMap = { intern: 'INTERN', alumni: 'ALUMNI', event: 'EVENT', press: 'NEWS' };
+      const tagEl = document.getElementById('f-tag');
+      if (tagMap[tpl]) tagEl.value = tagMap[tpl];
     }
 
-    function renderPreviews() {
-      const container = document.getElementById('photoPreviews');
-      container.innerHTML = uploadedPhotos.map((src, i) => `
-        <div class="photo-preview-item">
-          <img src="${src}" alt="">
-          <button class="remove-photo" onclick="removePhoto(${i})">×</button>
-        </div>`).join('');
+    // ══════════════════════════════════════════
+    // Compact photo upload
+    // ══════════════════════════════════════════
+    async function uploadPhoto(slotName, input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const iconEl = document.getElementById('icon-' + slotName);
+      const prevEl = slotName === 'thumb'
+        ? document.getElementById('thumb-preview')
+        : document.getElementById('prev-' + slotName);
+      const thumbIcon = document.getElementById('thumb-icon');
+
+      if (iconEl) iconEl.textContent = '⏳';
+      if (thumbIcon && slotName === 'thumb') thumbIcon.textContent = '⏳';
+
+      try {
+        const ext  = file.name.split('.').pop().toLowerCase() || 'jpg';
+        const path = `${Date.now()}-${slotName}.${ext}`;
+        const { error: upErr } = await db.storage
+          .from('article-photos')
+          .upload(path, file, { cacheControl: '3600', upsert: false });
+        if (upErr) throw upErr;
+
+        const { data: { publicUrl } } = db.storage
+          .from('article-photos')
+          .getPublicUrl(path);
+
+        photoStore[slotName] = publicUrl;
+
+        if (prevEl)   { prevEl.src = publicUrl; prevEl.style.display = 'block'; }
+        if (iconEl)   iconEl.style.display = 'none';
+        if (thumbIcon && slotName === 'thumb') thumbIcon.style.display = 'none';
+      } catch (err) {
+        const msg = err?.message || err?.error_description || JSON.stringify(err);
+        showToast('写真のアップロードに失敗しました: ' + msg, 'error');
+        console.error('uploadPhoto error:', err);
+        if (iconEl)   iconEl.textContent = '📷';
+        if (thumbIcon && slotName === 'thumb') thumbIcon.textContent = '📷';
+      }
     }
 
-    function removePhoto(i) {
-      uploadedPhotos.splice(i, 1);
-      renderPreviews();
-    }
-
-    // ── Schedule ──
-    function addSchedule() {
-      const list = document.getElementById('scheduleList');
+    // ══════════════════════════════════════════
+    // Schedule rows
+    // ══════════════════════════════════════════
+    function addScheduleRow(listId) {
+      const list = document.getElementById(listId);
       const item = document.createElement('div');
       item.className = 'schedule-item';
       item.innerHTML = `
         <input type="text" placeholder="14:00" class="s-time">
         <input type="text" placeholder="内容を入力" class="s-content">
-        <button class="remove-schedule" onclick="removeSchedule(this)">×</button>`;
+        <button class="remove-row" onclick="removeRow(this)">×</button>`;
       list.appendChild(item);
     }
 
-    function removeSchedule(btn) {
-      const items = document.querySelectorAll('.schedule-item');
-      if (items.length > 1) btn.closest('.schedule-item').remove();
+    function removeRow(btn) {
+      btn.closest('.schedule-item, .link-item').remove();
     }
 
-    // ── Submit ──
-    function submitArticle() {
-      const title   = document.getElementById('f-title').value.trim();
-      const body    = document.getElementById('f-body').value.trim();
-      const tag     = document.getElementById('f-tag').value;
-      const dateVal = document.getElementById('f-date').value;
+    // ══════════════════════════════════════════
+    // Related link rows
+    // ══════════════════════════════════════════
+    function addLinkRow() {
+      const list = document.getElementById('press-linkList');
+      if (list.children.length >= 3) { showToast('リンクは最大3件です', 'error'); return; }
+      const item = document.createElement('div');
+      item.className = 'link-item';
+      item.innerHTML = `
+        <input type="text" placeholder="リンクのテキスト" class="link-text">
+        <input type="text" placeholder="https://..." class="link-url">
+        <button class="remove-row" onclick="removeRow(this)">×</button>`;
+      list.appendChild(item);
+    }
 
-      if (!title || !body || !dateVal) {
-        showToast('タイトル・本文・日付は必須です', 'error');
+    // ══════════════════════════════════════════
+    // Collect QA for intern / alumni
+    // ══════════════════════════════════════════
+    function collectQA(prefix, count, withPhotos) {
+      const qa = [];
+      for (let i = 1; i <= count; i++) {
+        const q = (document.getElementById(`${prefix}-q${i}-q`) || {}).value || '';
+        const a = (document.getElementById(`${prefix}-q${i}-a`) || {}).value || '';
+        const entry = { question: q.trim(), answer: a.trim() };
+        if (withPhotos) {
+          const photoKey = `${prefix}-q${i}Photo`;
+          if (photoStore[photoKey]) entry.photo = photoStore[photoKey];
+        }
+        qa.push(entry);
+      }
+      return qa;
+    }
+
+    // ══════════════════════════════════════════
+    // Submit
+    // ══════════════════════════════════════════
+    async function submitArticle() {
+      const tpl     = document.getElementById('f-template').value;
+      const dateVal = document.getElementById('f-date').value;
+      const tag     = document.getElementById('f-tag').value;
+      const excerpt = document.getElementById('f-excerpt').value.trim();
+
+      if (!dateVal) {
+        showToast('日付は必須です', 'error');
         return;
       }
 
-      // Format date YYYY.MM.DD
       const [y, m, d] = dateVal.split('-');
       const dateStr = `${y}.${m}.${d}`;
+      const thumb = photoStore['thumb'] || '';
 
-      // Collect schedule
-      const schedule = [];
-      document.querySelectorAll('.schedule-item').forEach(item => {
-        const time    = item.querySelector('.s-time').value.trim();
-        const content = item.querySelector('.s-content').value.trim();
-        if (time && content) schedule.push({ time, content });
-      });
+      let specific = {};
+      let title = '';
+
+      if (tpl === 'intern') {
+        const catchcopy = document.getElementById('intern-catchcopy').value.trim();
+        if (!catchcopy) { showToast('キャッチコピーを入力してください', 'error'); return; }
+        title = catchcopy;
+
+        const schedule = [];
+        document.querySelectorAll('#intern-scheduleList .schedule-item').forEach(item => {
+          const time    = item.querySelector('.s-time').value.trim();
+          const content = item.querySelector('.s-content').value.trim();
+          if (time && content) schedule.push({ time, content });
+        });
+
+        specific = {
+          catchcopy,
+          dept:        document.getElementById('intern-dept').value.trim(),
+          nameEn:      document.getElementById('intern-nameEn').value.trim(),
+          nameJa:      document.getElementById('intern-nameJa').value.trim(),
+          university:  document.getElementById('intern-university').value.trim(),
+          heroPhoto:   photoStore['intern-heroPhoto'] || '',
+          reason:      document.getElementById('intern-reason').value.trim(),
+          work:        document.getElementById('intern-work').value.trim(),
+          bannerLabel: document.getElementById('intern-bannerLabel').value.trim(),
+          qa:          collectQA('intern', 5, true),
+          q1Photo:     photoStore['intern-q1Photo'] || '',
+          q4Photo:     photoStore['intern-q4Photo'] || '',
+          q5Photo:     photoStore['intern-q5Photo'] || '',
+          schedule,
+        };
+
+      } else if (tpl === 'alumni') {
+        const catchcopy = document.getElementById('alumni-catchcopy').value.trim();
+        if (!catchcopy) { showToast('キャッチコピーを入力してください', 'error'); return; }
+        title = catchcopy;
+
+        specific = {
+          catchcopy,
+          company:     document.getElementById('alumni-company').value.trim(),
+          nameEn:      document.getElementById('alumni-nameEn').value.trim(),
+          nameJa:      document.getElementById('alumni-nameJa').value.trim(),
+          university:  document.getElementById('alumni-university').value.trim(),
+          heroPhoto:   photoStore['alumni-heroPhoto'] || '',
+          career:      document.getElementById('alumni-career').value.trim(),
+          wiseExp:     document.getElementById('alumni-wiseExp').value.trim(),
+          bannerLabel: document.getElementById('alumni-bannerLabel').value.trim(),
+          qa:          collectQA('alumni', 5, false),
+        };
+
+      } else if (tpl === 'event') {
+        const eventTitle = document.getElementById('event-eventTitle').value.trim();
+        if (!eventTitle) { showToast('イベントタイトルを入力してください', 'error'); return; }
+        title = eventTitle;
+
+        specific = {
+          eventTitle,
+          location:       document.getElementById('event-location').value.trim(),
+          overviewTitle:  document.getElementById('event-overviewTitle').value.trim(),
+          overviewText:   document.getElementById('event-overviewText').value.trim(),
+          photo1:         photoStore['event-photo1'] || '',
+          photo2:         photoStore['event-photo2'] || '',
+          photo3:         photoStore['event-photo3'] || '',
+          reportLeft:     document.getElementById('event-reportLeft').value.trim(),
+          reportRight:    document.getElementById('event-reportRight').value.trim(),
+          pullQuote:      document.getElementById('event-pullQuote').value.trim(),
+          pullQuoteAttr:  document.getElementById('event-pullQuoteAttr').value.trim(),
+          closingText:    document.getElementById('event-closingText').value.trim(),
+        };
+
+      } else if (tpl === 'press') {
+        const pressTitle = document.getElementById('press-pressTitle').value.trim();
+        if (!pressTitle) { showToast('タイトルを入力してください', 'error'); return; }
+        title = pressTitle;
+
+        const relatedLinks = [];
+        document.querySelectorAll('#press-linkList .link-item').forEach(item => {
+          const text = item.querySelector('.link-text').value.trim();
+          const url  = item.querySelector('.link-url').value.trim();
+          if (text || url) relatedLinks.push({ text, url });
+        });
+
+        specific = {
+          pressTitle,
+          mediaName:     document.getElementById('press-mediaName').value.trim(),
+          pressCategory: document.getElementById('press-pressCategory').value.trim(),
+          urlVenue:      document.getElementById('press-urlVenue').value.trim(),
+          overviewText:  document.getElementById('press-overviewText').value.trim(),
+          photo1:        photoStore['press-photo1'] || '',
+          photo2:        photoStore['press-photo2'] || '',
+          detailText:    document.getElementById('press-detailText').value.trim(),
+          tags:          document.getElementById('press-tags').value.trim(),
+          relatedLinks,
+          sourceTitle:   document.getElementById('press-sourceTitle').value.trim(),
+          sourceUrl:     document.getElementById('press-sourceUrl').value.trim(),
+        };
+      }
 
       const article = {
         id:       Date.now(),
+        template: tpl,
         date:     dateStr,
         tag,
         title,
-        excerpt:  body.slice(0, 80) + (body.length > 80 ? '…' : ''),
-        body,
-        photos:   [...uploadedPhotos],
-        schedule,
-        img:      uploadedPhotos[0] || '',
+        excerpt,
+        img:      thumb,
+        ...specific,
       };
 
-      const articles = getArticles();
-      articles.unshift(article);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+      const { error: insertErr } = await db.from('articles').insert({ id: article.id, data: article });
+      if (insertErr) {
+        showToast('保存に失敗しました: ' + insertErr.message, 'error');
+        return;
+      }
 
       showToast('記事を公開しました！', 'success');
       resetForm();
       renderArticleList();
     }
 
-    // ── Storage ──
-    function getArticles() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-      catch { return []; }
-    }
-
-    function deleteArticle(id) {
+    // ══════════════════════════════════════════
+    // Storage
+    // ══════════════════════════════════════════
+    async function deleteArticle(id) {
       if (!confirm('この記事を削除しますか？')) return;
-      const articles = getArticles().filter(a => a.id !== id);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+      const { error } = await db.from('articles').delete().eq('id', id);
+      if (error) { showToast('削除に失敗しました', 'error'); return; }
       renderArticleList();
       showToast('記事を削除しました');
     }
 
-    // ── Render article list ──
-    function renderArticleList() {
-      const articles = getArticles();
+    // ══════════════════════════════════════════
+    // Render article list
+    // ══════════════════════════════════════════
+    async function renderArticleList() {
+      const { data: rows, error } = await db.from('articles').select('id, data').order('id', { ascending: false });
+      const articles = error ? [] : rows.map(r => ({ ...r.data, id: r.id }));
       const list = document.getElementById('articleList');
       const countEl = document.getElementById('articleCount');
       countEl.textContent = `(${articles.length})`;
@@ -500,38 +1101,100 @@
         return;
       }
 
+      const tplLabels = {
+        intern: 'インターン',
+        alumni: 'OB・OG',
+        event:  'イベント',
+        press:  'プレス',
+      };
+
       list.innerHTML = articles.map(a => `
         <div class="article-item">
           <div>
             <div class="article-item-meta">
-              <span class="article-item-date">${a.date}</span>
-              <span class="article-item-tag">${a.tag}</span>
+              <span class="article-item-date">${a.date || ''}</span>
+              <span class="article-item-tag">${a.tag || ''}</span>
+              <span class="article-item-tpl tpl-${a.template || ''}">${tplLabels[a.template] || a.template || ''}</span>
             </div>
-            <div class="article-item-title">${a.title}</div>
+            <div class="article-item-title">${a.title || '（タイトルなし）'}</div>
           </div>
           <div class="article-item-actions">
+            <button class="btn-sm" onclick="window.open('article.html?id=${a.id}','_blank')">プレビュー</button>
             <button class="btn-sm danger" onclick="deleteArticle(${a.id})">削除</button>
           </div>
         </div>`).join('');
     }
 
-    // ── Reset form ──
+    // ══════════════════════════════════════════
+    // Reset form
+    // ══════════════════════════════════════════
     function resetForm() {
-      document.getElementById('f-title').value = '';
-      document.getElementById('f-body').value = '';
-      document.getElementById('f-tag').value = 'EVENT';
+      // Clear photoStore
+      Object.keys(photoStore).forEach(k => delete photoStore[k]);
+
+      // Reset common
       document.getElementById('f-date').valueAsDate = new Date();
-      uploadedPhotos = [];
-      renderPreviews();
-      document.getElementById('scheduleList').innerHTML = `
+      document.getElementById('f-template').value = 'intern';
+      switchTemplate('intern');
+      document.getElementById('f-excerpt').value = '';
+
+      // Reset thumb
+      const thumbPrev = document.getElementById('thumb-preview');
+      const thumbIcon = document.getElementById('thumb-icon');
+      if (thumbPrev) { thumbPrev.style.display = 'none'; thumbPrev.src = ''; }
+      if (thumbIcon) thumbIcon.style.display = '';
+
+      // Reset all text inputs and textareas in template sections
+      document.querySelectorAll('.tpl-section input[type="text"], .tpl-section input[type="url"], .tpl-section textarea').forEach(el => {
+        el.value = '';
+      });
+
+      // Restore default Q values
+      const defaultQA = {
+        'intern-q1-q': 'ご自身から見たWISEとはどのような組織ですか',
+        'intern-q2-q': 'WISEでどういうところが一番成長したか',
+        'intern-q3-q': '将来の展望を教えてください',
+        'intern-q4-q': '業務上で大事にしていることを教えてください',
+        'intern-q5-q': '最大のつまずきと学びを教えてください',
+        'alumni-q1-q': 'WISEでのインターン時代を一言で表すとどんな時間でしたか',
+        'alumni-q2-q': 'WISEでの経験が現在のキャリアに活きていると感じることは何ですか',
+        'alumni-q3-q': 'インターン時代に最も印象に残っている出来事を教えてください',
+        'alumni-q4-q': '社会人として大切にしている価値観や仕事への姿勢を教えてください',
+        'alumni-q5-q': 'これからWISEでのインターンを考えている学生へメッセージをお願いします',
+      };
+      Object.entries(defaultQA).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+
+      // Reset all photo slot previews
+      document.querySelectorAll('.tpl-section .compact-upload-trigger img').forEach(img => {
+        img.style.display = 'none'; img.src = '';
+      });
+      document.querySelectorAll('.tpl-section .compact-upload-trigger .compact-upload-icon').forEach(ic => {
+        ic.style.display = '';
+      });
+
+      // Reset intern schedule list
+      document.getElementById('intern-scheduleList').innerHTML = `
         <div class="schedule-item">
           <input type="text" placeholder="10:00" class="s-time">
           <input type="text" placeholder="内容を入力" class="s-content">
-          <button class="remove-schedule" onclick="removeSchedule(this)">×</button>
+          <button class="remove-row" onclick="removeRow(this)">×</button>
+        </div>`;
+
+      // Reset press link list
+      document.getElementById('press-linkList').innerHTML = `
+        <div class="link-item">
+          <input type="text" placeholder="リンクのテキスト" class="link-text">
+          <input type="text" placeholder="https://..." class="link-url">
+          <button class="remove-row" onclick="removeRow(this)">×</button>
         </div>`;
     }
 
-    // ── Toast ──
+    // ══════════════════════════════════════════
+    // Toast
+    // ══════════════════════════════════════════
     function showToast(msg, type = 'success') {
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -539,7 +1202,9 @@
       setTimeout(() => t.classList.remove('show'), 3000);
     }
 
-    // ── Init ──
+    // ══════════════════════════════════════════
+    // Init
+    // ══════════════════════════════════════════
     renderArticleList();
   </script>
 

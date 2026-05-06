@@ -2935,6 +2935,7 @@
       .event-item { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -3814,6 +3815,13 @@
   <script>
     lucide.createIcons();
 
+    // ── Supabase client ──────────────────────────────────────
+    const { createClient } = supabase;
+    const db = createClient(
+      'https://kcxbnaaccjwqjkkvhrvm.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjeGJuYWFjY2p3cWpra3ZocnZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwMDAyMTQsImV4cCI6MjA5MzU3NjIxNH0.3mmxurljtN4cqrs7q1SF6mxFgbNmJMaeq8IYroJcaNM'
+    );
+
     // ── Infographic animation ────────────────────────────────
     const infoObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -3890,13 +3898,29 @@
       },
     ];
 
-    // Merge admin articles from localStorage
-    try {
-      const stored = JSON.parse(localStorage.getItem('wise_articles')) || [];
-      stored.forEach(a => ACTIVITIES.unshift(a));
-    } catch(e) {}
+    // Merge admin articles from Supabase (async, then re-render)
+    (async () => {
+      const { data: rows } = await db.from('articles').select('id, data').order('id', { ascending: false });
+      if (rows && rows.length) {
+        rows.forEach(r => ACTIVITIES.unshift({ ...r.data, id: r.id }));
+        renderJournal(document.querySelector('.j-filter.active')?.dataset.filter || 'ALL');
 
-    // Render Recent Events (top 4)
+        const eventsList = document.getElementById('eventsList');
+        if (eventsList) {
+          eventsList.innerHTML = '';
+          ACTIVITIES.slice(0, 4).forEach(a => {
+            eventsList.innerHTML += `
+              <a href="#journal" class="event-item">
+                <span class="event-date">${a.date}</span>
+                <span class="event-tag">${a.tag}</span>
+                <span class="event-title">${a.title}</span>
+              </a>`;
+          });
+        }
+      }
+    })();
+
+    // Render Recent Events (top 4) — initial render with static data
     const eventsList = document.getElementById('eventsList');
     if (eventsList) {
       ACTIVITIES.slice(0, 4).forEach(a => {
@@ -3918,7 +3942,7 @@
       track.innerHTML = '';
       filtered.forEach(a => {
         track.innerHTML += `
-          <a href="${a.url || '#'}" target="_blank" rel="noopener" class="journal-card">
+          <a href="${a.id ? `article.html?id=${a.id}` : (a.url || '#')}" ${!a.id && a.url ? 'target="_blank" rel="noopener"' : ''} class="journal-card">
             <div class="journal-card-img"><img src="${a.img}" alt=""></div>
             <div class="journal-card-body">
               <div class="journal-card-meta">
