@@ -284,10 +284,9 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 16px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       transition: border-color 0.2s;
     }
     .article-item:hover { border-color: var(--accent); }
@@ -323,7 +322,7 @@
     .tpl-press   { background: #10b981; }
 
     .article-item-title { font-size: 0.85rem; font-weight: 600; color: var(--text); }
-    .article-item-actions { display: flex; gap: 6px; }
+    .article-item-actions { display: flex; gap: 6px; justify-content: flex-end; }
     .btn-sm {
       padding: 5px 10px;
       font-size: 0.72rem;
