@@ -430,6 +430,16 @@
         </div>
 
         <div class="form-group">
+          <label>タイトル</label>
+          <input type="text" id="f-title" placeholder="記事のタイトル（カード・SEOに使用）">
+        </div>
+
+        <div class="form-group">
+          <label>サブヘッダー</label>
+          <input type="text" id="f-subHeader" placeholder="タイトル下に表示されるサブタイトル（省略可）">
+        </div>
+
+        <div class="form-group">
           <label>カード抜粋テキスト</label>
           <textarea id="f-excerpt" rows="3" placeholder="カードに表示される短い説明文（省略可）"></textarea>
         </div>
@@ -955,10 +965,12 @@
     let editingId = null; // null = new article, number = editing existing
 
     async function submitArticle() {
-      const tpl     = document.getElementById('f-template').value;
-      const dateVal = document.getElementById('f-date').value;
-      const tag     = document.getElementById('f-tag').value;
-      const excerpt = document.getElementById('f-excerpt').value.trim();
+      const tpl       = document.getElementById('f-template').value;
+      const dateVal   = document.getElementById('f-date').value;
+      const tag       = document.getElementById('f-tag').value;
+      const excerpt   = document.getElementById('f-excerpt').value.trim();
+      const cardTitle = document.getElementById('f-title').value.trim();
+      const subHeader = document.getElementById('f-subHeader').value.trim();
 
       if (!dateVal) {
         showToast('日付は必須です', 'error');
@@ -1074,13 +1086,15 @@
 
         const article = {
           ...existing?.data,
-          template: tpl,
-          date:     dateStr,
+          template:   tpl,
+          date:       dateStr,
           tag,
-          title,
-          slug:     existingSlug,
+          title:      cardTitle || title,
+          cardTitle,
+          subHeader,
+          slug:       existingSlug,
           excerpt,
-          img:      thumb || existing?.data?.img || '',
+          img:        thumb || existing?.data?.img || '',
           ...specific,
         };
 
@@ -1103,14 +1117,16 @@
         document.getElementById('slug-preview').textContent = slug;
 
         const article = {
-          id:       Date.now(),
-          template: tpl,
-          date:     dateStr,
+          id:        Date.now(),
+          template:  tpl,
+          date:      dateStr,
           tag,
-          title,
+          title:     cardTitle || title,
+          cardTitle,
+          subHeader,
           slug,
           excerpt,
-          img:      thumb,
+          img:       thumb,
           ...specific,
         };
 
@@ -1151,6 +1167,11 @@
       if (y && m && d) document.getElementById('f-date').value = `${y}-${m}-${d}`;
       if (a.tag) document.getElementById('f-tag').value = a.tag;
       if (a.excerpt) document.getElementById('f-excerpt').value = a.excerpt;
+
+      // Common title / subHeader
+      if (a.cardTitle) document.getElementById('f-title').value = a.cardTitle;
+      else if (a.title && !['intern','alumni'].includes(a.template)) document.getElementById('f-title').value = a.title;
+      if (a.subHeader) document.getElementById('f-subHeader').value = a.subHeader;
 
       // Thumbnail
       if (a.img) {
@@ -1292,6 +1313,8 @@
       document.getElementById('f-date').valueAsDate = new Date();
       document.getElementById('f-template').value = 'intern';
       switchTemplate('intern');
+      document.getElementById('f-title').value = '';
+      document.getElementById('f-subHeader').value = '';
       document.getElementById('f-excerpt').value = '';
       document.getElementById('slug-preview').textContent = '保存時に自動生成';
 
