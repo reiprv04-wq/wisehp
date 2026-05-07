@@ -3875,7 +3875,7 @@
       track.innerHTML = '';
       filtered.forEach(a => {
         track.innerHTML += `
-          <a href="${a.slug ? `/article/${a.slug}` : a.id ? `article.html?id=${a.id}` : (a.url || '#')}" ${!a.id && !a.slug && a.url ? 'target="_blank" rel="noopener"' : ''} class="journal-card">
+          <a href="${a.slug ? `/article/${a.slug}` : a.id ? `/article?id=${a.id}` : (a.url || '#')}" ${!a.id && !a.slug && a.url ? 'target="_blank" rel="noopener"' : ''} class="journal-card">
             <div class="journal-card-img"><img src="${a.img}" alt=""></div>
             <div class="journal-card-body">
               <div class="journal-card-meta">
@@ -3902,7 +3902,22 @@
         renderJournal(btn.dataset.filter);
       });
     });
-    renderJournal('ALL');
+    // Auto-select filter from URL param (e.g. ?filter=INTERN#journal)
+    const _urlFilter = new URLSearchParams(window.location.search).get('filter');
+    if (_urlFilter) {
+      const _btn = document.querySelector(`.j-filter[data-filter="${_urlFilter}"]`);
+      if (_btn) {
+        document.querySelectorAll('.j-filter').forEach(b => b.classList.remove('active'));
+        _btn.classList.add('active');
+        renderJournal(_urlFilter);
+        const _sec = document.getElementById('journal');
+        if (_sec) setTimeout(() => _sec.scrollIntoView({ behavior: 'smooth' }), 300);
+      } else {
+        renderJournal('ALL');
+      }
+    } else {
+      renderJournal('ALL');
+    }
 
     // ── Journal Carousel ──────────────────────────────────────
     (function() {
