@@ -324,14 +324,12 @@
        HERO — event (centered)
     ════════════════════════════════════════ */
     .art-hero.event-hero {
-      height: 480px;
+      height: 520px;
     }
 
     .art-hero.event-hero .h-body {
       position: absolute;
-      inset: 0;
-      bottom: unset;
-      left: unset;
+      top: 0; right: 0; bottom: 0; left: 0;
       padding: 0 80px;
       max-width: none;
       display: flex;
@@ -339,6 +337,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+      z-index: 3;
     }
 
     .hero-title-event {
@@ -1828,8 +1827,8 @@
       return `
         <section class="art-hero event-hero">
           <div class="h-bg"></div>
-          ${a.photo1 ? `<img class="h-bg-img" src="${esc(a.photo1)}" alt="" style="object-position:center center;">` : ''}
-          <div class="h-grad" style="background:linear-gradient(to bottom, rgba(15,23,42,0.55) 0%, rgba(15,23,42,0.72) 100%);"></div>
+          ${(a.img || a.photo1) ? `<img class="h-bg-img" src="${esc(a.img || a.photo1)}" alt="" style="object-position:center center;">` : ''}
+          <div class="h-grad" style="background:linear-gradient(to bottom, rgba(15,23,42,0.5) 0%, rgba(15,23,42,0.75) 100%);"></div>
           <div class="h-body">
             <span class="hero-badge">COMPANY EVENT</span>
             <div class="hero-title-event">${esc(a.eventTitle || '')}</div>
