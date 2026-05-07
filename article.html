@@ -342,12 +342,13 @@
     }
 
     .hero-title-event {
-      font-size: 3.2rem;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
       font-weight: 900;
       color: var(--white);
       line-height: 1.45;
       letter-spacing: 0.08em;
       margin-bottom: 32px;
+      max-width: 800px;
     }
 
     .hero-meta-row {
@@ -1827,6 +1828,8 @@
       return `
         <section class="art-hero event-hero">
           <div class="h-bg"></div>
+          ${a.photo1 ? `<img class="h-bg-img" src="${esc(a.photo1)}" alt="" style="object-position:center center;">` : ''}
+          <div class="h-grad" style="background:linear-gradient(to bottom, rgba(15,23,42,0.55) 0%, rgba(15,23,42,0.72) 100%);"></div>
           <div class="h-body">
             <span class="hero-badge">COMPANY EVENT</span>
             <div class="hero-title-event">${esc(a.eventTitle || '')}</div>
