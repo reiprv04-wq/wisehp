@@ -211,7 +211,7 @@
       position: absolute;
       inset: 0;
       object-fit: cover;
-      object-position: center top;
+      object-position: center center;
       width: 100%;
       height: 100%;
       z-index: 1;
@@ -637,7 +637,7 @@
     }
 
     .layout-single {
-      max-width: 780px;
+      max-width: 100%;
     }
 
     .layout-two-col {
@@ -683,6 +683,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center center;
       z-index: 1;
     }
 
@@ -864,6 +865,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center center;
     }
 
     .photo-count {
@@ -1313,6 +1315,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center center;
     }
 
     .rel-card-body {
