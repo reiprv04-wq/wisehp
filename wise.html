@@ -3835,7 +3835,7 @@
     (async () => {
       const { data: rows } = await db.from('articles').select('id, data').order('id', { ascending: false });
       if (rows && rows.length) {
-        rows.forEach(r => ACTIVITIES.unshift({ ...r.data, id: r.id }));
+        rows.forEach(r => ACTIVITIES.push({ ...r.data, id: r.id }));
         renderJournal(document.querySelector('.j-filter.active')?.dataset.filter || 'ALL');
 
         const eventsList = document.getElementById('eventsList');
