@@ -3875,7 +3875,7 @@
       track.innerHTML = '';
       filtered.forEach(a => {
         track.innerHTML += `
-          <a href="${a.slug ? `article.html?slug=${a.slug}` : a.id ? `article.html?id=${a.id}` : (a.url || '#')}" ${!a.id && !a.slug && a.url ? 'target="_blank" rel="noopener"' : ''} class="journal-card">
+          <a href="${a.slug ? `/article/${a.slug}` : a.id ? `article.html?id=${a.id}` : (a.url || '#')}" ${!a.id && !a.slug && a.url ? 'target="_blank" rel="noopener"' : ''} class="journal-card">
             <div class="journal-card-img"><img src="${a.img}" alt=""></div>
             <div class="journal-card-body">
               <div class="journal-card-meta">

@@ -425,9 +425,8 @@
         </div>
 
         <div class="form-group">
-          <label>スラッグ（URL用）<span class="req">*</span></label>
-          <input type="text" id="f-slug" placeholder="例: thinking-strategy-vol1（英数字・ハイフンのみ）" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9\-]/g,'')">
-          <div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">公開URL: wise.weby.co.jp/article/<span id="slug-preview" style="color:var(--accent);">スラッグを入力</span></div>
+          <label>公開URL</label>
+          <div style="font-size:0.85rem;color:var(--muted);padding:8px 0;">wise.weby.co.jp/article/<span id="slug-preview" style="color:var(--accent);font-weight:600;">保存時に自動生成</span></div>
         </div>
 
         <div class="form-group">
@@ -836,9 +835,11 @@
     // Set today's date as default
     document.getElementById('f-date').valueAsDate = new Date();
 
-    // Slug preview
-    document.getElementById('f-slug').addEventListener('input', function() {
-      document.getElementById('slug-preview').textContent = this.value || 'スラッグを入力';
+    // Slug preview updates when template type changes
+    document.querySelectorAll('.tpl-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('slug-preview').textContent = '保存時に自動生成';
+      });
     });
 
     // ══════════════════════════════════════════
@@ -1064,8 +1065,11 @@
         };
       }
 
-      const slug = document.getElementById('f-slug').value.trim();
-      if (!slug) { showToast('スラッグを入力してください', 'error'); return; }
+      // Auto-generate slug: count existing articles of same template type
+      const { data: sameType } = await db.from('articles').select('id').filter('data->>template', 'eq', tpl);
+      const nextNum = (sameType ? sameType.length : 0) + 1;
+      const slug = tpl + nextNum;
+      document.getElementById('slug-preview').textContent = slug;
 
       const article = {
         id:       Date.now(),
@@ -1152,6 +1156,7 @@
       document.getElementById('f-template').value = 'intern';
       switchTemplate('intern');
       document.getElementById('f-excerpt').value = '';
+      document.getElementById('slug-preview').textContent = '保存時に自動生成';
 
       // Reset thumb
       const thumbPrev = document.getElementById('thumb-preview');
