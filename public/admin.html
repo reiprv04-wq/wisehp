@@ -966,6 +966,11 @@
     let editingId = null; // null = new article, number = editing existing
 
     async function submitArticle() {
+      try { await _submitArticle(); }
+      catch(e) { showToast('エラー: ' + e.message, 'error'); console.error(e); }
+    }
+
+    async function _submitArticle() {
       const tpl       = document.getElementById('f-template').value;
       const dateVal   = document.getElementById('f-date').value;
       const tag       = document.getElementById('f-tag').value;
@@ -1099,9 +1104,15 @@
           ...specific,
         };
 
-        const { error: updateErr } = await db.from('articles').update({ data: article }).eq('id', editingId);
+        const { data: updatedRows, error: updateErr } = await db.from('articles').update({ data: article }).eq('id', editingId).select();
         if (updateErr) {
           showToast('更新に失敗しました: ' + updateErr.message, 'error');
+          console.error('update error', updateErr);
+          return;
+        }
+        if (!updatedRows || updatedRows.length === 0) {
+          showToast('更新対象が見つかりません (id=' + editingId + ')', 'error');
+          console.warn('0 rows updated, editingId=', editingId);
           return;
         }
 
@@ -1323,8 +1334,8 @@
           </div>
           <div class="article-item-actions">
             <button class="btn-sm" onclick="window.open('${a.slug ? `/article/${a.slug}` : `article.html?id=${a.id}`}','_blank')">プレビュー</button>
-            <button class="btn-sm" style="background:var(--blue);color:white;" onclick="editArticle(${a.id})">編集</button>
-            <button class="btn-sm danger" onclick="deleteArticle(${a.id})">削除</button>
+            <button class="btn-sm" style="background:var(--blue);color:white;" onclick="editArticle('${a.id}')">編集</button>
+            <button class="btn-sm danger" onclick="deleteArticle('${a.id}')">削除</button>
           </div>
         </div>`).join('');
     }
