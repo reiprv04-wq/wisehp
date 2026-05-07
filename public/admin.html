@@ -806,7 +806,7 @@
         </div>
         <!-- /sec-press -->
 
-        <button class="submit-btn" onclick="submitArticle()">記事を公開する</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitArticle()">記事を公開する</button>
       </div>
     </div>
 
@@ -952,6 +952,8 @@
     // ══════════════════════════════════════════
     // Submit
     // ══════════════════════════════════════════
+    let editingId = null; // null = new article, number = editing existing
+
     async function submitArticle() {
       const tpl     = document.getElementById('f-template').value;
       const dateVal = document.getElementById('f-date').value;
@@ -1065,31 +1067,62 @@
         };
       }
 
-      // Auto-generate slug: count existing articles of same template type
-      const { data: sameType } = await db.from('articles').select('id').filter('data->>template', 'eq', tpl);
-      const nextNum = (sameType ? sameType.length : 0) + 1;
-      const slug = tpl + nextNum;
-      document.getElementById('slug-preview').textContent = slug;
+      if (editingId) {
+        // ── UPDATE existing article ──
+        const { data: existing } = await db.from('articles').select('data').eq('id', editingId).maybeSingle();
+        const existingSlug = existing?.data?.slug;
 
-      const article = {
-        id:       Date.now(),
-        template: tpl,
-        date:     dateStr,
-        tag,
-        title,
-        slug,
-        excerpt,
-        img:      thumb,
-        ...specific,
-      };
+        const article = {
+          ...existing?.data,
+          template: tpl,
+          date:     dateStr,
+          tag,
+          title,
+          slug:     existingSlug,
+          excerpt,
+          img:      thumb || existing?.data?.img || '',
+          ...specific,
+        };
 
-      const { error: insertErr } = await db.from('articles').insert({ id: article.id, data: article });
-      if (insertErr) {
-        showToast('保存に失敗しました: ' + insertErr.message, 'error');
-        return;
+        const { error: updateErr } = await db.from('articles').update({ data: article }).eq('id', editingId);
+        if (updateErr) {
+          showToast('更新に失敗しました: ' + updateErr.message, 'error');
+          return;
+        }
+
+        showToast('記事を更新しました！', 'success');
+        editingId = null;
+        document.getElementById('submit-btn').textContent = '記事を公開する';
+        document.getElementById('slug-preview').textContent = '保存時に自動生成';
+
+      } else {
+        // ── INSERT new article ──
+        const { data: sameType } = await db.from('articles').select('id').filter('data->>template', 'eq', tpl);
+        const nextNum = (sameType ? sameType.length : 0) + 1;
+        const slug = tpl + nextNum;
+        document.getElementById('slug-preview').textContent = slug;
+
+        const article = {
+          id:       Date.now(),
+          template: tpl,
+          date:     dateStr,
+          tag,
+          title,
+          slug,
+          excerpt,
+          img:      thumb,
+          ...specific,
+        };
+
+        const { error: insertErr } = await db.from('articles').insert({ id: article.id, data: article });
+        if (insertErr) {
+          showToast('保存に失敗しました: ' + insertErr.message, 'error');
+          return;
+        }
+
+        showToast('記事を公開しました！', 'success');
       }
 
-      showToast('記事を公開しました！', 'success');
       resetForm();
       renderArticleList();
     }
@@ -1103,6 +1136,106 @@
       if (error) { showToast('削除に失敗しました', 'error'); return; }
       renderArticleList();
       showToast('記事を削除しました');
+    }
+
+    async function editArticle(id) {
+      const { data: row } = await db.from('articles').select('id, data').eq('id', id).maybeSingle();
+      if (!row) { showToast('記事が見つかりません', 'error'); return; }
+      const a = { ...row.data, id: row.id };
+
+      // Switch template and set common fields
+      document.getElementById('f-template').value = a.template || 'intern';
+      switchTemplate(a.template || 'intern');
+
+      const [y, m, d] = (a.date || '').split('.');
+      if (y && m && d) document.getElementById('f-date').value = `${y}-${m}-${d}`;
+      if (a.tag) document.getElementById('f-tag').value = a.tag;
+      if (a.excerpt) document.getElementById('f-excerpt').value = a.excerpt;
+
+      // Thumbnail
+      if (a.img) {
+        photoStore['thumb'] = a.img;
+        const prev = document.getElementById('thumb-preview');
+        const icon = document.getElementById('thumb-icon');
+        if (prev) { prev.src = a.img; prev.style.display = 'block'; }
+        if (icon) icon.style.display = 'none';
+      }
+
+      // Template-specific fields
+      const set = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.value = val || ''; };
+
+      if (a.template === 'intern') {
+        set('intern-catchcopy', a.catchcopy);
+        set('intern-dept', a.dept);
+        set('intern-nameEn', a.nameEn);
+        set('intern-nameJa', a.nameJa);
+        set('intern-university', a.university);
+        set('intern-reason', a.reason);
+        set('intern-work', a.work);
+        set('intern-bannerLabel', a.bannerLabel);
+        if (a.heroPhoto) { photoStore['intern-heroPhoto'] = a.heroPhoto; }
+        if (a.q1Photo)   { photoStore['intern-q1Photo']   = a.q1Photo; }
+        if (a.q4Photo)   { photoStore['intern-q4Photo']   = a.q4Photo; }
+        if (a.q5Photo)   { photoStore['intern-q5Photo']   = a.q5Photo; }
+        if (a.qa) a.qa.forEach((q, i) => {
+          const n = i + 1;
+          set(`intern-q${n}-q`, q.question);
+          set(`intern-q${n}-a`, q.answer);
+        });
+
+      } else if (a.template === 'alumni') {
+        set('alumni-catchcopy', a.catchcopy);
+        set('alumni-company', a.company);
+        set('alumni-nameEn', a.nameEn);
+        set('alumni-nameJa', a.nameJa);
+        set('alumni-university', a.university);
+        set('alumni-career', a.career);
+        set('alumni-wiseExp', a.wiseExp);
+        set('alumni-bannerLabel', a.bannerLabel);
+        if (a.heroPhoto) { photoStore['alumni-heroPhoto'] = a.heroPhoto; }
+        if (a.qa) a.qa.forEach((q, i) => {
+          const n = i + 1;
+          set(`alumni-q${n}-q`, q.question);
+          set(`alumni-q${n}-a`, q.answer);
+        });
+
+      } else if (a.template === 'event') {
+        set('event-eventTitle', a.eventTitle);
+        set('event-location', a.location);
+        set('event-overviewTitle', a.overviewTitle);
+        set('event-overviewText', a.overviewText);
+        set('event-reportLeft', a.reportLeft);
+        set('event-reportRight', a.reportRight);
+        set('event-pullQuote', a.pullQuote);
+        set('event-pullQuoteAttr', a.pullQuoteAttr);
+        set('event-closingText', a.closingText);
+        if (a.photo1) photoStore['event-photo1'] = a.photo1;
+        if (a.photo2) photoStore['event-photo2'] = a.photo2;
+        if (a.photo3) photoStore['event-photo3'] = a.photo3;
+
+      } else if (a.template === 'press') {
+        set('press-pressTitle', a.pressTitle);
+        set('press-mediaName', a.mediaName);
+        set('press-pressCategory', a.pressCategory);
+        set('press-urlVenue', a.urlVenue);
+        set('press-overviewText', a.overviewText);
+        set('press-detailText', a.detailText);
+        set('press-tags', a.tags);
+        set('press-sourceTitle', a.sourceTitle);
+        set('press-sourceUrl', a.sourceUrl);
+        if (a.photo1) photoStore['press-photo1'] = a.photo1;
+        if (a.photo2) photoStore['press-photo2'] = a.photo2;
+      }
+
+      // Update UI state
+      editingId = id;
+      document.getElementById('submit-btn').textContent = '記事を更新する';
+      const slugText = a.slug || '（スラッグなし）';
+      document.getElementById('slug-preview').textContent = slugText;
+
+      // Scroll to form
+      document.getElementById('submit-btn').scrollIntoView({ behavior: 'smooth', block: 'end' });
+      showToast('編集モードに切り替えました');
     }
 
     // ══════════════════════════════════════════
@@ -1138,7 +1271,8 @@
             <div class="article-item-title">${a.title || '（タイトルなし）'}</div>
           </div>
           <div class="article-item-actions">
-            <button class="btn-sm" onclick="window.open('article.html?id=${a.id}','_blank')">プレビュー</button>
+            <button class="btn-sm" onclick="window.open('${a.slug ? `/article/${a.slug}` : `article.html?id=${a.id}`}','_blank')">プレビュー</button>
+            <button class="btn-sm" style="background:var(--blue);color:white;" onclick="editArticle(${a.id})">編集</button>
             <button class="btn-sm danger" onclick="deleteArticle(${a.id})">削除</button>
           </div>
         </div>`).join('');
@@ -1148,6 +1282,9 @@
     // Reset form
     // ══════════════════════════════════════════
     function resetForm() {
+      editingId = null;
+      document.getElementById('submit-btn').textContent = '記事を公開する';
+
       // Clear photoStore
       Object.keys(photoStore).forEach(k => delete photoStore[k]);
 
