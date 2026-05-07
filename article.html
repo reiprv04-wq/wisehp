@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WISE Journal</title>
+  <meta name="description" id="meta-desc" content="WISEインターンシップの活動記録・メンバーインタビュー">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="WISE — インターンシップ">
+  <meta property="og:title" id="og-title" content="WISE Journal">
+  <meta property="og:description" id="og-desc" content="WISEインターンシップの活動記録・メンバーインタビュー">
+  <meta property="og:image" id="og-image" content="">
+  <meta property="og:url" id="og-url" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="tw-title" content="WISE Journal">
+  <meta name="twitter:description" id="tw-desc" content="WISEインターンシップの活動記録・メンバーインタビュー">
+  <meta name="twitter:image" id="tw-image" content="">
+  <link rel="canonical" id="canonical" href="">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -2048,10 +2060,44 @@
 
       const article = { ...row.data, id: row.id };
 
-      // Update breadcrumb title
+      // ── SEO meta tags ─────────────────────────
       const titleStr = article.title || article.catchcopy || article.eventTitle || article.pressTitle || '記事';
-      document.getElementById('bc-title').textContent = titleStr;
+      const descStr  = (article.excerpt || article.overviewText || article.detailText || '').slice(0, 120);
+      const imgStr   = article.img || article.heroPhoto || article.photo1 || '';
+      const pageUrl  = `https://wise.weby.co.jp/article.html?id=${id}`;
+
       document.title = `${titleStr} — WISE Journal`;
+      document.getElementById('bc-title').textContent = titleStr;
+
+      document.getElementById('meta-desc').content  = descStr;
+      document.getElementById('og-title').content   = `${titleStr} — WISE Journal`;
+      document.getElementById('og-desc').content    = descStr;
+      document.getElementById('og-image').content   = imgStr;
+      document.getElementById('og-url').content     = pageUrl;
+      document.getElementById('tw-title').content   = `${titleStr} — WISE Journal`;
+      document.getElementById('tw-desc').content    = descStr;
+      document.getElementById('tw-image').content   = imgStr;
+      document.getElementById('canonical').href     = pageUrl;
+
+      // JSON-LD structured data
+      const jsonld = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        'headline': titleStr,
+        'description': descStr,
+        'image': imgStr,
+        'datePublished': (article.date || '').replace(/\./g, '-'),
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'WISE インターンシップ',
+          'url': 'https://wise.weby.co.jp/'
+        },
+        'url': pageUrl
+      };
+      const s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.text = JSON.stringify(jsonld);
+      document.head.appendChild(s);
 
       let html = '';
       switch (article.template) {
