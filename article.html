@@ -2036,18 +2036,23 @@
     // ══════════════════════════════════════════
     (async function init() {
       const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
+      const id   = params.get('id');
+      const slug = params.get('slug');
       const root = document.getElementById('root');
 
-      if (!id) {
-        root.innerHTML = `<div class="not-found"><h2>記事が見つかりません</h2><p>URLにIDが指定されていません。</p><a href="wise.html">ホームに戻る</a></div>`;
+      if (!id && !slug) {
+        root.innerHTML = `<div class="not-found"><h2>記事が見つかりません</h2><p>URLにIDまたはスラッグが指定されていません。</p><a href="wise.html">ホームに戻る</a></div>`;
         return;
       }
 
       root.innerHTML = `<div style="text-align:center;padding:4rem;color:#888;">読み込み中…</div>`;
 
+      const articleQuery = slug
+        ? db.from('articles').select('id, data').filter('data->>slug', 'eq', slug).maybeSingle()
+        : db.from('articles').select('id, data').eq('id', id).maybeSingle();
+
       const [{ data: row, error }, { data: allRows }] = await Promise.all([
-        db.from('articles').select('id, data').eq('id', id).maybeSingle(),
+        articleQuery,
         db.from('articles').select('id, data').order('id', { ascending: false }),
       ]);
 
@@ -2064,7 +2069,9 @@
       const titleStr = article.title || article.catchcopy || article.eventTitle || article.pressTitle || '記事';
       const descStr  = (article.excerpt || article.overviewText || article.detailText || '').slice(0, 120);
       const imgStr   = article.img || article.heroPhoto || article.photo1 || '';
-      const pageUrl  = `https://wise.weby.co.jp/article.html?id=${id}`;
+      const pageUrl  = article.slug
+        ? `https://wise.weby.co.jp/article/${article.slug}`
+        : `https://wise.weby.co.jp/article.html?id=${article.id}`;
 
       document.title = `${titleStr} — WISE Journal`;
       document.getElementById('bc-title').textContent = titleStr;
