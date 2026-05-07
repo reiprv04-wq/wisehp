@@ -2988,16 +2988,6 @@
           <h2 class="events-heading">最新<br>ニュース</h2>
         </div>
         <div class="events-list">
-          <a href="#journal" class="event-item">
-            <span class="event-date">2026.04.01</span>
-            <span class="event-tag">RECRUIT</span>
-            <span class="event-title">2027年卒 新卒採用 本選考エントリーを開始しました</span>
-          </a>
-          <a href="#journal" class="event-item">
-            <span class="event-date">2026.03.15</span>
-            <span class="event-tag">EVENT</span>
-            <span class="event-title">会社説明会（オンライン）を開催します。ご参加お待ちしております</span>
-          </a>
           <div id="eventsList"></div>
         </div>
       </div>
@@ -3839,64 +3829,7 @@
     document.querySelectorAll('.infographic-section').forEach(el => infoObs.observe(el));
 
     // ── Shared Activity Data ──────────────────────────────────
-    const ACTIVITIES = [
-      {
-        date: '2026.03.28', tag: 'EVENT',
-        title: 'WISE × 〇〇大学 キャリアセミナーを開催しました',
-        excerpt: '〇〇大学にてWISEのメンバーが登壇し、実務経験と成長について学生と対話しました。',
-        img: './untitled%20folder/intern-photos/IMG_1958.JPG',
-        url: ''
-      },
-      {
-        date: '2026.03.15', tag: 'INTERN',
-        title: 'インターン生がマーケティング施策の成果発表を行いました',
-        excerpt: 'マーケティング部門のインターン生が3ヶ月間の取り組みをメンバー全員の前でプレゼンしました。',
-        img: './untitled%20folder/intern-photos/intern%201.JPG',
-        url: ''
-      },
-      {
-        date: '2026.02.20', tag: 'EVENT',
-        title: '社内交流イベント「WISE Meetup #03」を実施しました',
-        excerpt: '部門を超えたメンバーが集まり、プロジェクトのシェアやフリーディスカッションを行いました。',
-        img: './untitled%20folder/intern-photos/intern%202.JPG',
-        url: ''
-      },
-      {
-        date: '2026.01.30', tag: 'NEWS',
-        title: '2027年卒インターンシップ募集を開始しました',
-        excerpt: '今年度のインターンシップ生の募集を正式に開始。説明会の日程など詳細はこちらから。',
-        img: './untitled%20folder/event-photos/Copy%20of%20L1002568%20(1).jpg',
-        url: ''
-      },
-      {
-        date: '2025.12.10', tag: 'WORK',
-        title: 'マーケティング部門、SEO施策で流入数2.8倍を達成。',
-        excerpt: '4ヶ月間のPDCAサイクルの結果、自社メディアの月間オーガニック流入が大幅に増加しました。',
-        img: './untitled%20folder/member-photos/marketing.jpg',
-        url: ''
-      },
-      {
-        date: '2025.11.05', tag: 'ITS',
-        title: 'ITS部門、社内業務自動化プロジェクトを始動。',
-        excerpt: '定型業務のAI化に向けたプロトタイプ開発をスタート。将来的な外部展開を見据えた設計を進めています。',
-        img: './untitled%20folder/member-photos/iTS.JPG',
-        url: ''
-      },
-      {
-        date: '2025.10.01', tag: 'ALUMNI',
-        title: '卒業生インタビュー｜BCG内定　T.K.さんの軌跡',
-        excerpt: 'WISEでの実務経験がコンサルへの道を拓いた。インターン時代に培った思考力と、自走する力について語ってもらいました。',
-        img: './untitled%20folder/member-photos/sales.jpg',
-        url: ''
-      },
-      {
-        date: '2025.09.15', tag: 'ALUMNI',
-        title: '卒業生インタビュー｜三菱商事内定　A.M.さんが語るWISE',
-        excerpt: '「ここで働いた経験が、面接での一番の武器になった」。商社志望だった彼女がWISEで得たものとは。',
-        img: './untitled%20folder/member-photos/corporate.jpg',
-        url: ''
-      },
-    ];
+    const ACTIVITIES = [];
 
     // Merge admin articles from Supabase (async, then re-render)
     (async () => {
