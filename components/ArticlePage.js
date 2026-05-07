@@ -1,9 +1,19 @@
 import Head from 'next/head';
 import { useEffect } from 'react';
 
-export default function ArticlePage({ seo, bodyHtml }) {
+const TEMPLATE_CRUMB = {
+  intern: { label: 'インターン体験談', filter: 'INTERN' },
+  alumni: { label: 'OB・OG インタビュー', filter: 'ALUMNI' },
+  event:  { label: '社内イベント', filter: 'EVENT' },
+  press:  { label: 'プレス掲載', filter: 'NEWS' },
+};
+
+export default function ArticlePage({ article, seo, bodyHtml }) {
   const { title, description, image, pageUrl, jsonLd } = seo;
   const fullTitle = title + ' — WISE Journal';
+  const tpl = article?.template || 'intern';
+  const crumb = TEMPLATE_CRUMB[tpl] || { label: 'ジャーナル', filter: '' };
+  const journalUrl = crumb.filter ? `/?filter=${crumb.filter}#journal` : '/#journal';
 
   useEffect(() => {
     const hdr = document.getElementById('header');
@@ -72,7 +82,7 @@ export default function ArticlePage({ seo, bodyHtml }) {
       <nav className="breadcrumb">
         <a href="/">ホーム</a>
         <span>›</span>
-        <a href="/#journal">ジャーナル</a>
+        <a href={journalUrl}>{crumb.label}</a>
         <span>›</span>
         <span>{title}</span>
       </nav>
