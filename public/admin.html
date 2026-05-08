@@ -440,7 +440,7 @@
           <input type="text" id="f-subHeader" placeholder="タイトル下に表示されるサブタイトル（省略可）">
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="excerpt-group">
           <label>カード抜粋テキスト</label>
           <textarea id="f-excerpt" rows="3" placeholder="カードに表示される短い説明文（省略可）"></textarea>
         </div>
@@ -486,12 +486,14 @@
           <div class="section-sep">入社理由・業務内容</div>
 
           <div class="form-group">
-            <label>入社した理由</label>
-            <textarea id="intern-reason" rows="5" placeholder="入社した理由を入力してください。"></textarea>
+            <label>入社した理由 <span style="font-size:0.72rem;color:var(--muted);font-weight:400;">（質問文を変更可）</span></label>
+            <input type="text" id="intern-reasonQ" value="入社した理由" placeholder="質問文">
+            <textarea id="intern-reason" rows="5" placeholder="入社した理由を入力してください。" style="margin-top:6px;"></textarea>
           </div>
           <div class="form-group">
-            <label>具体的な業務とやりがい</label>
-            <textarea id="intern-work" rows="5" placeholder="業務内容ややりがいを入力してください。"></textarea>
+            <label>具体的な業務とやりがい <span style="font-size:0.72rem;color:var(--muted);font-weight:400;">（質問文を変更可）</span></label>
+            <input type="text" id="intern-workQ" value="具体的な業務とやりがい" placeholder="質問文">
+            <textarea id="intern-work" rows="5" placeholder="業務内容ややりがいを入力してください。" style="margin-top:6px;"></textarea>
           </div>
           <div class="form-group">
             <label>バナーラベル</label>
@@ -865,6 +867,9 @@
       const tagMap = { intern: 'INTERN', alumni: 'ALUMNI', event: 'EVENT', press: 'NEWS' };
       const tagEl = document.getElementById('f-tag');
       if (tagMap[tpl]) tagEl.value = tagMap[tpl];
+
+      const excerptGroup = document.getElementById('excerpt-group');
+      if (excerptGroup) excerptGroup.style.display = tpl === 'event' ? 'none' : '';
     }
 
     // ══════════════════════════════════════════
@@ -1009,7 +1014,9 @@
           nameJa:      document.getElementById('intern-nameJa').value.trim(),
           university:  document.getElementById('intern-university').value.trim(),
           heroPhoto:   photoStore['intern-heroPhoto'] || '',
+          reasonQ:     document.getElementById('intern-reasonQ').value.trim() || '入社した理由',
           reason:      document.getElementById('intern-reason').value.trim(),
+          workQ:       document.getElementById('intern-workQ').value.trim() || '具体的な業務とやりがい',
           work:        document.getElementById('intern-work').value.trim(),
           bannerLabel: document.getElementById('intern-bannerLabel').value.trim(),
           qa:          collectQA('intern', 5, true),
@@ -1104,22 +1111,28 @@
           ...specific,
         };
 
-        const { data: updatedRows, error: updateErr } = await db.from('articles').update({ data: article }).eq('id', editingId).select();
+        const updatedAt = Date.now();
+        article.updatedAt = updatedAt;
+
+        console.log('UPDATE id=', editingId, typeof editingId, article);
+        const { error: updateErr } = await db.from('articles').update({ data: article }).eq('id', editingId);
         if (updateErr) {
           showToast('更新に失敗しました: ' + updateErr.message, 'error');
           console.error('update error', updateErr);
           return;
         }
-        if (!updatedRows || updatedRows.length === 0) {
-          showToast('更新対象が見つかりません (id=' + editingId + ')', 'error');
-          console.warn('0 rows updated, editingId=', editingId);
+
+        // Verify the data was actually saved
+        const { data: verifyRow } = await db.from('articles').select('data').eq('id', editingId).maybeSingle();
+        if (verifyRow?.data?.updatedAt !== updatedAt) {
+          showToast('保存に失敗しました（Supabaseの権限設定をご確認ください）', 'error');
+          console.warn('verify failed: saved=', verifyRow?.data?.updatedAt, 'expected=', updatedAt);
           return;
         }
 
         showToast('記事を更新しました！', 'success');
-        editingId = null;
-        document.getElementById('submit-btn').textContent = '記事を公開する';
-        document.getElementById('slug-preview').textContent = '保存時に自動生成';
+        renderArticleList();
+        return;
 
       } else {
         // ── INSERT new article ──
@@ -1166,7 +1179,8 @@
       showToast('記事を削除しました');
     }
 
-    async function editArticle(id) {
+    async function editArticle(rawId) {
+      const id = isNaN(rawId) ? rawId : Number(rawId);
       const { data: row } = await db.from('articles').select('id, data').eq('id', id).maybeSingle();
       if (!row) { showToast('記事が見つかりません', 'error'); return; }
       const a = { ...row.data, id: row.id };
@@ -1211,7 +1225,9 @@
         set('intern-nameEn', a.nameEn);
         set('intern-nameJa', a.nameJa);
         set('intern-university', a.university);
+        set('intern-reasonQ', a.reasonQ || '入社した理由');
         set('intern-reason', a.reason);
+        set('intern-workQ', a.workQ || '具体的な業務とやりがい');
         set('intern-work', a.work);
         set('intern-bannerLabel', a.bannerLabel);
         setPhoto('intern-heroPhoto', a.heroPhoto);
