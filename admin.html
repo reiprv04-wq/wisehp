@@ -486,12 +486,14 @@
           <div class="section-sep">入社理由・業務内容</div>
 
           <div class="form-group">
-            <label>入社した理由</label>
-            <textarea id="intern-reason" rows="5" placeholder="入社した理由を入力してください。"></textarea>
+            <label>入社した理由 <span style="font-size:0.72rem;color:var(--muted);font-weight:400;">（質問文を変更可）</span></label>
+            <input type="text" id="intern-reasonQ" value="入社した理由" placeholder="質問文">
+            <textarea id="intern-reason" rows="5" placeholder="入社した理由を入力してください。" style="margin-top:6px;"></textarea>
           </div>
           <div class="form-group">
-            <label>具体的な業務とやりがい</label>
-            <textarea id="intern-work" rows="5" placeholder="業務内容ややりがいを入力してください。"></textarea>
+            <label>具体的な業務とやりがい <span style="font-size:0.72rem;color:var(--muted);font-weight:400;">（質問文を変更可）</span></label>
+            <input type="text" id="intern-workQ" value="具体的な業務とやりがい" placeholder="質問文">
+            <textarea id="intern-work" rows="5" placeholder="業務内容ややりがいを入力してください。" style="margin-top:6px;"></textarea>
           </div>
           <div class="form-group">
             <label>バナーラベル</label>
@@ -1012,7 +1014,9 @@
           nameJa:      document.getElementById('intern-nameJa').value.trim(),
           university:  document.getElementById('intern-university').value.trim(),
           heroPhoto:   photoStore['intern-heroPhoto'] || '',
+          reasonQ:     document.getElementById('intern-reasonQ').value.trim() || '入社した理由',
           reason:      document.getElementById('intern-reason').value.trim(),
+          workQ:       document.getElementById('intern-workQ').value.trim() || '具体的な業務とやりがい',
           work:        document.getElementById('intern-work').value.trim(),
           bannerLabel: document.getElementById('intern-bannerLabel').value.trim(),
           qa:          collectQA('intern', 5, true),
@@ -1221,7 +1225,9 @@
         set('intern-nameEn', a.nameEn);
         set('intern-nameJa', a.nameJa);
         set('intern-university', a.university);
+        set('intern-reasonQ', a.reasonQ || '入社した理由');
         set('intern-reason', a.reason);
+        set('intern-workQ', a.workQ || '具体的な業務とやりがい');
         set('intern-work', a.work);
         set('intern-bannerLabel', a.bannerLabel);
         setPhoto('intern-heroPhoto', a.heroPhoto);
