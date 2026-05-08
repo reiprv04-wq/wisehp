@@ -284,10 +284,9 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 16px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       transition: border-color 0.2s;
     }
     .article-item:hover { border-color: var(--accent); }
@@ -308,12 +307,14 @@
       border-radius: 3px;
     }
     .article-item-tpl {
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      padding: 2px 6px;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
       border-radius: 3px;
       color: white;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .tpl-intern  { background: #0ea5e9; }
     .tpl-alumni  { background: #8b5cf6; }
@@ -321,7 +322,7 @@
     .tpl-press   { background: #10b981; }
 
     .article-item-title { font-size: 0.85rem; font-weight: 600; color: var(--text); }
-    .article-item-actions { display: flex; gap: 6px; }
+    .article-item-actions { display: flex; gap: 6px; justify-content: flex-end; }
     .btn-sm {
       padding: 5px 10px;
       font-size: 0.72rem;
@@ -439,7 +440,7 @@
           <input type="text" id="f-subHeader" placeholder="タイトル下に表示されるサブタイトル（省略可）">
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="excerpt-group">
           <label>カード抜粋テキスト</label>
           <textarea id="f-excerpt" rows="3" placeholder="カードに表示される短い説明文（省略可）"></textarea>
         </div>
@@ -864,6 +865,9 @@
       const tagMap = { intern: 'INTERN', alumni: 'ALUMNI', event: 'EVENT', press: 'NEWS' };
       const tagEl = document.getElementById('f-tag');
       if (tagMap[tpl]) tagEl.value = tagMap[tpl];
+
+      const excerptGroup = document.getElementById('excerpt-group');
+      if (excerptGroup) excerptGroup.style.display = tpl === 'event' ? 'none' : '';
     }
 
     // ══════════════════════════════════════════
@@ -965,6 +969,11 @@
     let editingId = null; // null = new article, number = editing existing
 
     async function submitArticle() {
+      try { await _submitArticle(); }
+      catch(e) { showToast('エラー: ' + e.message, 'error'); console.error(e); }
+    }
+
+    async function _submitArticle() {
       const tpl       = document.getElementById('f-template').value;
       const dateVal   = document.getElementById('f-date').value;
       const tag       = document.getElementById('f-tag').value;
@@ -1098,16 +1107,28 @@
           ...specific,
         };
 
+        const updatedAt = Date.now();
+        article.updatedAt = updatedAt;
+
+        console.log('UPDATE id=', editingId, typeof editingId, article);
         const { error: updateErr } = await db.from('articles').update({ data: article }).eq('id', editingId);
         if (updateErr) {
           showToast('更新に失敗しました: ' + updateErr.message, 'error');
+          console.error('update error', updateErr);
+          return;
+        }
+
+        // Verify the data was actually saved
+        const { data: verifyRow } = await db.from('articles').select('data').eq('id', editingId).maybeSingle();
+        if (verifyRow?.data?.updatedAt !== updatedAt) {
+          showToast('保存に失敗しました（Supabaseの権限設定をご確認ください）', 'error');
+          console.warn('verify failed: saved=', verifyRow?.data?.updatedAt, 'expected=', updatedAt);
           return;
         }
 
         showToast('記事を更新しました！', 'success');
-        editingId = null;
-        document.getElementById('submit-btn').textContent = '記事を公開する';
-        document.getElementById('slug-preview').textContent = '保存時に自動生成';
+        renderArticleList();
+        return;
 
       } else {
         // ── INSERT new article ──
@@ -1154,7 +1175,8 @@
       showToast('記事を削除しました');
     }
 
-    async function editArticle(id) {
+    async function editArticle(rawId) {
+      const id = isNaN(rawId) ? rawId : Number(rawId);
       const { data: row } = await db.from('articles').select('id, data').eq('id', id).maybeSingle();
       if (!row) { showToast('記事が見つかりません', 'error'); return; }
       const a = { ...row.data, id: row.id };
@@ -1184,6 +1206,14 @@
 
       // Template-specific fields
       const set = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.value = val || ''; };
+      const setPhoto = (slotName, url) => {
+        if (!url) return;
+        photoStore[slotName] = url;
+        const prev = document.getElementById(`prev-${slotName}`);
+        const icon = document.getElementById(`icon-${slotName}`);
+        if (prev) { prev.src = url; prev.style.display = 'block'; }
+        if (icon) icon.style.display = 'none';
+      };
 
       if (a.template === 'intern') {
         set('intern-catchcopy', a.catchcopy);
@@ -1194,14 +1224,24 @@
         set('intern-reason', a.reason);
         set('intern-work', a.work);
         set('intern-bannerLabel', a.bannerLabel);
-        if (a.heroPhoto) { photoStore['intern-heroPhoto'] = a.heroPhoto; }
-        if (a.q1Photo)   { photoStore['intern-q1Photo']   = a.q1Photo; }
-        if (a.q4Photo)   { photoStore['intern-q4Photo']   = a.q4Photo; }
-        if (a.q5Photo)   { photoStore['intern-q5Photo']   = a.q5Photo; }
+        setPhoto('intern-heroPhoto', a.heroPhoto);
+        setPhoto('intern-q1Photo', a.q1Photo);
+        setPhoto('intern-q4Photo', a.q4Photo);
+        setPhoto('intern-q5Photo', a.q5Photo);
         if (a.qa) a.qa.forEach((q, i) => {
           const n = i + 1;
           set(`intern-q${n}-q`, q.question);
           set(`intern-q${n}-a`, q.answer);
+        });
+        // Restore schedule
+        const schedList = document.getElementById('intern-scheduleList');
+        schedList.innerHTML = '';
+        const schedItems = a.schedule && a.schedule.length ? a.schedule : [{ time: '', content: '' }];
+        schedItems.forEach(s => {
+          const item = document.createElement('div');
+          item.className = 'schedule-item';
+          item.innerHTML = `<input type="text" placeholder="10:00" class="s-time" value="${(s.time || '').replace(/"/g,'&quot;')}"><input type="text" placeholder="内容を入力" class="s-content" value="${(s.content || '').replace(/"/g,'&quot;')}"><button class="remove-row" onclick="removeRow(this)">×</button>`;
+          schedList.appendChild(item);
         });
 
       } else if (a.template === 'alumni') {
@@ -1213,7 +1253,7 @@
         set('alumni-career', a.career);
         set('alumni-wiseExp', a.wiseExp);
         set('alumni-bannerLabel', a.bannerLabel);
-        if (a.heroPhoto) { photoStore['alumni-heroPhoto'] = a.heroPhoto; }
+        setPhoto('alumni-heroPhoto', a.heroPhoto);
         if (a.qa) a.qa.forEach((q, i) => {
           const n = i + 1;
           set(`alumni-q${n}-q`, q.question);
@@ -1230,9 +1270,9 @@
         set('event-pullQuote', a.pullQuote);
         set('event-pullQuoteAttr', a.pullQuoteAttr);
         set('event-closingText', a.closingText);
-        if (a.photo1) photoStore['event-photo1'] = a.photo1;
-        if (a.photo2) photoStore['event-photo2'] = a.photo2;
-        if (a.photo3) photoStore['event-photo3'] = a.photo3;
+        setPhoto('event-photo1', a.photo1);
+        setPhoto('event-photo2', a.photo2);
+        setPhoto('event-photo3', a.photo3);
 
       } else if (a.template === 'press') {
         set('press-pressTitle', a.pressTitle);
@@ -1244,8 +1284,19 @@
         set('press-tags', a.tags);
         set('press-sourceTitle', a.sourceTitle);
         set('press-sourceUrl', a.sourceUrl);
-        if (a.photo1) photoStore['press-photo1'] = a.photo1;
-        if (a.photo2) photoStore['press-photo2'] = a.photo2;
+        setPhoto('press-photo1', a.photo1);
+        setPhoto('press-photo2', a.photo2);
+        // Restore related links
+        if (a.relatedLinks && a.relatedLinks.length) {
+          const linkList = document.getElementById('press-linkList');
+          linkList.innerHTML = '';
+          a.relatedLinks.forEach(l => {
+            const item = document.createElement('div');
+            item.className = 'link-item';
+            item.innerHTML = `<input type="text" placeholder="リンクのテキスト" class="link-text" value="${(l.text || '').replace(/"/g,'&quot;')}"><input type="text" placeholder="https://..." class="link-url" value="${(l.url || '').replace(/"/g,'&quot;')}"><button class="remove-row" onclick="removeRow(this)">×</button>`;
+            linkList.appendChild(item);
+          });
+        }
       }
 
       // Update UI state
@@ -1293,8 +1344,8 @@
           </div>
           <div class="article-item-actions">
             <button class="btn-sm" onclick="window.open('${a.slug ? `/article/${a.slug}` : `article.html?id=${a.id}`}','_blank')">プレビュー</button>
-            <button class="btn-sm" style="background:var(--blue);color:white;" onclick="editArticle(${a.id})">編集</button>
-            <button class="btn-sm danger" onclick="deleteArticle(${a.id})">削除</button>
+            <button class="btn-sm" style="background:var(--blue);color:white;" onclick="editArticle('${a.id}')">編集</button>
+            <button class="btn-sm danger" onclick="deleteArticle('${a.id}')">削除</button>
           </div>
         </div>`).join('');
     }
