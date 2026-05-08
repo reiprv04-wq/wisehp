@@ -3872,6 +3872,10 @@
 
     // Journal Cards rendered via renderJournal() after filters init
 
+    // ── Journal Carousel state ────────────────────────────────
+    let _carouselCurrent = 0;
+    let _carouselListeners = false;
+
     // ── Journal Filter ────────────────────────────────────────
     function renderJournal(filter) {
       const filtered = filter === 'ALL' ? ACTIVITIES : ACTIVITIES.filter(a => a.tag === filter);
@@ -3920,9 +3924,6 @@
     }
 
     // ── Journal Carousel ──────────────────────────────────────
-    let _carouselCurrent = 0;
-    let _carouselListeners = false;
-
     function initJournalCarousel() {
       const outer   = document.getElementById('journalOuter');
       const track   = document.getElementById('journalTrack');
