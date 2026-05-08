@@ -3882,8 +3882,8 @@
                 <span class="journal-card-date">${a.date}</span>
                 <span class="journal-card-tag">${a.tag}</span>
               </div>
-              <h3 class="journal-card-title">${a.title}</h3>
-              <p class="journal-card-excerpt">${a.excerpt}</p>
+              <h3 class="journal-card-title">${a.cardTitle || a.title || ''}</h3>
+              <p class="journal-card-excerpt">${a.subHeader || ''}</p>
               <span class="journal-card-arrow">READ MORE →</span>
             </div>
           </a>`;

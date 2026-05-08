@@ -440,11 +440,6 @@
           <input type="text" id="f-subHeader" placeholder="タイトル下に表示されるサブタイトル（省略可）">
         </div>
 
-        <div class="form-group" id="excerpt-group">
-          <label>カード抜粋テキスト</label>
-          <textarea id="f-excerpt" rows="3" placeholder="カードに表示される短い説明文（省略可）"></textarea>
-        </div>
-
         <!-- ════ INTERN SECTION ════ -->
         <div class="tpl-section active" id="sec-intern">
           <div class="section-sep">ヒーロー情報</div>
@@ -868,8 +863,6 @@
       const tagEl = document.getElementById('f-tag');
       if (tagMap[tpl]) tagEl.value = tagMap[tpl];
 
-      const excerptGroup = document.getElementById('excerpt-group');
-      if (excerptGroup) excerptGroup.style.display = tpl === 'event' ? 'none' : '';
     }
 
     // ══════════════════════════════════════════
@@ -979,7 +972,6 @@
       const tpl       = document.getElementById('f-template').value;
       const dateVal   = document.getElementById('f-date').value;
       const tag       = document.getElementById('f-tag').value;
-      const excerpt   = document.getElementById('f-excerpt').value.trim();
       const cardTitle = document.getElementById('f-title').value.trim();
       const subHeader = document.getElementById('f-subHeader').value.trim();
 
@@ -1106,7 +1098,6 @@
           cardTitle,
           subHeader,
           slug:       existingSlug,
-          excerpt,
           img:        thumb || existing?.data?.img || '',
           ...specific,
         };
@@ -1150,7 +1141,6 @@
           cardTitle,
           subHeader,
           slug,
-          excerpt,
           img:       thumb,
           ...specific,
         };
@@ -1192,7 +1182,6 @@
       const [y, m, d] = (a.date || '').split('.');
       if (y && m && d) document.getElementById('f-date').value = `${y}-${m}-${d}`;
       if (a.tag) document.getElementById('f-tag').value = a.tag;
-      if (a.excerpt) document.getElementById('f-excerpt').value = a.excerpt;
 
       // Common title / subHeader
       if (a.cardTitle) document.getElementById('f-title').value = a.cardTitle;
@@ -1372,7 +1361,6 @@
       switchTemplate('intern');
       document.getElementById('f-title').value = '';
       document.getElementById('f-subHeader').value = '';
-      document.getElementById('f-excerpt').value = '';
       document.getElementById('slug-preview').textContent = '保存時に自動生成';
 
       // Reset thumb
