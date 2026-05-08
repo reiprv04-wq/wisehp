@@ -3449,8 +3449,12 @@
         </div>
         <div class="journal-nav">
           <span class="journal-nav-count" id="journalCount">1 / 6</span>
-          <button class="journal-nav-btn" id="journalPrev">←</button>
-          <button class="journal-nav-btn" id="journalNext">→</button>
+          <button class="journal-nav-btn" id="journalPrev">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="journal-nav-btn" id="journalNext">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>
     </div>
@@ -3888,11 +3892,7 @@
             </div>
           </a>`;
       });
-      const countEl = document.getElementById('journalCount');
-      if (countEl) countEl.textContent = `1 / ${filtered.length}`;
-      // reset carousel position
-      const t = document.getElementById('journalTrack');
-      if (t) t.style.transform = 'translateX(0)';
+      initJournalCarousel();
     }
 
     document.querySelectorAll('.j-filter').forEach(btn => {
@@ -3920,7 +3920,10 @@
     }
 
     // ── Journal Carousel ──────────────────────────────────────
-    (function() {
+    let _carouselCurrent = 0;
+    let _carouselListeners = false;
+
+    function initJournalCarousel() {
       const outer   = document.getElementById('journalOuter');
       const track   = document.getElementById('journalTrack');
       const prev    = document.getElementById('journalPrev');
@@ -3928,51 +3931,34 @@
       const countEl = document.getElementById('journalCount');
       const cards   = track.querySelectorAll('.journal-card');
       const total   = cards.length;
-      if (countEl) countEl.textContent = `1 / ${total}`;
-      const CARD_W  = 360 + 24; // card width + gap
-      let current   = 0;
+      const CARD_W  = 360 + 24;
+      _carouselCurrent = 0;
 
       function goTo(n) {
-        const max = total - Math.floor(outer.offsetWidth / CARD_W);
-        current = Math.max(0, Math.min(n, max));
-        track.style.transform = `translateX(-${current * CARD_W}px)`;
-        countEl.textContent = `${current + 1} / ${total}`;
+        const visible = Math.floor(outer.offsetWidth / CARD_W) || 1;
+        const max = Math.max(0, total - visible);
+        _carouselCurrent = Math.max(0, Math.min(n, max));
+        track.style.transform = `translateX(-${_carouselCurrent * CARD_W}px)`;
+        if (countEl) countEl.textContent = `${_carouselCurrent + 1} / ${total}`;
       }
 
-      prev.addEventListener('click', () => goTo(current - 1));
-      next.addEventListener('click', () => goTo(current + 1));
+      goTo(0);
 
-      // drag / swipe
-      let startX = 0, dragging = false, startOffset = 0;
+      if (!_carouselListeners) {
+        _carouselListeners = true;
+        prev.addEventListener('click', () => goTo(_carouselCurrent - 1));
+        next.addEventListener('click', () => goTo(_carouselCurrent + 1));
 
-      outer.addEventListener('mousedown', e => {
-        dragging = true; startX = e.clientX;
-        startOffset = current * CARD_W;
-        track.style.transition = 'none';
-      });
-      outer.addEventListener('mousemove', e => {
-        if (!dragging) return;
-        track.style.transform = `translateX(-${startOffset - (e.clientX - startX)}px)`;
-      });
-      outer.addEventListener('mouseup', e => {
-        if (!dragging) return;
-        dragging = false;
-        track.style.transition = '';
-        const diff = e.clientX - startX;
-        if (Math.abs(diff) > 60) goTo(diff < 0 ? current + 1 : current - 1);
-        else goTo(current);
-      });
-      outer.addEventListener('mouseleave', () => { if (dragging) { dragging = false; track.style.transition = ''; goTo(current); } });
-
-      outer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startOffset = current * CARD_W; track.style.transition = 'none'; }, {passive:true});
-      outer.addEventListener('touchmove',  e => { track.style.transform = `translateX(-${startOffset - (e.touches[0].clientX - startX)}px)`; }, {passive:true});
-      outer.addEventListener('touchend',   e => {
-        track.style.transition = '';
-        const diff = e.changedTouches[0].clientX - startX;
-        if (Math.abs(diff) > 60) goTo(diff < 0 ? current + 1 : current - 1);
-        else goTo(current);
-      });
-    })();
+        let startX = 0, dragging = false, startOffset = 0;
+        outer.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; startOffset = _carouselCurrent * CARD_W; track.style.transition = 'none'; });
+        outer.addEventListener('mousemove', e => { if (!dragging) return; track.style.transform = `translateX(-${startOffset - (e.clientX - startX)}px)`; });
+        outer.addEventListener('mouseup', e => { if (!dragging) return; dragging = false; track.style.transition = ''; const diff = e.clientX - startX; if (Math.abs(diff) > 60) goTo(diff < 0 ? _carouselCurrent + 1 : _carouselCurrent - 1); else goTo(_carouselCurrent); });
+        outer.addEventListener('mouseleave', () => { if (dragging) { dragging = false; track.style.transition = ''; goTo(_carouselCurrent); } });
+        outer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startOffset = _carouselCurrent * CARD_W; track.style.transition = 'none'; }, {passive:true});
+        outer.addEventListener('touchmove',  e => { track.style.transform = `translateX(-${startOffset - (e.touches[0].clientX - startX)}px)`; }, {passive:true});
+        outer.addEventListener('touchend',   e => { track.style.transition = ''; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 60) goTo(diff < 0 ? _carouselCurrent + 1 : _carouselCurrent - 1); else goTo(_carouselCurrent); });
+      }
+    }
 
     // ── Department Modal ──────────────────────────────────────
     function openDept(key) {
