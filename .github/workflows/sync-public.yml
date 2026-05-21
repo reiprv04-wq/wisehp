@@ -1,0 +1,34 @@
+name: Sync public/ to root for GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/wise.html'
+      - 'public/article.html'
+      - 'public/admin.html'
+      - 'public/departments.js'
+      - 'public/untitled folder/**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy public/ files to root
+        run: |
+          cp public/wise.html wise.html
+          cp public/article.html article.html
+          cp public/admin.html admin.html
+          cp public/departments.js departments.js
+          cp -r "public/untitled folder" .
+
+      - name: Commit and push if changed
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Actions"
+          git add wise.html article.html admin.html departments.js "untitled folder"
+          git diff-index --quiet HEAD || git commit -m "Auto-sync public/ to root [skip ci]" && git push
