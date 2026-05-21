@@ -3930,7 +3930,10 @@
     }
 
     function renderJournal(filter) {
-      const filtered = filter === 'ALL' ? ACTIVITIES : ACTIVITIES.filter(a => a.tag === filter);
+      const isAlumni = a => a.tag === 'ALUMNI' || a.template === 'alumni';
+      const filtered = filter === 'ALL'
+        ? ACTIVITIES.filter(a => !isAlumni(a))
+        : ACTIVITIES.filter(a => a.tag === filter);
       const track = document.getElementById('journalTrack');
       track.innerHTML = '';
       filtered.forEach(a => {
