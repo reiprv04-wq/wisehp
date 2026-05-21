@@ -311,6 +311,75 @@
     }
 
     /* ════════════════════════════════════════
+       HERO — intern / alumni (split: white left / photo right)
+    ════════════════════════════════════════ */
+    .art-hero.intern-hero,
+    .art-hero.alumni-hero {
+      background: #dde8f5;
+    }
+    .art-hero.intern-hero::before,
+    .art-hero.alumni-hero::before {
+      display: none;
+    }
+    .art-hero.intern-hero .h-bg,
+    .art-hero.alumni-hero .h-bg {
+      background: #dde8f5;
+    }
+    .art-hero.intern-hero .h-bg-img,
+    .art-hero.alumni-hero .h-bg-img {
+      top: 0; right: 0; bottom: 0; left: auto;
+      width: 68%;
+      object-fit: cover;
+      object-position: center center;
+      transform: scale(1.25);
+      transform-origin: center center;
+    }
+    .art-hero.intern-hero .h-grad,
+    .art-hero.alumni-hero .h-grad {
+      background: linear-gradient(
+        to right,
+        #dde8f5 0%,
+        #dde8f5 28%,
+        rgba(221,232,245,0.85) 40%,
+        rgba(221,232,245,0.3)  52%,
+        rgba(221,232,245,0)    65%
+      );
+    }
+    .art-hero.intern-hero .hero-badge,
+    .art-hero.alumni-hero .hero-badge {
+      color: rgba(15,23,42,0.45);
+    }
+    .art-hero.intern-hero,
+    .art-hero.alumni-hero {
+      height: clamp(580px, 50vw, 680px);
+    }
+    .art-hero.intern-hero .hero-headline-text,
+    .art-hero.alumni-hero .hero-headline-text {
+      color: #0f172a;
+      font-size: clamp(1.9rem, 2.4vw, 3rem);
+      line-height: 1.45;
+      margin-bottom: 24px;
+    }
+    .art-hero.intern-hero .hero-name-en-text,
+    .art-hero.alumni-hero .hero-name-en-text {
+      color: rgba(15,23,42,0.38);
+    }
+    .art-hero.intern-hero .hero-name-ja-text,
+    .art-hero.alumni-hero .hero-name-ja-text {
+      color: #0f172a;
+    }
+    .art-hero.intern-hero .hero-univ-text,
+    .art-hero.intern-hero .hero-meta-text,
+    .art-hero.alumni-hero .hero-univ-text,
+    .art-hero.alumni-hero .hero-meta-text {
+      color: rgba(15,23,42,0.5);
+    }
+    .art-hero.intern-hero .scroll-line,
+    .art-hero.alumni-hero .scroll-line {
+      background: rgba(15,23,42,0.07);
+    }
+
+    /* ════════════════════════════════════════
        HERO — event (centered)
     ════════════════════════════════════════ */
     .art-hero.event-hero {

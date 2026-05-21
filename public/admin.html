@@ -162,6 +162,22 @@
       transition: border-color 0.2s;
     }
     .compact-upload-trigger:hover { border-color: var(--accent); }
+    .photo-clear-btn {
+      position: absolute; top: 4px; right: 4px;
+      width: 20px; height: 20px;
+      background: rgba(10,10,10,0.72); color: #fff;
+      border: none; border-radius: 50%;
+      font-size: 13px; line-height: 20px; text-align: center;
+      cursor: pointer; z-index: 10; display: none; padding: 0;
+    }
+    .photo-clear-btn:hover { background: #d00; }
+    .clear-photos-btn {
+      display: block; width: 100%; padding: 10px; margin-bottom: 10px;
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--line-gray); border-radius: 6px;
+      font-size: 0.85rem; cursor: pointer; transition: all 0.15s;
+    }
+    .clear-photos-btn:hover { color: #d00; border-color: #d00; }
     .compact-upload-trigger input {
       position: absolute;
       inset: 0;
@@ -445,8 +461,8 @@
           <div class="section-sep">ヒーロー情報</div>
 
           <div class="form-group">
-            <label>キャッチコピー</label>
-            <textarea id="intern-catchcopy" rows="2" placeholder="例：挑戦する場所が、自分を変える。"></textarea>
+            <label>キャッチコピー <span style="font-size:0.72rem;color:var(--muted);font-weight:400;">（最大20文字）</span><span id="intern-catchcopy-count" style="float:right;font-size:0.72rem;color:var(--muted);font-weight:400;">0 / 20</span></label>
+            <textarea id="intern-catchcopy" rows="2" placeholder="例：挑戦する場所が、自分を変える。" maxlength="20" oninput="document.getElementById('intern-catchcopy-count').textContent=this.value.length+' / 20';"></textarea>
           </div>
           <div class="form-group">
             <label>部門</label>
@@ -573,8 +589,8 @@
           <div class="section-sep">ヒーロー情報</div>
 
           <div class="form-group">
-            <label>キャッチコピー</label>
-            <textarea id="alumni-catchcopy" rows="2" placeholder="例：WISEで育てた力が、今の自分を支えている。"></textarea>
+            <label>キャッチコピー <span style="font-size:0.72rem;color:var(--muted);font-weight:400;">（最大20文字）</span><span id="alumni-catchcopy-count" style="float:right;font-size:0.72rem;color:var(--muted);font-weight:400;">0 / 20</span></label>
+            <textarea id="alumni-catchcopy" rows="2" placeholder="例：WISEで育てた力が、今の自分を支えている。" maxlength="20" oninput="document.getElementById('alumni-catchcopy-count').textContent=this.value.length+' / 20';"></textarea>
           </div>
           <div class="form-group">
             <label>入社先・会社名</label>
@@ -606,16 +622,6 @@
             </div>
           </div>
 
-          <div class="section-sep">キャリア・経験</div>
-
-          <div class="form-group">
-            <label>現在の仕事・キャリア</label>
-            <textarea id="alumni-career" rows="5" placeholder="現在の仕事やキャリアについて入力してください。"></textarea>
-          </div>
-          <div class="form-group">
-            <label>WISEでの経験</label>
-            <textarea id="alumni-wiseExp" rows="5" placeholder="WISEでのインターン経験について入力してください。"></textarea>
-          </div>
           <div class="form-group">
             <label>バナーラベル</label>
             <input type="text" id="alumni-bannerLabel" placeholder="From WISE to the World">
@@ -814,6 +820,7 @@
         </div>
         <!-- /sec-press -->
 
+        <button type="button" class="clear-photos-btn" onclick="clearAllPhotos()">全写真をクリア</button>
         <button class="submit-btn" id="submit-btn" onclick="submitArticle()">記事を公開する</button>
       </div>
     </div>
@@ -898,6 +905,7 @@
         if (prevEl)   { prevEl.src = publicUrl; prevEl.style.display = 'block'; }
         if (iconEl)   iconEl.style.display = 'none';
         if (thumbIcon && slotName === 'thumb') thumbIcon.style.display = 'none';
+        showClearBtn(slotName, prevEl);
       } catch (err) {
         const msg = err?.message || err?.error_description || JSON.stringify(err);
         showToast('写真のアップロードに失敗しました: ' + msg, 'error');
@@ -905,6 +913,45 @@
         if (iconEl)   iconEl.textContent = '📷';
         if (thumbIcon && slotName === 'thumb') thumbIcon.textContent = '📷';
       }
+    }
+
+    // ══════════════════════════════════════════
+    // Photo clear helpers
+    // ══════════════════════════════════════════
+    function showClearBtn(slotName, anchorEl) {
+      if (!anchorEl) return;
+      const trigger = slotName === 'thumb' ? document.getElementById('thumb-trigger')
+                                           : (anchorEl.closest('.compact-upload-trigger') || anchorEl.parentElement);
+      if (!trigger) return;
+      let btn = trigger.querySelector('.photo-clear-btn');
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'photo-clear-btn';
+        btn.textContent = '×';
+        btn.dataset.slot = slotName;
+        btn.addEventListener('click', e => { e.stopPropagation(); clearPhoto(slotName); });
+        trigger.appendChild(btn);
+      }
+      btn.style.display = 'block';
+    }
+
+    function clearPhoto(slotName) {
+      delete photoStore[slotName];
+      const isThumb = slotName === 'thumb';
+      const prevEl  = isThumb ? document.getElementById('thumb-preview') : document.getElementById('prev-' + slotName);
+      const iconEl  = isThumb ? document.getElementById('thumb-icon')    : document.getElementById('icon-' + slotName);
+      if (prevEl) { prevEl.src = ''; prevEl.style.display = 'none'; }
+      if (iconEl) { iconEl.style.display = ''; iconEl.textContent = '📷'; }
+      const trigger = isThumb ? document.getElementById('thumb-trigger')
+                               : (prevEl?.closest('.compact-upload-trigger') || prevEl?.parentElement);
+      if (trigger) { const btn = trigger.querySelector('.photo-clear-btn'); if (btn) btn.style.display = 'none'; }
+    }
+
+    function clearAllPhotos() {
+      ['thumb','intern-heroPhoto','intern-q1Photo','intern-q4Photo','intern-q5Photo',
+       'alumni-heroPhoto','event-photo1','event-photo2','event-photo3','press-photo1','press-photo2']
+        .forEach(s => clearPhoto(s));
     }
 
     // ══════════════════════════════════════════
@@ -1030,8 +1077,6 @@
           nameJa:      document.getElementById('alumni-nameJa').value.trim(),
           university:  document.getElementById('alumni-university').value.trim(),
           heroPhoto:   photoStore['alumni-heroPhoto'] || '',
-          career:      document.getElementById('alumni-career').value.trim(),
-          wiseExp:     document.getElementById('alumni-wiseExp').value.trim(),
           bannerLabel: document.getElementById('alumni-bannerLabel').value.trim(),
           qa:          collectQA('alumni', 5, false),
         };
@@ -1198,7 +1243,14 @@
       }
 
       // Template-specific fields
-      const set = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.value = val || ''; };
+      const set = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val !== undefined) {
+          el.value = val || '';
+          const counter = document.getElementById(id + '-count');
+          if (counter && el.maxLength > 0) counter.textContent = el.value.length + ' / ' + el.maxLength;
+        }
+      };
       const setPhoto = (slotName, url) => {
         if (!url) return;
         photoStore[slotName] = url;
@@ -1206,6 +1258,7 @@
         const icon = document.getElementById(`icon-${slotName}`);
         if (prev) { prev.src = url; prev.style.display = 'block'; }
         if (icon) icon.style.display = 'none';
+        showClearBtn(slotName, prev);
       };
 
       if (a.template === 'intern') {
@@ -1245,8 +1298,6 @@
         set('alumni-nameEn', a.nameEn);
         set('alumni-nameJa', a.nameJa);
         set('alumni-university', a.university);
-        set('alumni-career', a.career);
-        set('alumni-wiseExp', a.wiseExp);
         set('alumni-bannerLabel', a.bannerLabel);
         setPhoto('alumni-heroPhoto', a.heroPhoto);
         if (a.qa) a.qa.forEach((q, i) => {
@@ -1338,7 +1389,7 @@
             <div class="article-item-title">${a.title || '（タイトルなし）'}</div>
           </div>
           <div class="article-item-actions">
-            <button class="btn-sm" onclick="window.open('${a.slug ? `/article/${a.slug}` : `article.html?id=${a.id}`}','_blank')">プレビュー</button>
+            <button class="btn-sm" onclick="window.open('${a.slug ? `article.html?slug=${a.slug}` : `article.html?id=${a.id}`}','_blank')">プレビュー</button>
             <button class="btn-sm" style="background:var(--blue);color:white;" onclick="editArticle('${a.id}')">編集</button>
             <button class="btn-sm danger" onclick="deleteArticle('${a.id}')">削除</button>
           </div>
@@ -1368,6 +1419,8 @@
       const thumbIcon = document.getElementById('thumb-icon');
       if (thumbPrev) { thumbPrev.style.display = 'none'; thumbPrev.src = ''; }
       if (thumbIcon) thumbIcon.style.display = '';
+      const thumbTrigger = document.getElementById('thumb-trigger');
+      if (thumbTrigger) { const b = thumbTrigger.querySelector('.photo-clear-btn'); if (b) b.style.display = 'none'; }
 
       // Reset all text inputs and textareas in template sections
       document.querySelectorAll('.tpl-section input[type="text"], .tpl-section input[type="url"], .tpl-section textarea').forEach(el => {
@@ -1376,6 +1429,8 @@
 
       // Restore default Q values
       const defaultQA = {
+        'intern-reasonQ': '入社した理由',
+        'intern-workQ': '具体的な業務とやりがい',
         'intern-q1-q': 'ご自身から見たWISEとはどのような組織ですか',
         'intern-q2-q': 'WISEでどういうところが一番成長したか',
         'intern-q3-q': '将来の展望を教えてください',
@@ -1398,6 +1453,9 @@
       });
       document.querySelectorAll('.tpl-section .compact-upload-trigger .compact-upload-icon').forEach(ic => {
         ic.style.display = '';
+      });
+      document.querySelectorAll('.tpl-section .compact-upload-trigger .photo-clear-btn').forEach(btn => {
+        btn.style.display = 'none';
       });
 
       // Reset intern schedule list

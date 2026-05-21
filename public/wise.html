@@ -3127,7 +3127,7 @@
     </div>
     <div class="gallery-full reveal">
       <div class="gallery-item">
-        <img src="./untitled%20folder/facility%20photos/サブ２.png" alt="オフィスロビー">
+        <img src="./untitled%20folder/facility%20photos/facility-lobby.png" alt="オフィスロビー">
         <div class="g-label">
           <span class="g-loc">TOKYO / 01</span>
           <h3 class="g-title">LOBBY</h3>
@@ -3876,6 +3876,19 @@
     let _carouselCurrent = 0;
     let _carouselListeners = false;
 
+    function _journalGoTo(n) {
+      const track   = document.getElementById('journalTrack');
+      const outer   = document.getElementById('journalOuter');
+      const countEl = document.getElementById('journalCount');
+      const CARD_W  = 384;
+      const total   = track ? track.querySelectorAll('.journal-card').length : 0;
+      const visible = outer ? (Math.floor(outer.offsetWidth / CARD_W) || 1) : 1;
+      const max = Math.max(0, total - visible);
+      _carouselCurrent = Math.max(0, Math.min(n, max));
+      if (track) track.style.transform = `translateX(-${_carouselCurrent * CARD_W}px)`;
+      if (countEl) countEl.textContent = `${_carouselCurrent + 1} / ${total}`;
+    }
+
     // ── Journal Filter ────────────────────────────────────────
     function renderJournal(filter) {
       const filtered = filter === 'ALL' ? ACTIVITIES : ACTIVITIES.filter(a => a.tag === filter);
@@ -3883,7 +3896,7 @@
       track.innerHTML = '';
       filtered.forEach(a => {
         track.innerHTML += `
-          <a href="${a.slug ? `/article/${a.slug}` : a.id ? `/article?id=${a.id}` : (a.url || '#')}" ${!a.id && !a.slug && a.url ? 'target="_blank" rel="noopener"' : ''} class="journal-card">
+          <a href="${a.slug ? `article.html?slug=${a.slug}` : a.id ? `article.html?id=${a.id}` : (a.url || '#')}" ${!a.id && !a.slug && a.url ? 'target="_blank" rel="noopener"' : ''} class="journal-card">
             <div class="journal-card-img"><img src="${a.img}" alt=""></div>
             <div class="journal-card-body">
               <div class="journal-card-meta">
@@ -3925,39 +3938,26 @@
 
     // ── Journal Carousel ──────────────────────────────────────
     function initJournalCarousel() {
-      const outer   = document.getElementById('journalOuter');
-      const track   = document.getElementById('journalTrack');
-      const prev    = document.getElementById('journalPrev');
-      const next    = document.getElementById('journalNext');
-      const countEl = document.getElementById('journalCount');
-      const cards   = track.querySelectorAll('.journal-card');
-      const total   = cards.length;
-      const CARD_W  = 360 + 24;
       _carouselCurrent = 0;
-
-      function goTo(n) {
-        const visible = Math.floor(outer.offsetWidth / CARD_W) || 1;
-        const max = Math.max(0, total - visible);
-        _carouselCurrent = Math.max(0, Math.min(n, max));
-        track.style.transform = `translateX(-${_carouselCurrent * CARD_W}px)`;
-        if (countEl) countEl.textContent = `${_carouselCurrent + 1} / ${total}`;
-      }
-
-      goTo(0);
+      _journalGoTo(0);
 
       if (!_carouselListeners) {
         _carouselListeners = true;
-        prev.addEventListener('click', () => goTo(_carouselCurrent - 1));
-        next.addEventListener('click', () => goTo(_carouselCurrent + 1));
+        const prev  = document.getElementById('journalPrev');
+        const next  = document.getElementById('journalNext');
+        const outer = document.getElementById('journalOuter');
 
-        let startX = 0, dragging = false, startOffset = 0;
-        outer.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; startOffset = _carouselCurrent * CARD_W; track.style.transition = 'none'; });
-        outer.addEventListener('mousemove', e => { if (!dragging) return; track.style.transform = `translateX(-${startOffset - (e.clientX - startX)}px)`; });
-        outer.addEventListener('mouseup', e => { if (!dragging) return; dragging = false; track.style.transition = ''; const diff = e.clientX - startX; if (Math.abs(diff) > 60) goTo(diff < 0 ? _carouselCurrent + 1 : _carouselCurrent - 1); else goTo(_carouselCurrent); });
-        outer.addEventListener('mouseleave', () => { if (dragging) { dragging = false; track.style.transition = ''; goTo(_carouselCurrent); } });
-        outer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startOffset = _carouselCurrent * CARD_W; track.style.transition = 'none'; }, {passive:true});
-        outer.addEventListener('touchmove',  e => { track.style.transform = `translateX(-${startOffset - (e.touches[0].clientX - startX)}px)`; }, {passive:true});
-        outer.addEventListener('touchend',   e => { track.style.transition = ''; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 60) goTo(diff < 0 ? _carouselCurrent + 1 : _carouselCurrent - 1); else goTo(_carouselCurrent); });
+        prev.addEventListener('click', () => _journalGoTo(_carouselCurrent - 1));
+        next.addEventListener('click', () => _journalGoTo(_carouselCurrent + 1));
+
+        let startX = 0, dragging = false;
+        outer.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; document.getElementById('journalTrack').style.transition = 'none'; });
+        outer.addEventListener('mousemove', e => { if (!dragging) return; const off = _carouselCurrent * 384; document.getElementById('journalTrack').style.transform = `translateX(-${off - (e.clientX - startX)}px)`; });
+        outer.addEventListener('mouseup', e => { if (!dragging) return; dragging = false; document.getElementById('journalTrack').style.transition = ''; const diff = e.clientX - startX; if (Math.abs(diff) > 60) _journalGoTo(diff < 0 ? _carouselCurrent + 1 : _carouselCurrent - 1); else _journalGoTo(_carouselCurrent); });
+        outer.addEventListener('mouseleave', () => { if (dragging) { dragging = false; document.getElementById('journalTrack').style.transition = ''; _journalGoTo(_carouselCurrent); } });
+        outer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; document.getElementById('journalTrack').style.transition = 'none'; }, {passive:true});
+        outer.addEventListener('touchmove',  e => { const off = _carouselCurrent * 384; document.getElementById('journalTrack').style.transform = `translateX(-${off - (e.touches[0].clientX - startX)}px)`; }, {passive:true});
+        outer.addEventListener('touchend',   e => { document.getElementById('journalTrack').style.transition = ''; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 60) _journalGoTo(diff < 0 ? _carouselCurrent + 1 : _carouselCurrent - 1); else _journalGoTo(_carouselCurrent); });
       }
     }
 

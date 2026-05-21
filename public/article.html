@@ -2058,7 +2058,12 @@
 
       _allArticles = allRows ? allRows.map(r => ({ ...r.data, id: r.id })) : [];
 
-      if (error || !row) {
+      if (error) {
+        console.error('Supabase error:', error);
+        root.innerHTML = `<div class="not-found"><h2>読み込みエラー</h2><p>記事を読み込めませんでした。しばらく待ってから再試行してください。</p><a href="wise.html#journal">ジャーナルに戻る</a></div>`;
+        return;
+      }
+      if (!row) {
         root.innerHTML = `<div class="not-found"><h2>記事が見つかりません</h2><p>この記事は存在しないか、削除されました。</p><a href="wise.html#journal">ジャーナルに戻る</a></div>`;
         return;
       }
