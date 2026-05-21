@@ -1652,9 +1652,6 @@
       const q4 = qGet(3);
       const q5 = qGet(4);
 
-      const [q2a, q2b] = splitParas(q2.answer || '');
-      const [q3a, q3b] = splitParas(q3.answer || '');
-
       return `
         <section class="art-hero">
           <div class="h-bg"></div>
@@ -1791,19 +1788,6 @@
           </div>
           <div class="scroll-line"><div class="scroll-line-fill"></div></div>
         </section>
-
-        <div class="main-box">
-          <div class="main-box-col">
-            <span class="col-eyebrow">CURRENT CAREER</span>
-            <div class="col-title-label">現在の仕事・キャリア</div>
-            ${textToParas(a.career || '', 'dark-text')}
-          </div>
-          <div class="main-box-col">
-            <span class="col-eyebrow">WISE EXPERIENCE</span>
-            <div class="col-title-label">WISEでの経験</div>
-            ${textToParas(a.wiseExp || '', 'dark-text')}
-          </div>
-        </div>
 
         <div class="banner">
           <div class="banner-line"></div>

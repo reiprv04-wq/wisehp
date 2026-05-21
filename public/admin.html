@@ -611,18 +611,6 @@
             <input type="text" id="alumni-university" placeholder="○○大学 ○○学部 ○○年卒">
           </div>
           <div class="form-group">
-            <label>ヒーロー写真</label>
-            <div class="compact-upload">
-              <div class="compact-upload-trigger">
-                <span class="compact-upload-icon" id="icon-alumni-heroPhoto">📷</span>
-                <img id="prev-alumni-heroPhoto" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <input type="file" accept="image/*" onchange="uploadPhoto('alumni-heroPhoto', this)">
-              </div>
-              <div class="compact-upload-meta"><strong>クリックして選択</strong><br>ヒーロー背景画像</div>
-            </div>
-          </div>
-
-          <div class="form-group">
             <label>バナーラベル</label>
             <input type="text" id="alumni-bannerLabel" placeholder="From WISE to the World">
           </div>
@@ -870,8 +858,8 @@
       const tagEl = document.getElementById('f-tag');
       if (tagMap[tpl]) tagEl.value = tagMap[tpl];
 
-      const thumbGroup = document.getElementById('thumb-group');
-      if (thumbGroup) thumbGroup.style.display = tpl === 'alumni' ? 'none' : '';
+      const thumbGroup = document.getElementById('thumb-trigger');
+      if (thumbGroup) thumbGroup.parentElement.style.display = tpl === 'alumni' ? 'none' : '';
     }
 
     // ══════════════════════════════════════════
@@ -952,7 +940,7 @@
 
     function clearAllPhotos() {
       ['thumb','intern-heroPhoto','intern-q1Photo','intern-q4Photo','intern-q5Photo',
-       'alumni-heroPhoto','event-photo1','event-photo2','event-photo3','press-photo1','press-photo2']
+       'event-photo1','event-photo2','event-photo3','press-photo1','press-photo2']
         .forEach(s => clearPhoto(s));
     }
 
@@ -1078,7 +1066,6 @@
           nameEn:      document.getElementById('alumni-nameEn').value.trim(),
           nameJa:      document.getElementById('alumni-nameJa').value.trim(),
           university:  document.getElementById('alumni-university').value.trim(),
-          heroPhoto:   photoStore['alumni-heroPhoto'] || '',
           bannerLabel: document.getElementById('alumni-bannerLabel').value.trim(),
           qa:          collectQA('alumni', 5, false),
         };
@@ -1301,7 +1288,6 @@
         set('alumni-nameJa', a.nameJa);
         set('alumni-university', a.university);
         set('alumni-bannerLabel', a.bannerLabel);
-        setPhoto('alumni-heroPhoto', a.heroPhoto);
         if (a.qa) a.qa.forEach((q, i) => {
           const n = i + 1;
           set(`alumni-q${n}-q`, q.question);
