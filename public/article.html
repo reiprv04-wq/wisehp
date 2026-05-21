@@ -54,11 +54,11 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 90px;
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 60px;
+      padding: 0 52px;
       z-index: 1000;
       transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
     }
@@ -74,7 +74,7 @@
     }
 
     .logo img {
-      height: 56px;
+      height: 52px;
       display: block;
       object-fit: contain;
     }
@@ -86,17 +86,20 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 36px;
+      gap: 44px;
+    }
+
+    #header nav a {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      text-decoration: none;
+      transition: color 0.2s;
     }
 
     #header.top-transparent nav a {
-      font-family: var(--font-en);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
       color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      transition: color 0.2s;
     }
 
     #header.top-transparent nav a:hover {
@@ -104,13 +107,7 @@
     }
 
     #header.scrolled nav a {
-      font-family: var(--font-en);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
       color: var(--navy);
-      text-decoration: none;
-      transition: color 0.2s;
     }
 
     #header.scrolled nav a:hover {
@@ -127,7 +124,7 @@
        BREADCRUMB
     ════════════════════════════════════════ */
     .breadcrumb {
-      margin-top: 90px;
+      margin-top: 80px;
       padding: 14px 80px;
       font-family: var(--font-en);
       font-size: 0.62rem;
@@ -714,19 +711,20 @@
     }
 
     .layout-single {
-      max-width: 780px;
+      max-width: 680px;
+      margin: 0 auto;
     }
 
     .layout-two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 72px;
+      gap: 56px;
     }
 
     .layout-asymmetric {
       display: grid;
       grid-template-columns: 3fr 2fr;
-      gap: 72px;
+      gap: 56px;
     }
 
     /* img-box */
@@ -1707,7 +1705,7 @@
             </div>
           </div>
 
-          <!-- Q2: 2-col + watermark -->
+          <!-- Q2: watermark -->
           <div class="qa-block watermark-wrap">
             <div class="watermark">WISE</div>
             <div class="qa-head">
@@ -1715,22 +1713,20 @@
               <div class="qa-head-divider"></div>
               <span class="qa-question-text">${esc(q2.question || '')}</span>
             </div>
-            <div class="layout-full">
-              <div class="qa-text-col">${textToParas(q2a, 'qa-p')}</div>
-              <div class="qa-text-col">${textToParas(q2b || q2.answer || '', 'qa-p')}</div>
+            <div class="layout-single">
+              <div class="qa-text-col">${textToParas(q2.answer || '', 'qa-p')}</div>
             </div>
           </div>
 
-          <!-- Q3: 2-col -->
+          <!-- Q3 -->
           <div class="qa-block">
             <div class="qa-head">
               <span class="qa-num">Q — 03</span>
               <div class="qa-head-divider"></div>
               <span class="qa-question-text">${esc(q3.question || '')}</span>
             </div>
-            <div class="layout-full">
-              <div class="qa-text-col">${textToParas(q3a, 'qa-p')}</div>
-              <div class="qa-text-col">${textToParas(q3b || q3.answer || '', 'qa-p')}</div>
+            <div class="layout-single">
+              <div class="qa-text-col">${textToParas(q3.answer || '', 'qa-p')}</div>
             </div>
           </div>
 
@@ -1780,9 +1776,6 @@
       const q4 = qGet(3);
       const q5 = qGet(4);
 
-      const [q2a, q2b] = splitParas(q2.answer || '');
-      const [q3a, q3b] = splitParas(q3.answer || '');
-      const [q4a, q4b] = splitParas(q4.answer || '');
 
       return `
         <section class="art-hero alumni-hero">
@@ -1832,7 +1825,7 @@
             </div>
           </div>
 
-          <!-- Q2: two-col + watermark -->
+          <!-- Q2: watermark -->
           <div class="qa-block watermark-wrap">
             <div class="watermark">WISE</div>
             <div class="qa-head">
@@ -1840,35 +1833,32 @@
               <div class="qa-head-divider"></div>
               <span class="qa-question-text">${esc(q2.question || '')}</span>
             </div>
-            <div class="layout-two-col">
-              <div class="qa-text-col">${textToParas(q2a, 'qa-p')}</div>
-              <div class="qa-text-col">${textToParas(q2b || q2.answer || '', 'qa-p')}</div>
+            <div class="layout-single">
+              <div class="qa-text-col">${textToParas(q2.answer || '', 'qa-p')}</div>
             </div>
           </div>
 
-          <!-- Q3: two-col -->
+          <!-- Q3 -->
           <div class="qa-block">
             <div class="qa-head">
               <span class="qa-num">Q — 03</span>
               <div class="qa-head-divider"></div>
               <span class="qa-question-text">${esc(q3.question || '')}</span>
             </div>
-            <div class="layout-two-col">
-              <div class="qa-text-col">${textToParas(q3a, 'qa-p')}</div>
-              <div class="qa-text-col">${textToParas(q3b || q3.answer || '', 'qa-p')}</div>
+            <div class="layout-single">
+              <div class="qa-text-col">${textToParas(q3.answer || '', 'qa-p')}</div>
             </div>
           </div>
 
-          <!-- Q4: asymmetric -->
+          <!-- Q4 -->
           <div class="qa-block">
             <div class="qa-head">
               <span class="qa-num">Q — 04</span>
               <div class="qa-head-divider"></div>
               <span class="qa-question-text">${esc(q4.question || '')}</span>
             </div>
-            <div class="layout-asymmetric">
-              <div class="qa-text-col">${textToParas(q4a, 'qa-p')}</div>
-              <div class="qa-text-col">${textToParas(q4b || q4.answer || '', 'qa-p')}</div>
+            <div class="layout-single">
+              <div class="qa-text-col">${textToParas(q4.answer || '', 'qa-p')}</div>
             </div>
           </div>
 
