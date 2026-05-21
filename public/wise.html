@@ -1123,6 +1123,41 @@
       color: var(--wise-accent);
     }
 
+    .journal-card-alumni-cover {
+      height: 220px;
+      background: #0D0D0D;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .journal-card-alumni-cover::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: #FF1F4B;
+    }
+    .journal-card-alumni-cover-initials {
+      font-family: var(--font-en);
+      font-size: 3.8rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .journal-card-alumni-cover-catchcopy {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.1em;
+      padding: 0 24px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
     .journal-nav {
       display: flex;
       align-items: center;
@@ -3890,14 +3925,24 @@
     }
 
     // ── Journal Filter ────────────────────────────────────────
+    function _alumniInitials(nameEn) {
+      return (nameEn || '').trim().split(/\s+/).filter(Boolean).map(w => w[0]).join('.').toUpperCase() + '.';
+    }
+
     function renderJournal(filter) {
       const filtered = filter === 'ALL' ? ACTIVITIES : ACTIVITIES.filter(a => a.tag === filter);
       const track = document.getElementById('journalTrack');
       track.innerHTML = '';
       filtered.forEach(a => {
+        const coverHtml = (a.tag === 'ALUMNI' || a.template === 'alumni')
+          ? `<div class="journal-card-alumni-cover">
+               <span class="journal-card-alumni-cover-initials">${_alumniInitials(a.nameEn)}</span>
+               ${a.catchcopy ? `<span class="journal-card-alumni-cover-catchcopy">${a.catchcopy}</span>` : ''}
+             </div>`
+          : `<div class="journal-card-img"><img src="${a.img}" alt=""></div>`;
         track.innerHTML += `
           <a href="${a.slug ? `article.html?slug=${a.slug}` : a.id ? `article.html?id=${a.id}` : (a.url || '#')}" ${!a.id && !a.slug && a.url ? 'target="_blank" rel="noopener"' : ''} class="journal-card">
-            <div class="journal-card-img"><img src="${a.img}" alt=""></div>
+            ${coverHtml}
             <div class="journal-card-body">
               <div class="journal-card-meta">
                 <span class="journal-card-date">${a.date}</span>

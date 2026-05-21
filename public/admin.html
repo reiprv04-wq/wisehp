@@ -870,6 +870,8 @@
       const tagEl = document.getElementById('f-tag');
       if (tagMap[tpl]) tagEl.value = tagMap[tpl];
 
+      const thumbGroup = document.getElementById('thumb-group');
+      if (thumbGroup) thumbGroup.style.display = tpl === 'alumni' ? 'none' : '';
     }
 
     // ══════════════════════════════════════════

@@ -333,6 +333,56 @@
     }
 
     /* ════════════════════════════════════════
+       HERO — alumni (centered, dark navy)
+    ════════════════════════════════════════ */
+    .art-hero.alumni-hero {
+      background: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .art-hero.alumni-hero::before {
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .art-hero.alumni-hero .h-bg {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 60%);
+    }
+    .art-hero.alumni-hero .h-body {
+      position: static;
+      padding: 0;
+      max-width: 760px;
+      width: 100%;
+      text-align: center;
+      z-index: 3;
+    }
+    .art-hero.alumni-hero .hero-badge {
+      border-bottom-color: #FF1F4B;
+      color: rgba(255,255,255,0.7);
+    }
+    .art-hero.alumni-hero .hero-headline-text { color: #fff; }
+    .art-hero.alumni-hero .hero-name-en-text  { color: rgba(255,255,255,0.45); }
+    .art-hero.alumni-hero .hero-name-ja-text  { color: #fff; font-size: 1.8rem; }
+    .art-hero.alumni-hero .hero-meta-text     { color: rgba(255,255,255,0.38); }
+    .art-hero.alumni-hero .scroll-line-fill   { background: #FF1F4B; }
+
+    .alumni-hero-mono {
+      position: absolute;
+      right: -1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-en);
+      font-size: 20rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.04);
+      letter-spacing: -0.02em;
+      z-index: 1;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ════════════════════════════════════════
        HERO — event (centered)
     ════════════════════════════════════════ */
     .art-hero.event-hero {
@@ -1536,6 +1586,10 @@
         </div>`;
     }
 
+    function _artAlumniInitials(nameEn) {
+      return (nameEn || '').trim().split(/\s+/).filter(Boolean).map(w => w[0]).join('').toUpperCase();
+    }
+
     let _allArticles = [];
 
     function renderRelated(currentId) {
@@ -1726,10 +1780,9 @@
       const [q4a, q4b] = splitParas(q4.answer || '');
 
       return `
-        <section class="art-hero">
+        <section class="art-hero alumni-hero">
           <div class="h-bg"></div>
-          ${heroPhotoSrc ? `<img class="h-bg-img" src="${esc(heroPhotoSrc)}" alt="">` : ''}
-          <div class="h-grad"></div>
+          <div class="alumni-hero-mono">${_artAlumniInitials(a.nameEn)}</div>
           <div class="h-body">
             <span class="hero-badge">ALUMNI</span>
             <div class="hero-headline-text">${esc(a.catchcopy || '')}</div>
