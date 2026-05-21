@@ -3880,7 +3880,7 @@
         const eventsList = document.getElementById('eventsList');
         if (eventsList) {
           eventsList.innerHTML = '';
-          ACTIVITIES.slice(0, 4).forEach(a => {
+          ACTIVITIES.filter(a => a.tag !== 'ALUMNI' && a.template !== 'alumni').slice(0, 4).forEach(a => {
             eventsList.innerHTML += `
               <a href="#journal" class="event-item">
                 <span class="event-date">${a.date}</span>

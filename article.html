@@ -1696,10 +1696,7 @@
               <div class="qa-head-divider"></div>
               <span class="qa-question-text">${esc(q1.question || '')}</span>
             </div>
-            <div class="layout-img-left">
-              ${imgBox(a.q1Photo || q1.photo || '')}
-              <div class="qa-text-col">${textToParas(q1.answer || '', 'qa-p')}</div>
-            </div>
+            ${(a.q1Photo || q1.photo) ? `<div class="layout-img-left">${imgBox(a.q1Photo || q1.photo || '')}<div class="qa-text-col">${textToParas(q1.answer || '', 'qa-p')}</div></div>` : `<div class="layout-single"><div class="qa-text-col">${textToParas(q1.answer || '', 'qa-p')}</div></div>`}
           </div>
 
           <!-- Q2: watermark -->
@@ -1734,10 +1731,7 @@
               <div class="qa-head-divider"></div>
               <span class="qa-question-text">${esc(q4.question || '')}</span>
             </div>
-            <div class="layout-img-right">
-              <div class="qa-text-col">${textToParas(q4.answer || '', 'qa-p')}</div>
-              ${imgBox(a.q4Photo || q4.photo || '')}
-            </div>
+            ${(a.q4Photo || q4.photo) ? `<div class="layout-img-right"><div class="qa-text-col">${textToParas(q4.answer || '', 'qa-p')}</div>${imgBox(a.q4Photo || q4.photo || '')}</div>` : `<div class="layout-single"><div class="qa-text-col">${textToParas(q4.answer || '', 'qa-p')}</div></div>`}
           </div>
 
           <!-- Q5: img-left -->
@@ -1747,10 +1741,7 @@
               <div class="qa-head-divider"></div>
               <span class="qa-question-text">${esc(q5.question || '')}</span>
             </div>
-            <div class="layout-img-left">
-              ${imgBox(a.q5Photo || q5.photo || '')}
-              <div class="qa-text-col">${textToParas(q5.answer || '', 'qa-p')}</div>
-            </div>
+            ${(a.q5Photo || q5.photo) ? `<div class="layout-img-left">${imgBox(a.q5Photo || q5.photo || '')}<div class="qa-text-col">${textToParas(q5.answer || '', 'qa-p')}</div></div>` : `<div class="layout-single"><div class="qa-text-col">${textToParas(q5.answer || '', 'qa-p')}</div></div>`}
           </div>
 
         </div>
@@ -1764,7 +1755,6 @@
     // Render: alumni
     // ══════════════════════════════════════════
     function renderAlumni(a) {
-      const heroPhotoSrc = a.heroPhoto || '';
       const q = (a.qa || []);
       const qGet = (i) => q[i] || {};
       const q1 = qGet(0);
