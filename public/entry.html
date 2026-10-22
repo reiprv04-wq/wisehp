@@ -234,13 +234,12 @@
     /* ---------- Responsive ---------- */
     /* Tablet & mobile: app-like single screen. Only the form body scrolls if a step is taller than the screen. */
     @media (max-width: 900px) {
-      :root { --header-h: 54px; }
-      .site-header { padding: 0 20px 0 16px; }
-      .logo img { height: 40px; }
+      /* No header on mobile: give the whole screen to the form (WISE links remain on the thanks screen) */
+      :root { --header-h: 0px; }
+      .site-header { display: none; }
       .page { display: flex; flex-direction: column; gap: 0; padding: 0; align-items: stretch; }
       .side { padding: 14px 20px 0; background: #fff; }
       .side-title, .side-lead, .explore { display: none; }
-      .header-link { font-family: var(--font-serif); font-size: .74rem; letter-spacing: .06em; color: var(--wise-navy); padding: 6px 12px; border: 1px solid var(--line-gray); }
       .thanks-links { grid-template-columns: 1fr; }
       .thanks-links a { display: flex; gap: 12px; align-items: center; text-align: left; padding: 12px 16px; }
       .thanks-links .en { min-width: 8.5em; }
