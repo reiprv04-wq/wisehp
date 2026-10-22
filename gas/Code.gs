@@ -4,6 +4,9 @@
  * entry.html から送信された回答を
  *   1. スプレッドシート「管理表」タブに1行追記（A〜J列のみ。K列以降は数式・選考管理用なので触らない）
  *   2. 1次・2次面談用の「面談シート」（Googleドキュメント）を自動生成し、リンクを同じ行に記録
+ *   3. 応募者に「一次面談のご案内」メールを送る（wiseintern.recruit@gmail.com の gas-mail スクリプト経由）
+ *
+ * MAIL_SECRET と MAIL_ENDPOINT は secret.gs に置く（公開リポジトリには上げない）
  */
 
 const SPREADSHEET_ID = '1b5VqS9XDjFlYes0QMA5Cpy8CLSiq8lGUu4GTdt0ODDY';
@@ -56,6 +59,14 @@ function doPost(e) {
       lastWarning_ = `doc: ${err}`;
     }
     appendRow_(record);
+
+    // メールが送れなくても、エントリー自体は受け付け済みにする
+    try {
+      sendGuideMail_(data);
+    } catch (err) {
+      console.error('案内メール送信エラー', err);
+      lastWarning_ = `mail: ${err}`;
+    }
     return json_(lastWarning_ ? { ok: true, warning: lastWarning_ } : { ok: true });
   } catch (err) {
     console.error(err);
@@ -237,10 +248,28 @@ function createInterviewSheet_(r, d) {
   return `https://docs.google.com/document/d/${doc.getId()}/edit`; // 管理表の既存リンクと同じ形式
 }
 
+/* ---------- 一次面談のご案内メール ---------- */
+
+function sendGuideMail_(d) {
+  const res = UrlFetchApp.fetch(MAIL_ENDPOINT, {
+    method: 'post',
+    contentType: 'text/plain',
+    payload: JSON.stringify({ secret: MAIL_SECRET, to: d.email, name: `${d.lastName} ${d.firstName}` }),
+    muteHttpExceptions: true
+  });
+  const result = JSON.parse(res.getContentText());
+  if (!result.ok) throw new Error(result.error);
+}
+
 let lastWarning_ = '';
 
 function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+/* ---------- 初回だけエディタで実行：外部への接続（メール送信スクリプトの呼び出し）を許可する ---------- */
+function authorizeMail() {
+  console.log(UrlFetchApp.fetch(MAIL_ENDPOINT, { method: 'post', payload: '{}', muteHttpExceptions: true }).getContentText());
 }
 
 /* ---------- 動作確認用：エディタで実行するとテスト行と面談シートが1件作られる ---------- */
