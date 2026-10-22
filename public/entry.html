@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ENTRY | WISE インターンシップ・新卒採用</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wise-navy: #0F172A;
+      --wise-blue: #1E40AF;
+      --wise-accent: #3B82F6;
+      --text-gray: #475569;
+      --muted: #94A3B8;
+      --line-gray: #E2E8F0;
+      --bg-soft: #F8FAFC;
+      --font-en: 'Times New Roman', 'Georgia', serif;
+      --font-serif: 'Noto Serif JP', 'Source Han Serif JP', serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --header-h: 75px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font-serif);
+      color: var(--wise-navy);
+      background: var(--bg-soft);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+    a { color: inherit; }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      height: var(--header-h);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 60px 0 32px;
+      background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line-gray);
+    }
+    /* Logo: same as wise.html header (scrolled state) */
+    .logo { display: block; text-decoration: none; line-height: 0; }
+    .logo img { height: 64px; object-fit: contain; }
+    .header-link { font-family: var(--font-en); font-size: .75rem; letter-spacing: .3em; text-decoration: none; color: var(--text-gray); }
+    .header-link:hover { color: var(--wise-navy); }
+
+    /* ---------- Layout ---------- */
+    .page {
+      height: calc(100dvh - var(--header-h));
+      max-width: 1180px; margin: 0 auto; padding: clamp(20px, 4vh, 48px) 40px;
+      display: grid; grid-template-columns: 320px 1fr; gap: 60px; align-items: center;
+    }
+
+    .side-label { font-family: var(--font-en); font-weight: 900; font-size: .8rem; letter-spacing: .55em; color: var(--wise-blue); display: block; }
+    .side-title { font-size: clamp(1.4rem, 2vw, 1.75rem); font-weight: 900; letter-spacing: .08em; line-height: 1.6; margin-top: 10px; white-space: nowrap; }
+    .side-lead { font-size: .88rem; color: var(--text-gray); margin: 10px 0 clamp(18px, 4vh, 36px); letter-spacing: .05em; }
+    .side-lead strong { font-family: var(--font-en); font-size: 1.3rem; color: var(--wise-navy); margin-right: 2px; }
+
+    .stepper { list-style: none; border-left: 1px solid var(--line-gray); }
+    .stepper li { position: relative; padding: 0 0 clamp(12px, 2.6vh, 26px) 28px; color: var(--muted); transition: color .4s; }
+    .stepper li:last-child { padding-bottom: 0; }
+    .stepper li::before {
+      content: ''; position: absolute; left: -6px; top: 7px; width: 11px; height: 11px; border-radius: 50%;
+      background: var(--bg-soft); border: 1px solid var(--muted); transition: all .4s;
+    }
+    .stepper li.is-active, .stepper li.is-done { color: var(--wise-navy); }
+    .stepper li.is-active::before { background: var(--wise-blue); border-color: var(--wise-blue); box-shadow: 0 0 0 6px rgba(30,64,175,.12); }
+    .stepper li.is-done::before { background: var(--wise-navy); border-color: var(--wise-navy); }
+    .stepper .s-en { font-family: var(--font-en); font-size: .7rem; letter-spacing: .4em; font-weight: 700; display: block; line-height: 1.4; }
+    .stepper .s-ja { font-size: 1rem; font-weight: 700; letter-spacing: .08em; }
+
+    .explore { margin-top: clamp(16px, 3.5vh, 36px); padding-top: clamp(12px, 2.4vh, 22px); border-top: 1px solid var(--line-gray); }
+    .explore-label { display: block; font-family: var(--font-en); font-size: .7rem; letter-spacing: .4em; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+    .explore a {
+      display: flex; justify-content: space-between; align-items: center; padding: clamp(4px, .9vh, 8px) 0;
+      font-size: .88rem; letter-spacing: .06em; text-decoration: none; color: var(--wise-navy);
+      border-bottom: 1px solid transparent; transition: color .3s, padding .4s var(--ease);
+    }
+    .explore a:hover { color: var(--wise-accent); padding-left: 6px; }
+    .explore .ext { font-family: var(--font-en); color: var(--wise-accent); }
+    /* ---------- Card ---------- */
+    .form-card {
+      background: #fff; border: 1px solid var(--line-gray);
+      box-shadow: 0 30px 60px -30px rgba(15,23,42,.18);
+      max-height: 100%; display: flex; flex-direction: column; min-height: 0;
+    }
+    .progress { height: 3px; background: var(--line-gray); flex-shrink: 0; }
+    .progress-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--wise-blue), var(--wise-accent)); transition: width .6s var(--ease); }
+    .form-head { display: flex; justify-content: space-between; align-items: baseline; padding: 28px 52px 0; flex-shrink: 0; }
+    .form-head .count { font-family: var(--font-en); font-size: .8rem; letter-spacing: .3em; color: var(--muted); }
+    .form-head .count b { font-size: 1.7rem; color: var(--wise-navy); letter-spacing: 0; margin-right: 4px; }
+    .form-head .pct { font-family: var(--font-en); font-size: .8rem; letter-spacing: .2em; color: var(--wise-accent); font-weight: 700; }
+
+    .form-body { overflow-y: auto; min-height: 0; flex: 1; }
+    .step { display: none; padding: 22px 52px 16px; animation: stepIn .6s var(--ease); }
+    .step.is-current { display: block; }
+    @keyframes stepIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: none; } }
+    .step-title { font-size: 1.4rem; font-weight: 900; letter-spacing: .1em; line-height: 1.5; }
+    .step-desc { color: var(--text-gray); font-size: .86rem; margin: 4px 0 32px; }
+
+    .field { margin-bottom: 30px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .field-row > *, .form-card, .input { min-width: 0; }
+    .label { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: .88rem; letter-spacing: .08em; margin-bottom: 10px; }
+    .label small { font-weight: 400; color: var(--muted); font-size: .75rem; letter-spacing: .04em; }
+    .req { font-size: .64rem; padding: 1px 7px; letter-spacing: .1em; font-weight: 700; background: var(--wise-navy); color: #fff; }
+
+    .input {
+      width: 100%; font: inherit; font-size: 1rem; color: var(--wise-navy);
+      padding: 14px 18px; border: 1px solid var(--line-gray); background: var(--bg-soft);
+      transition: border-color .3s, background .3s, box-shadow .3s; border-radius: 0; appearance: none;
+    }
+    .input::placeholder { color: #CBD5E1; }
+    .input:focus { outline: none; border-color: var(--wise-accent); background: #fff; box-shadow: 0 0 0 4px rgba(59,130,246,.12); }
+    .field.is-ok .input { border-color: #CBD5E1; background: #fff; }
+    .field.is-error .input { border-color: #E11D48; }
+    .err { display: none; color: #E11D48; font-size: .76rem; margin-top: 4px; }
+    .field.is-error .err { display: block; }
+    .hint { font-size: .76rem; color: var(--muted); margin-top: 4px; }
+    .field.is-error .hint { display: none; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+    .chip input { position: absolute; opacity: 0; pointer-events: none; }
+    .chip span {
+      display: inline-flex; align-items: center; padding: 11px 22px; cursor: pointer;
+      border: 1px solid var(--line-gray); background: #fff; font-size: .9rem; letter-spacing: .06em;
+      transition: all .3s var(--ease); user-select: none;
+    }
+    .chip span:hover { border-color: var(--wise-accent); }
+    .chip input:checked + span { background: var(--wise-navy); border-color: var(--wise-navy); color: #fff; }
+    .chip input:focus-visible + span { box-shadow: 0 0 0 4px rgba(59,130,246,.25); }
+
+    .chips-days .chip span { min-width: 56px; justify-content: center; }
+    .ack {
+      display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; cursor: pointer;
+      border: 1px solid var(--line-gray); background: var(--bg-soft); transition: border-color .3s, background .3s;
+    }
+    .ack:has(input:checked) { border-color: var(--wise-accent); background: #EFF6FF; }
+    .field.is-error .ack { border-color: #E11D48; }
+    .ack input { width: 17px; height: 17px; margin-top: 5px; flex-shrink: 0; accent-color: var(--wise-accent); }
+    .ack b { display: block; font-size: .88rem; letter-spacing: .06em; }
+    .ack-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .ack-list span { font-size: .76rem; padding: 2px 10px; background: #fff; border: 1px solid var(--line-gray); letter-spacing: .04em; }
+    .perk {
+      margin: 14px 0 0; padding: 11px 16px; background: #EFF6FF; border-left: 2px solid var(--wise-accent);
+      font-size: .8rem; color: var(--wise-blue); letter-spacing: .05em; line-height: 1.6;
+    }
+    .perk b { font-weight: 900; }
+    .sub-panel {
+      margin: -12px 0 30px; padding: 20px 22px 2px; border-left: 2px solid var(--wise-accent); background: var(--bg-soft);
+      display: grid; grid-template-columns: auto 1fr; gap: 0 20px; align-items: start; animation: stepIn .4s var(--ease);
+    }
+    .sub-panel .field { margin-bottom: 18px; }
+    .sub-panel-single { grid-template-columns: 1fr; }
+    .sub-panel .input { background: #fff; padding: 9px 14px; }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .card-opt input { position: absolute; opacity: 0; pointer-events: none; }
+    .card-opt .box {
+      display: block; height: 100%; padding: 20px 20px; border: 1px solid var(--line-gray); background: #fff; cursor: pointer;
+      transition: all .35s var(--ease); position: relative;
+    }
+    .card-opt .box:hover { border-color: var(--wise-accent); transform: translateY(-2px); }
+    .card-opt .en { font-family: var(--font-en); font-size: .7rem; letter-spacing: .35em; color: var(--wise-accent); font-weight: 700; }
+    .card-opt .ttl { display: block; font-weight: 900; font-size: 1rem; margin: 2px 0 4px; letter-spacing: .06em; }
+    .card-opt .sub { font-size: .76rem; color: var(--text-gray); line-height: 1.6; display: block; }
+    .card-opt .box::after {
+      content: '✓'; position: absolute; top: 12px; right: 12px; width: 20px; height: 20px; border-radius: 50%;
+      display: grid; place-items: center; font-size: .66rem; color: #fff; background: var(--wise-accent);
+      transform: scale(0); transition: transform .35s var(--ease);
+    }
+    .card-opt input:checked + .box { border-color: var(--wise-accent); box-shadow: 0 0 0 1px var(--wise-accent), 0 14px 28px -18px rgba(59,130,246,.6); }
+    .card-opt input:checked + .box::after { transform: scale(1); }
+    .card-opt input:focus-visible + .box { box-shadow: 0 0 0 4px rgba(59,130,246,.25); }
+
+    .confirm { border-top: 1px solid var(--line-gray); margin-bottom: 18px; }
+    .confirm div { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line-gray); font-size: .9rem; }
+    .confirm dt { color: var(--muted); font-size: .8rem; letter-spacing: .08em; }
+    .confirm dd { word-break: break-word; }
+
+    .agree { display: flex; gap: 10px; align-items: flex-start; font-size: .88rem; color: var(--text-gray); cursor: pointer; }
+    .agree input { width: 17px; height: 17px; margin-top: 5px; accent-color: var(--wise-accent); }
+    .agree a { color: var(--wise-blue); }
+
+    .step-nav { padding: 0 52px 34px; flex-shrink: 0; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--line-gray); }
+    .send-err { color: #E11D48; font-size: .8rem; margin-bottom: 10px; }
+    .btn-back { background: none; border: none; font: inherit; color: var(--text-gray); cursor: pointer; letter-spacing: .15em; font-size: .88rem; padding: 10px 0; }
+    .btn-back:hover { color: var(--wise-navy); }
+    .btn-back[hidden] { display: inline-block !important; visibility: hidden; }
+
+    .btn-primary {
+      position: relative; display: inline-flex; align-items: center; gap: 16px;
+      padding: 16px 40px; background: var(--wise-blue); color: #fff; border: none; border-radius: 2px; cursor: pointer;
+      font-family: var(--font-serif); font-weight: 700; font-size: .98rem; letter-spacing: .2em; text-decoration: none;
+      overflow: hidden; transition: transform .4s var(--ease);
+    }
+    /* Same as wise.html .nav-entry: wise-blue → accent on hover */
+    .btn-primary::before { content: ''; position: absolute; inset: 0; background: var(--wise-accent); transform: translateX(-101%); transition: transform .5s var(--ease); }
+    .btn-primary > * { position: relative; }
+    .btn-primary:hover::before { transform: none; }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-primary .arrow { transition: transform .4s var(--ease); }
+    .btn-primary:hover .arrow { transform: translateX(6px); }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-primary:disabled::before { display: none; }
+
+    /* ---------- Thanks ---------- */
+    .thanks { display: none; padding: 60px 44px; text-align: center; animation: stepIn .8s var(--ease); }
+    .thanks.is-current { display: block; }
+    .thanks-mark { width: 80px; height: 80px; margin: 0 auto 28px; border-radius: 50%; border: 1px solid var(--wise-accent); display: grid; place-items: center; }
+    .thanks-mark svg { width: 34px; height: 34px; stroke: var(--wise-accent); stroke-width: 2; fill: none; stroke-dasharray: 40; stroke-dashoffset: 40; animation: draw .9s .3s var(--ease) forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .thanks h3 { font-size: 1.8rem; font-weight: 900; letter-spacing: .12em; line-height: 1.6; }
+    .thanks p { color: var(--text-gray); margin: 16px auto 0; max-width: 30em; font-size: .92rem; }
+    .thanks-explore { margin-top: 36px; }
+    .thanks-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 520px; margin: 0 auto; }
+    .thanks-links a {
+      display: block; padding: 16px 10px; border: 1px solid var(--line-gray); text-decoration: none;
+      font-size: .86rem; font-weight: 700; letter-spacing: .06em; transition: border-color .3s, transform .4s var(--ease);
+    }
+    .thanks-links a:hover { border-color: var(--wise-accent); transform: translateY(-2px); }
+    .thanks-links .en { display: block; font-family: var(--font-en); font-size: .62rem; letter-spacing: .3em; color: var(--wise-accent); font-weight: 700; }
+    .thanks .back-link { display: inline-block; margin-top: 32px; font-family: var(--font-en); letter-spacing: .3em; font-size: .8rem; text-decoration: none; border-bottom: 1px solid var(--wise-accent); padding-bottom: 4px; }
+
+    /* ---------- Responsive ---------- */
+    /* Tablet & mobile: app-like single screen. Only the form body scrolls if a step is taller than the screen. */
+    @media (max-width: 900px) {
+      :root { --header-h: 54px; }
+      .site-header { padding: 0 20px 0 16px; }
+      .logo img { height: 40px; }
+      .page { display: flex; flex-direction: column; gap: 0; padding: 0; align-items: stretch; }
+      .side { padding: 14px 20px 0; background: #fff; }
+      .side-title, .side-lead, .explore { display: none; }
+      .header-link { font-family: var(--font-serif); font-size: .74rem; letter-spacing: .06em; color: var(--wise-navy); padding: 6px 12px; border: 1px solid var(--line-gray); }
+      .thanks-links { grid-template-columns: 1fr; }
+      .thanks-links a { display: flex; gap: 12px; align-items: center; text-align: left; padding: 12px 16px; }
+      .thanks-links .en { min-width: 8.5em; }
+      .side-label { font-size: .68rem; letter-spacing: .45em; text-align: center; margin-bottom: 18px; }
+      .stepper { display: flex; border-left: none; border-top: 1px solid var(--line-gray); }
+      .stepper li, .stepper li:last-child { flex: 1; padding: 12px 2px 12px; text-align: center; }
+      .stepper li::before { left: 50%; top: -6px; transform: translateX(-50%); }
+      .stepper .s-en { display: none; }
+      .stepper .s-ja { font-size: .74rem; letter-spacing: .04em; }
+      .form-card { flex: 1; min-height: 0; max-height: none; border: none; border-top: 1px solid var(--line-gray); box-shadow: none; }
+      .form-head { display: none; }
+      .step { padding: 18px 20px 4px; }
+      .step-title { font-size: 1.2rem; }
+      .step-desc { font-size: .8rem; margin-bottom: 24px; }
+      .field { margin-bottom: 24px; }
+      .field-row { gap: 12px; }
+      .label { font-size: .82rem; margin-bottom: 6px; }
+      .input { padding: 11px 14px; font-size: 16px; } /* 16px prevents iOS zoom */
+      .chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 10px; }
+      .chip span { width: 100%; justify-content: center; padding: 12px 4px; font-size: .84rem; letter-spacing: .02em; }
+      .chips-days { grid-template-columns: repeat(5, 1fr); }
+      .chips-grad { grid-template-columns: repeat(4, 1fr); }
+      .chips-days .chip span { min-width: 0; }
+      .ack { padding: 12px 14px; }
+      .sub-panel { grid-template-columns: 1fr; padding: 14px 14px 0; margin-top: -4px; }
+      .sub-panel .field { margin-bottom: 12px; }
+      .cards { grid-template-columns: 1fr; gap: 8px; }
+      .card-opt .box { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
+      .card-opt .box:hover { transform: none; }
+      .card-opt .en { min-width: 2.6em; }
+      .card-opt .ttl { margin: 0; }
+      .card-opt .sub { display: none; }
+      .card-opt .box::after { top: 50%; right: 14px; margin-top: -10px; }
+      .confirm div { grid-template-columns: 96px 1fr; gap: 10px; padding: 8px 0; font-size: .86rem; }
+      .step-nav { padding: 0 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: #fff; }
+      .nav { padding-top: 14px; gap: 16px; }
+      .btn-primary { flex: 1; justify-content: center; padding: 15px 20px; letter-spacing: .12em; }
+      .btn-back[hidden] { display: none !important; }
+      .thanks { padding: 48px 20px; }
+      .thanks h2 { font-size: 1.4rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="wise.html" class="logo">
+      <img src="./untitled%20folder/banner-logo/banner_logo-removebg-preview.png" alt="WISE">
+    </a>
+    <a href="wise.html" class="header-link" target="_blank" rel="noopener">WISEをもっと知る <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="page">
+    <aside class="side">
+      <span class="side-label">ENTRY FORM</span>
+      <h1 class="side-title">あなたのことを、<br>聞かせてください。</h1>
+      <p class="side-lead"><strong>3</strong>分で完了します。</p>
+      <ol class="stepper" id="stepper">
+        <li class="is-active"><span class="s-en">STEP 01</span><span class="s-ja">基本情報</span></li>
+        <li><span class="s-en">STEP 02</span><span class="s-ja">連絡先・出勤</span></li>
+        <li><span class="s-en">STEP 03</span><span class="s-ja">応募情報</span></li>
+        <li><span class="s-en">STEP 04</span><span class="s-ja">確認</span></li>
+      </ol>
+      <nav class="explore" aria-label="WISEについて">
+        <span class="explore-label">MORE ABOUT WISE</span>
+        <a href="wise.html#journal" target="_blank" rel="noopener"><span>記事・インタビューを読む</span><span class="ext">↗</span></a>
+        <a href="wise.html#departments" target="_blank" rel="noopener"><span>部署・仕事を知る</span><span class="ext">↗</span></a>
+        <a href="wise.html#facility" target="_blank" rel="noopener"><span>オフィスを見る</span><span class="ext">↗</span></a>      </nav>
+    </aside>
+
+    <form class="form-card" id="entryForm" novalidate>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+      <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="form-head" id="formHead">
+        <span class="count"><b id="stepNum">1</b>/ 4</span>
+        <span class="pct" id="pct">0% COMPLETE</span>
+      </div>
+
+      <div class="form-body">
+        <!-- Step 1 -->
+        <div class="step is-current" data-step="1">
+          <h2 class="step-title">基本情報</h2>
+          <p class="step-desc">まずは、あなたのことを教えてください。</p>
+          <div class="field-row">
+            <div class="field">
+              <label class="label" for="lastName">姓 <small>（漢字）</small><span class="req">必須</span></label>
+              <input class="input" id="lastName" name="lastName" placeholder="山田" required autocomplete="family-name">
+              <p class="err">姓を漢字で入力してください</p>
+            </div>
+            <div class="field">
+              <label class="label" for="firstName">名 <small>（漢字）</small><span class="req">必須</span></label>
+              <input class="input" id="firstName" name="firstName" placeholder="太郎" required autocomplete="given-name">
+              <p class="err">名を漢字で入力してください</p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="school">大学 <span class="req">必須</span></label>
+            <input class="input" id="school" name="school" placeholder="〇〇大学" required>
+            <p class="err">大学名を入力してください</p>
+          </div>
+          <div class="field" data-group="grad">
+            <span class="label">卒業年度 <span class="req">必須</span></span>
+            <div class="chips chips-grad">
+              <label class="chip"><input type="radio" name="grad" value="2028年"><span>2028年</span></label>
+              <label class="chip"><input type="radio" name="grad" value="2029年"><span>2029年</span></label>
+              <label class="chip"><input type="radio" name="grad" value="2030年"><span>2030年</span></label>
+              <label class="chip"><input type="radio" name="grad" value="2031年"><span>2031年</span></label>
+            </div>
+            <p class="err">卒業年度を選んでください</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step" data-step="2">
+          <h2 class="step-title">連絡先・出勤条件</h2>
+          <p class="step-desc">選考のご案内と、シフトの参考にします。</p>
+          <div class="field">
+            <label class="label" for="email">メールアドレス <span class="req">必須</span></label>
+            <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+            <p class="err">正しいメールアドレスを入力してください</p>
+          </div>
+          <div class="field">
+            <label class="label" for="tel">電話番号 <span class="req">必須</span></label>
+            <input class="input" id="tel" name="tel" type="tel" inputmode="numeric" maxlength="11" placeholder="09012345678" required autocomplete="tel" data-format="tel">
+            <p class="hint">ハイフンなし・半角数字で入力してください</p>
+            <p class="err">ハイフンなしの10〜11桁で入力してください（例：09012345678）</p>
+          </div>
+          <div class="field" data-group="days" data-min="2">
+            <span class="label">希望出勤曜日 <small>（2日以上・複数選択可）</small><span class="req">必須</span></span>
+            <div class="chips chips-days">
+              <label class="chip"><input type="checkbox" name="days" value="月"><span>月</span></label>
+              <label class="chip"><input type="checkbox" name="days" value="火"><span>火</span></label>
+              <label class="chip"><input type="checkbox" name="days" value="水"><span>水</span></label>
+              <label class="chip"><input type="checkbox" name="days" value="木"><span>木</span></label>
+              <label class="chip"><input type="checkbox" name="days" value="金"><span>金</span></label>
+            </div>
+            <p class="err">2日以上選んでください</p>
+          </div>
+          <div class="field" data-group="workAck">
+            <label class="ack">
+              <input type="checkbox" name="workAck" value="確認済み">
+              <span>
+                <b>以下の出社条件を確認しました</b>
+                <span class="ack-list"><span>1日 最低4時間</span><span>週2日以上</span><span>最低40時間以上</span></span>
+              </span>
+            </label>
+            <p class="err">出社条件の確認が必要です</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step" data-step="3">
+          <h2 class="step-title">応募情報</h2>
+          <p class="step-desc">あと少しで完了です。</p>
+          <div class="field" data-group="media">
+            <span class="label">応募媒体 <span class="req">必須</span></span>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="media" value="公式HP"><span>公式HP</span></label>
+              <label class="chip"><input type="radio" name="media" value="Infra"><span>Infra</span></label>
+              <label class="chip"><input type="radio" name="media" value="Renew"><span>Renew</span></label>
+              <label class="chip"><input type="radio" name="media" value="Kokoshiro"><span>Kokoshiro</span></label>
+              <label class="chip"><input type="radio" name="media" value="Wantedly"><span>Wantedly</span></label>
+              <label class="chip"><input type="radio" name="media" value="LinkedIn"><span>LinkedIn</span></label>
+              <label class="chip"><input type="radio" name="media" value="その他"><span>その他</span></label>
+            </div>
+            <p class="err">応募媒体を選んでください</p>
+            <p class="perk">✦ 公式HPからのエントリーは、<b>一次選考が免除</b>されます。</p>
+          </div>
+          <div class="sub-panel sub-panel-single" id="linkedinPanel" hidden>
+            <div class="field">
+              <label class="label" for="referrer">紹介者のお名前 <span class="req">必須</span></label>
+              <input class="input" id="referrer" name="referrer" placeholder="例）山田 花子" required>
+              <p class="err">紹介者のお名前を入力してください</p>
+            </div>
+          </div>
+          <div class="sub-panel" id="otherPanel" hidden>
+            <div class="field" data-group="otherType">
+              <span class="label">「その他」の内容 <span class="req">必須</span></span>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="otherType" value="紹介"><span>紹介</span></label>
+                <label class="chip"><input type="radio" name="otherType" value="イベント"><span>イベント</span></label>
+              </div>
+              <p class="err">いずれかを選んでください</p>
+            </div>
+            <div class="field" id="otherDetailField" hidden>
+              <label class="label" for="otherDetail"><span id="otherDetailLabel">紹介者のお名前</span> <span class="req">必須</span></label>
+              <input class="input" id="otherDetail" name="otherDetail" required>
+              <p class="err">入力してください</p>
+            </div>
+          </div>
+          <div class="field" data-group="role">
+            <span class="label">希望職種 <span class="req">必須</span></span>
+            <div class="cards">
+              <label class="card-opt"><input type="radio" name="role" value="MD"><span class="box"><span class="en">MD</span><span class="ttl">マーケティング</span><span class="sub">市場を読み、売れる仕組みを設計する</span></span></label>
+              <label class="card-opt"><input type="radio" name="role" value="SD"><span class="box"><span class="en">SD</span><span class="ttl">セールス</span><span class="sub">顧客の課題に向き合い、成果に変える</span></span></label>
+              <label class="card-opt"><input type="radio" name="role" value="iTS"><span class="box"><span class="en">iTS</span><span class="ttl">IT戦略</span><span class="sub">テクノロジーで、事業を前進させる</span></span></label>
+            </div>
+            <p class="err">希望職種を選んでください</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step" data-step="4">
+          <h2 class="step-title">入力内容の確認</h2>
+          <p class="step-desc">内容に間違いがなければ、送信してください。</p>
+          <dl class="confirm" id="confirm"></dl>
+          <div class="field" data-group="agree">
+            <label class="agree"><input type="checkbox" id="agree"> <span><a href="#" onclick="return false;">個人情報の取り扱い</a>に同意します</span></label>
+            <p class="err">同意が必要です</p>
+          </div>
+        </div>
+
+        <!-- Thanks -->
+        <div class="thanks" id="thanks">
+          <div class="thanks-mark"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></div>
+          <h2>エントリー、<br>ありがとうございます。</h2>
+          <p>あなたの一歩を、確かに受け取りました。<br>3営業日以内に、担当者よりメールでご連絡します。</p>
+          <div class="thanks-explore">
+            <span class="explore-label">ご連絡までの間に、WISEをもっと知る</span>
+            <div class="thanks-links">
+              <a href="wise.html#journal"><span class="en">JOURNAL</span>記事・インタビュー</a>
+              <a href="wise.html#departments"><span class="en">DEPARTMENTS</span>部署・仕事</a>
+              <a href="wise.html#facility"><span class="en">OFFICE</span>オフィス</a>
+            </div>
+          </div>
+          <a href="wise.html" class="back-link">BACK TO TOP</a>
+        </div>
+      </div>
+
+      <div class="step-nav" id="stepNav">
+        <p class="send-err" id="sendErr" hidden>送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。</p>
+        <div class="nav">
+          <button type="button" class="btn-back" id="backBtn" hidden>← 戻る</button>
+          <button type="button" class="btn-primary" id="nextBtn"><span id="nextLabel">次へ進む</span><span class="arrow">→</span></button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    // Apps Script ウェブアプリのURL（gas/Code.gs をデプロイして発行されたもの）。空ならモック送信
+    const ENTRY_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzPbGGek3w_azL6EJ74GFaYJOmJE4_HgScKyzJqiK3xv-MvmfgCFfbgF40h-cnmy_X55Q/exec';
+
+    // Multi-step form
+    const form = document.getElementById('entryForm');
+    const steps = [...form.querySelectorAll('.step')];
+    const stepperItems = [...document.querySelectorAll('#stepper li')];
+    const backBtn = document.getElementById('backBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const nextLabel = document.getElementById('nextLabel');
+    const bar = document.getElementById('progressBar');
+    const pct = document.getElementById('pct');
+    const stepNum = document.getElementById('stepNum');
+    let current = 0;
+
+    function setError(field, bad) {
+      field.classList.toggle('is-error', bad);
+      return !bad;
+    }
+
+    const isShown = el => !el.closest('[hidden]');
+
+    function validate(stepEl) {
+      let ok = true;
+      stepEl.querySelectorAll('input[required]').forEach(input => {
+        if (!isShown(input)) return;
+        const field = input.closest('.field');
+        const v = input.value.trim();
+        const bad = !v
+          || (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))
+          || (input.dataset.format === 'tel' && !/^0\d{9,10}$/.test(v));
+        ok = setError(field, bad) && ok;
+      });
+      stepEl.querySelectorAll('[data-group]').forEach(group => {
+        if (!isShown(group)) return;
+        const name = group.dataset.group;
+        const min = Number(group.dataset.min) || 1;
+        const checked = name === 'agree'
+          ? document.getElementById('agree').checked
+          : form.querySelectorAll(`input[name="${name}"]:checked`).length >= min;
+        ok = setError(group, !checked) && ok;
+      });
+      return ok;
+    }
+
+    function buildConfirm() {
+      const fd = new FormData(form);
+      let media = fd.get('media');
+      if (media === 'その他') media += `（${fd.get('otherType')}：${fd.get('otherDetail')}）`;
+      if (media === 'LinkedIn') media += `（紹介者：${fd.get('referrer')}）`;
+      if (media === '公式HP') media += '（一次選考免除）';
+      const roleLabel = { MD: 'マーケティング（MD）', SD: 'セールス（SD）', iTS: 'IT戦略（iTS）' }[fd.get('role')];
+      const rows = [
+        ['氏名', `${fd.get('lastName')} ${fd.get('firstName')}`], ['大学', fd.get('school')], ['卒業年度', fd.get('grad')],
+        ['メールアドレス', fd.get('email')], ['電話番号', fd.get('tel')],
+        ['希望出勤曜日', fd.getAll('days').join('・')], ['出社条件', fd.get('workAck')],
+        ['応募媒体', media], ['希望職種', roleLabel]
+      ];
+      const dl = document.getElementById('confirm');
+      dl.innerHTML = '';
+      rows.forEach(([k, v]) => {
+        const div = document.createElement('div');
+        const dt = document.createElement('dt'); dt.textContent = k;
+        const dd = document.createElement('dd'); dd.textContent = v || '—';
+        div.append(dt, dd); dl.append(div);
+      });
+    }
+
+    function render() {
+      steps.forEach((s, i) => s.classList.toggle('is-current', i === current));
+      stepperItems.forEach((li, i) => {
+        li.classList.toggle('is-active', i === current);
+        li.classList.toggle('is-done', i < current);
+      });
+      backBtn.hidden = current === 0;
+      nextLabel.textContent = current === steps.length - 1 ? 'エントリーを送信する' : '次へ進む';
+      stepNum.textContent = current + 1;
+      const p = Math.round((current / steps.length) * 100);
+      bar.style.width = p + '%';
+      pct.textContent = p + '% COMPLETE';
+      if (current === steps.length - 1) buildConfirm();
+      const first = steps[current].querySelector('input');
+      if (first && current > 0) first.focus({ preventScroll: true });
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (!validate(steps[current])) {
+        const firstErr = steps[current].querySelector('.is-error input');
+        if (firstErr) firstErr.focus();
+        return;
+      }
+      if (current < steps.length - 1) { current++; render(); return; }
+      submitEntry();
+    });
+
+    function collectPayload() {
+      const fd = new FormData(form);
+      const data = Object.fromEntries(fd.entries());
+      data.days = fd.getAll('days');
+      if (data.media !== 'その他') { delete data.otherType; delete data.otherDetail; }
+      if (data.media !== 'LinkedIn') delete data.referrer;
+      return data;
+    }
+
+    async function submitEntry() {
+      const sendErr = document.getElementById('sendErr');
+      sendErr.hidden = true;
+      nextBtn.disabled = true;
+      nextLabel.textContent = '送信中…';
+      try {
+        if (ENTRY_ENDPOINT) {
+          // text/plain で送ると CORS のプリフライトが発生せず、Apps Script でそのまま受け取れる
+          const res = await fetch(ENTRY_ENDPOINT, { method: 'POST', body: JSON.stringify(collectPayload()) });
+          const json = await res.json();
+          if (!json.ok) throw new Error(json.error || (json.errors || []).join(', '));
+        } else {
+          await new Promise(r => setTimeout(r, 900));
+        }
+        showThanks();
+      } catch (err) {
+        console.error(err);
+        sendErr.hidden = false;
+        nextBtn.disabled = false;
+        nextLabel.textContent = 'エントリーを送信する';
+      }
+    }
+
+    function showThanks() {
+      steps.forEach(s => s.classList.remove('is-current'));
+      document.getElementById('stepNav').hidden = true;
+      document.getElementById('formHead').hidden = true;
+      bar.style.width = '100%';
+      stepperItems.forEach(li => { li.classList.remove('is-active'); li.classList.add('is-done'); });
+      document.getElementById('thanks').classList.add('is-current');
+    }
+
+    backBtn.addEventListener('click', () => { if (current > 0) { current--; render(); } });
+
+    // Clear errors as user fixes them
+    form.addEventListener('input', e => {
+      const field = e.target.closest('.field');
+      if (field && field.classList.contains('is-error')) field.classList.remove('is-error');
+      if (e.target.matches('input[required]') && e.target.value.trim()) field.classList.add('is-ok');
+    });
+    form.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'checkbox' && !e.isComposing) { e.preventDefault(); nextBtn.click(); }
+    });
+
+    // Phone: half-width digits only (full-width converted, hyphens stripped)
+    const tel = document.getElementById('tel');
+    tel.addEventListener('input', () => {
+      tel.value = tel.value
+        .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+        .replace(/\D/g, '')
+        .slice(0, 11);
+    });
+
+    // 応募媒体「その他」→ 紹介 / イベント の詳細入力
+    const otherPanel = document.getElementById('otherPanel');
+    const otherDetailField = document.getElementById('otherDetailField');
+    const otherDetail = document.getElementById('otherDetail');
+    const otherDetailLabel = document.getElementById('otherDetailLabel');
+    form.addEventListener('change', e => {
+      const group = e.target.closest('[data-group]');
+      if (group) group.classList.remove('is-error');
+      if (e.target.name === 'media') {
+        otherPanel.hidden = e.target.value !== 'その他';
+        document.getElementById('linkedinPanel').hidden = e.target.value !== 'LinkedIn';      }
+      if (e.target.name === 'otherType') {
+        const isEvent = e.target.value === 'イベント';
+        otherDetailLabel.textContent = isEvent ? 'イベント名' : '紹介者のお名前';
+        otherDetail.placeholder = isEvent ? '例）WISE キャリアセミナー' : '例）山田 花子';
+        otherDetailField.hidden = false;
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
