@@ -45,17 +45,17 @@ function doPost(e) {
     if (errors.length) return json_({ ok: false, errors });
 
     const record = toRecord_(data);
-    const row = appendRow_(record);
 
-    // 面談シートの生成に失敗しても、回答そのものは保存済みにしておく
+    // 面談シートを先に作り、リンクごと1回で書き込む（後から行番号で書くと、その間の並べ替えで別の人の行に入るため）
+    // 生成に失敗しても、回答そのものは保存する
     try {
-      const url = createInterviewSheet_(record, data);
-      setCell_(row, '履歴書', url);
+      record['履歴書'] = createInterviewSheet_(record, data);
     } catch (err) {
       console.error('面談シート生成エラー', err);
-      setCell_(row, '履歴書', '生成エラー');
+      record['履歴書'] = '生成エラー';
       lastWarning_ = `doc: ${err}`;
     }
+    appendRow_(record);
     return json_(lastWarning_ ? { ok: true, warning: lastWarning_ } : { ok: true });
   } catch (err) {
     console.error(err);
@@ -145,16 +145,9 @@ function appendRow_(record) {
     // 自分の列だけ1セルずつ書く（間にある数式の列を空文字で上書きしないため）
     COLUMNS.forEach(h => sheet.getRange(row, headers.indexOf(h) + 1).setValue(record[h]));
     sheet.getRange(row, headers.indexOf('応募日') + 1).setNumberFormat('yyyy/mm/dd');
-    return row;
   } finally {
     lock.releaseLock();
   }
-}
-
-function setCell_(row, header, value) {
-  const sheet = getSheet_();
-  const col = getHeaders_(sheet).indexOf(header) + 1;
-  if (col) sheet.getRange(row, col).setValue(value);
 }
 
 /* ---------- 面談シート（Googleドキュメント） ---------- */
