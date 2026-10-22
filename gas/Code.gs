@@ -105,7 +105,7 @@ function toRecord_(d) {
   return {
     '応募日': today_(),
     '部門': DEPT_LABEL[d.role],
-    '応募者': `${d.lastName}${d.firstName}`.trim(),
+    '応募者': `${String(d.lastName).trim()} ${String(d.firstName).trim()}`, // 姓と名の間は半角スペース
     '大学': toSchoolName_(d.school),
     '卒業年度': toGradLabel_(d.grad),
     'メールアドレス': d.email,
