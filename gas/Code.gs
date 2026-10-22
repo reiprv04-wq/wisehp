@@ -12,7 +12,7 @@
 const SPREADSHEET_ID = '1b5VqS9XDjFlYes0QMA5Cpy8CLSiq8lGUu4GTdt0ODDY';
 const SHEET_NAME = '管理表';
 const SHEET_GID = 1308531241; // URL の #gid= の値。タブ名を変えてもこちらで特定できる
-const DOC_FOLDER_ID = '1kjXxgq4dDoMYrx04ndcG-ha0BajMby_c'; // 面談シートの保存先（マイドライブ「WISE 面談シート」）
+const DOC_FOLDER_ID = '1kjXxgq4dDoMYrx04ndcG-ha0BajMby_c'; // 面談シートの保存先（マイドライブ「【面接・評価フォーム】」）
 const TIMEZONE = 'Asia/Tokyo';
 
 // 管理表に書き込む列（1行目の見出し名で位置を探す）。希望出勤曜日・出社条件は面談シートにだけ載せる
