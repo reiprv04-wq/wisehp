@@ -2,7 +2,7 @@
  * WISE エントリーフォーム受付（Google Apps Script ウェブアプリ）
  *
  * entry.html から送信された回答を
- *   1. スプレッドシート「管理表」タブに1行追記（A〜J列のみ。K列以降は数式・選考管理用なので触らない）
+ *   1. スプレッドシート「応募者一覧」タブに1行追記（A〜J列のみ。K列以降は数式・選考管理用なので触らない）
  *   2. 1次・2次面談用の「面談シート」（Googleドキュメント）を自動生成し、リンクを同じ行に記録
  *   3. 応募者に「一次面談のご案内」メールを送る（wiseintern.recruit@gmail.com の gas-mail スクリプト経由）
  *
@@ -10,17 +10,17 @@
  */
 
 const SPREADSHEET_ID = '1b5VqS9XDjFlYes0QMA5Cpy8CLSiq8lGUu4GTdt0ODDY';
-const SHEET_NAME = '管理表';
+const SHEET_NAME = '応募者一覧'; // タブ名が変わっても下の GID で見つかる
 const SHEET_GID = 1308531241; // URL の #gid= の値。タブ名を変えてもこちらで特定できる
 const DOC_FOLDER_ID = '1kjXxgq4dDoMYrx04ndcG-ha0BajMby_c'; // 面談シートの保存先（マイドライブ「【面接・評価フォーム】」）
 const TIMEZONE = 'Asia/Tokyo';
 
-// 管理表に書き込む列（1行目の見出し名で位置を探す）。希望出勤曜日・出社条件は面談シートにだけ載せる
+// 応募者一覧に書き込む列（1行目の見出し名で位置を探す）。希望出勤曜日・出社条件は面談シートにだけ載せる
 const COLUMNS = [
   '応募日', '部門', '応募者', '大学', '卒業年度', 'メールアドレス', '電話番号', '応募媒体', '応募媒体（詳細）', '履歴書'
 ];
 
-// 管理表の表記（英語名・括弧なし）。集計データ・月別がこの文字列で集計しているので、変えるときはシート側もそろえる
+// 応募者一覧の表記（英語名・括弧なし）。集計データ・月別がこの文字列で集計しているので、変えるときはシート側もそろえる
 const MEDIA_LABEL = {
   '公式HP': '公式HP',
   'Infra': 'Infra',
@@ -43,6 +43,7 @@ function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     if (data.website) return json_({ ok: true }); // honeypot: bot は成功扱いで破棄
+    data.tel = String(data.tel || '').normalize('NFKC').replace(/\D/g, ''); // 全角・ハイフン入りでも数字だけにそろえる
 
     const errors = validate_(data);
     if (errors.length) return json_({ ok: false, errors });
@@ -137,7 +138,7 @@ function appendRow_(record) {
     const sheet = getSheet_();
     const headers = getHeaders_(sheet);
     const missing = COLUMNS.filter(c => !headers.includes(c));
-    if (missing.length) throw new Error(`管理表に見出しがありません：${missing.join('、')}`);
+    if (missing.length) throw new Error(`応募者一覧に見出しがありません：${missing.join('、')}`);
 
     // K列以降の ARRAYFORMULA が下の行まで値を出すので、getLastRow ではなく応募者（C列）で最終行を探す
     const nameCol = headers.indexOf('応募者') + 1;
@@ -246,7 +247,7 @@ function createInterviewSheet_(r, d) {
     console.error('共有設定エラー', err);
     lastWarning_ = `share: ${err}`;
   }
-  return `https://docs.google.com/document/d/${doc.getId()}/edit`; // 管理表の既存リンクと同じ形式
+  return `https://docs.google.com/document/d/${doc.getId()}/edit`; // 応募者一覧の既存リンクと同じ形式
 }
 
 /* ---------- 一次面談のご案内メール ---------- */
