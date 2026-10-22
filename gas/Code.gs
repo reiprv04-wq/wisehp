@@ -20,7 +20,7 @@ const COLUMNS = [
 // 管理表の既存の表記に合わせる（集計データ・月別が応募媒体の文字列で集計しているため）
 const MEDIA_LABEL = {
   '公式HP': '公式HP（ホームページ）',
-  'Infra': 'Infra（インフラ）',
+  'Infra': 'Infra',
   'Renew': 'Renew（リニュー）',
   'Kokoshiro': 'Kokoshiro（ココシロ）',
   'Wantedly': 'Wantedly（ウォンテッドリー）',
