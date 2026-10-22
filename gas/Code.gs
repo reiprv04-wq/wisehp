@@ -119,6 +119,21 @@ function toRecord_(d) {
   };
 }
 
+// 条件付き書式（連絡待ちの赤など）は、シートの最後に足した行には自動で広がらないので、
+// 1つ上の行まで届いているルールだけを、追加した行まで伸ばす
+function extendFormatRules_(sheet, row) {
+  let changed = false;
+  const rules = sheet.getConditionalFormatRules().map(rule => {
+    const ranges = rule.getRanges().map(r => {
+      if (r.getLastRow() !== row - 1) return r;
+      changed = true;
+      return sheet.getRange(r.getRow(), r.getColumn(), row - r.getRow() + 1, r.getNumColumns());
+    });
+    return rule.copy().setRanges(ranges).build();
+  });
+  if (changed) sheet.setConditionalFormatRules(rules);
+}
+
 function getSheet_() {
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   const sheet = ss.getSheets().find(s => s.getSheetId() === SHEET_GID) || ss.getSheetByName(SHEET_NAME);
@@ -158,6 +173,7 @@ function appendRow_(record) {
     // 自分の列だけ1セルずつ書く（間にある数式の列を空文字で上書きしないため）
     COLUMNS.forEach(h => sheet.getRange(row, headers.indexOf(h) + 1).setValue(record[h]));
     sheet.getRange(row, headers.indexOf('応募日') + 1).setNumberFormat('yyyy/mm/dd');
+    extendFormatRules_(sheet, row);
   } finally {
     lock.releaseLock();
   }
