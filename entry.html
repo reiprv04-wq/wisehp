@@ -341,7 +341,7 @@
           </div>
           <div class="field">
             <label class="label" for="school">大学 <span class="req">必須</span></label>
-            <input class="input" id="school" name="school" placeholder="〇〇大学" required>
+            <input class="input" id="school" name="school" placeholder="例：明治大学" required>
             <p class="err">大学名を入力してください</p>
           </div>
           <div class="field" data-group="grad">
@@ -577,6 +577,13 @@
       }
       if (current < steps.length - 1) { current++; render(); return; }
       submitEntry();
+    });
+
+    // 「明治」→「明治大学」。大学院・短大・高専・専門学校などはそのまま（gas/Code.gs の toSchoolName_ と同じ規則）
+    const schoolInput = document.getElementById('school');
+    schoolInput.addEventListener('blur', () => {
+      const v = schoolInput.value.trim();
+      if (v && !/(大学|大学院|大学校|短大|高専|学校|University|College)$/i.test(v)) schoolInput.value = `${v}大学`;
     });
 
     function collectPayload() {

@@ -2,34 +2,39 @@
  * WISE エントリーフォーム受付（Google Apps Script ウェブアプリ）
  *
  * entry.html から送信された回答を
- *   1. スプレッドシート「アンケート集計表」タブに1行追記
+ *   1. スプレッドシート「管理表」タブに1行追記（A〜J列のみ。K列以降は数式・選考管理用なので触らない）
  *   2. 1次・2次面談用の「面談シート」（Googleドキュメント）を自動生成し、リンクを同じ行に記録
  */
 
 const SPREADSHEET_ID = '1b5VqS9XDjFlYes0QMA5Cpy8CLSiq8lGUu4GTdt0ODDY';
-const SHEET_NAME = 'アンケート集計表';
-const SHEET_GID = 1382991770; // URL の #gid= の値。タブ名を変えてもこちらで特定できる
+const SHEET_NAME = '管理表';
+const SHEET_GID = 1308531241; // URL の #gid= の値。タブ名を変えてもこちらで特定できる
 const DOC_FOLDER_ID = '1kjXxgq4dDoMYrx04ndcG-ha0BajMby_c'; // 面談シートの保存先（マイドライブ「WISE 面談シート」）
 const TIMEZONE = 'Asia/Tokyo';
 
-// 集計表の列（既存の1行目の見出しに合わせて書き込む。足りない見出しは右端に自動追加）
+// 管理表に書き込む列（1行目の見出し名で位置を探す）。希望出勤曜日・出社条件は面談シートにだけ載せる
 const COLUMNS = [
-  '応募日', '部門', '応募者', '大学', '卒業年度', 'メールアドレス', '電話番号', '応募媒体', '履歴書',
-  '希望出勤曜日', '出社条件', '応募媒体（詳細）'
+  '応募日', '部門', '応募者', '大学', '卒業年度', 'メールアドレス', '電話番号', '応募媒体', '応募媒体（詳細）', '履歴書'
 ];
 
-// シートに書き込む媒体名（カタカナ読みは付けない）
+// 管理表の既存の表記に合わせる（集計データ・月別が応募媒体の文字列で集計しているため）
 const MEDIA_LABEL = {
-  '公式HP': '公式HP',
-  'Infra': 'Infra',
-  'Renew': 'Renew',
-  'Kokoshiro': 'Kokoshiro',
-  'Wantedly': 'Wantedly',
+  '公式HP': '公式HP（ホームページ）',
+  'Infra': 'Infra（インフラ）',
+  'Renew': 'Renew（リニュー）',
+  'Kokoshiro': 'Kokoshiro（ココシロ）',
+  'Wantedly': 'Wantedly（ウォンテッドリー）',
   'LinkedIn': 'LinkedIn',
   'その他': 'その他'
 };
+const OTHER_LABEL = { '紹介': '紹介（友人）', 'イベント': '社内イベント' };
 const DEPT_LABEL = { MD: 'マーケティング', SD: 'セールス', iTS: 'iTS' };
-const toGradLabel_ = grad => `${String(grad).replace(/\D/g, '').slice(-2)}卒`; // 2028年 → 28卒
+const toGradLabel_ = grad => `${String(grad).replace(/\D/g, '')}卒`; // 2028年 → 2028卒
+// 「明治」→「明治大学」。大学院・短大・高専・専門学校などはそのまま
+const toSchoolName_ = school => {
+  const s = String(school).trim();
+  return /(大学|大学院|大学校|短大|高専|学校|University|College)$/i.test(s) ? s : `${s}大学`;
+};
 
 function doPost(e) {
   try {
@@ -75,25 +80,30 @@ function validate_(d) {
 }
 
 function mediaDetail_(d) {
-  if (d.media === 'その他') return `${d.otherType}：${d.otherDetail}`;
+  if (d.media === 'その他') return `${d.otherType === '紹介' ? '紹介者' : 'イベント'}：${d.otherDetail}`;
   if (d.media === 'LinkedIn') return `紹介者：${d.referrer}`;
-  return '';
+  return '-';
+}
+
+// 応募日は時刻なしの日付（既存の行と同じ yyyy/mm/dd 表示）
+function today_() {
+  return new Date(`${Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd')}T00:00:00+09:00`);
 }
 
 function toRecord_(d) {
   return {
-    '応募日': new Date(),
+    '応募日': today_(),
     '部門': DEPT_LABEL[d.role],
     '応募者': `${d.lastName}${d.firstName}`.trim(),
-    '大学': d.school,
+    '大学': toSchoolName_(d.school),
     '卒業年度': toGradLabel_(d.grad),
     'メールアドレス': d.email,
     '電話番号': `'${d.tel}`, // 先頭の0が消えないよう文字列として保存
-    '応募媒体': MEDIA_LABEL[d.media],
+    '応募媒体': d.media === 'その他' ? OTHER_LABEL[d.otherType] || 'その他' : MEDIA_LABEL[d.media],
+    '応募媒体（詳細）': mediaDetail_(d),
     '履歴書': '',
     '希望出勤曜日': d.days.join('・'),
-    '出社条件': '確認済み',
-    '応募媒体（詳細）': mediaDetail_(d)
+    '出社条件': '確認済み'
   };
 }
 
@@ -114,14 +124,28 @@ function appendRow_(record) {
   lock.waitLock(20000);
   try {
     const sheet = getSheet_();
-    let headers = getHeaders_(sheet);
+    const headers = getHeaders_(sheet);
     const missing = COLUMNS.filter(c => !headers.includes(c));
-    if (missing.length) {
-      sheet.getRange(1, headers.length + 1, 1, missing.length).setValues([missing]);
-      headers = headers.concat(missing);
-    }
-    sheet.appendRow(headers.map(h => record[h] ?? ''));
-    return sheet.getLastRow();
+    if (missing.length) throw new Error(`管理表に見出しがありません：${missing.join('、')}`);
+
+    // K列以降の ARRAYFORMULA が下の行まで値を出すので、getLastRow ではなく応募者（C列）で最終行を探す
+    const nameCol = headers.indexOf('応募者') + 1;
+    const names = sheet.getRange(2, nameCol, sheet.getMaxRows() - 1, 1).getValues();
+    let last = names.length;
+    while (last > 0 && String(names[last - 1][0]).trim() === '') last--;
+    const row = last + 2;
+    if (row > sheet.getMaxRows()) sheet.insertRowsAfter(sheet.getMaxRows(), 1);
+
+    // プルダウン・チェックボックス・表示形式を1つ上の行からコピー
+    const width = sheet.getMaxColumns();
+    const above = sheet.getRange(row - 1, 1, 1, width);
+    above.copyTo(sheet.getRange(row, 1, 1, width), SpreadsheetApp.CopyPasteType.PASTE_FORMAT, false);
+    above.copyTo(sheet.getRange(row, 1, 1, width), SpreadsheetApp.CopyPasteType.PASTE_DATA_VALIDATION, false);
+
+    // 自分の列だけ1セルずつ書く（間にある数式の列を空文字で上書きしないため）
+    COLUMNS.forEach(h => sheet.getRange(row, headers.indexOf(h) + 1).setValue(record[h]));
+    sheet.getRange(row, headers.indexOf('応募日') + 1).setNumberFormat('yyyy/mm/dd');
+    return row;
   } finally {
     lock.releaseLock();
   }
@@ -142,7 +166,7 @@ const MEMO_HINTS = ['長所', '短所', '将来軸', 'その他'];
 
 function createInterviewSheet_(r, d) {
   const detail = r['応募媒体（詳細）'];
-  const media = detail ? `${r['応募媒体']}（${detail}）` : r['応募媒体'];
+  const media = detail !== '-' ? `${r['応募媒体']}（${detail}）` : r['応募媒体'];
   const name = `${d.lastName} ${d.firstName}`;
   const doc = DocumentApp.create(`面談シート｜${name}（${r['大学']}）`);
   const body = doc.getBody();
@@ -217,7 +241,7 @@ function createInterviewSheet_(r, d) {
     console.error('共有設定エラー', err);
     lastWarning_ = `share: ${err}`;
   }
-  return doc.getUrl();
+  return `https://docs.google.com/document/d/${doc.getId()}/edit`; // 管理表の既存リンクと同じ形式
 }
 
 let lastWarning_ = '';
