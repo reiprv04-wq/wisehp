@@ -147,11 +147,12 @@ function appendRow_(record) {
     const row = last + 2;
     if (row > sheet.getMaxRows()) sheet.insertRowsAfter(sheet.getMaxRows(), 1);
 
-    // プルダウン・チェックボックス・表示形式を1つ上の行からコピー
+    // 罫線・プルダウン・チェックボックス・表示形式を2行目（見本の行）からコピー
+    // 1つ上の行だと、手入力や旧n8nで書式のない行が入っていたときに罫線が消えるため
     const width = sheet.getMaxColumns();
-    const above = sheet.getRange(row - 1, 1, 1, width);
-    above.copyTo(sheet.getRange(row, 1, 1, width), SpreadsheetApp.CopyPasteType.PASTE_FORMAT, false);
-    above.copyTo(sheet.getRange(row, 1, 1, width), SpreadsheetApp.CopyPasteType.PASTE_DATA_VALIDATION, false);
+    const template = sheet.getRange(2, 1, 1, width);
+    template.copyTo(sheet.getRange(row, 1, 1, width), SpreadsheetApp.CopyPasteType.PASTE_FORMAT, false);
+    template.copyTo(sheet.getRange(row, 1, 1, width), SpreadsheetApp.CopyPasteType.PASTE_DATA_VALIDATION, false);
 
     // 自分の列だけ1セルずつ書く（間にある数式の列を空文字で上書きしないため）
     COLUMNS.forEach(h => sheet.getRange(row, headers.indexOf(h) + 1).setValue(record[h]));
