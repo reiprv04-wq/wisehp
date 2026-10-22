@@ -20,17 +20,17 @@ const COLUMNS = [
   '応募日', '部門', '応募者', '大学', '卒業年度', 'メールアドレス', '電話番号', '応募媒体', '応募媒体（詳細）', '履歴書'
 ];
 
-// 管理表の既存の表記に合わせる（集計データ・月別が応募媒体の文字列で集計しているため）
+// 管理表の表記（英語名・括弧なし）。集計データ・月別がこの文字列で集計しているので、変えるときはシート側もそろえる
 const MEDIA_LABEL = {
-  '公式HP': '公式HP（ホームページ）',
+  '公式HP': '公式HP',
   'Infra': 'Infra',
-  'Renew': 'Renew（リニュー）',
-  'Kokoshiro': 'Kokoshiro（ココシロ）',
-  'Wantedly': 'Wantedly（ウォンテッドリー）',
+  'Renew': 'Renew',
+  'Kokoshiro': 'Kokoshiro',
+  'Wantedly': 'Wantedly',
   'LinkedIn': 'LinkedIn',
   'その他': 'その他'
 };
-const OTHER_LABEL = { '紹介': '紹介（友人）', 'イベント': '社内イベント' };
+const OTHER_LABEL = { '紹介': '紹介', 'イベント': '社内イベント' };
 const DEPT_LABEL = { MD: 'マーケティング', SD: 'セールス', iTS: 'iTS' };
 const toGradLabel_ = grad => `${String(grad).replace(/\D/g, '')}卒`; // 2028年 → 2028卒
 // 「明治」→「明治大学」。大学院・短大・高専・専門学校などはそのまま
