@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>個人情報の取り扱い | WISE インターンシップ・新卒採用</title>
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wise-navy: #0F172A;
+      --wise-blue: #1E40AF;
+      --text-gray: #475569;
+      --line-gray: #E2E8F0;
+      --bg-soft: #F8FAFC;
+      --font-en: 'Times New Roman', 'Georgia', serif;
+      --font-serif: 'Noto Serif JP', 'Source Han Serif JP', serif;
+      --header-h: 75px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-serif);
+      color: var(--wise-navy);
+      background: var(--bg-soft);
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+
+    /* Header: same as entry.html */
+    .site-header {
+      height: var(--header-h);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 60px 0 32px;
+      background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line-gray);
+    }
+    .logo { display: block; text-decoration: none; line-height: 0; }
+    .logo img { height: 64px; object-fit: contain; }
+    .header-link { font-family: var(--font-en); font-size: .75rem; letter-spacing: .3em; text-decoration: none; color: var(--text-gray); }
+    .header-link:hover { color: var(--wise-navy); }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 56px 40px 96px; }
+    .label { font-family: var(--font-en); font-weight: 900; font-size: .8rem; letter-spacing: .55em; color: var(--wise-blue); display: block; }
+    h1 { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 900; letter-spacing: .08em; line-height: 1.6; margin-top: 10px; }
+    .lead { margin-top: 20px; color: var(--text-gray); font-size: .95rem; }
+
+    .card { margin-top: 36px; background: #fff; border: 1px solid var(--line-gray); padding: 8px 40px; }
+    section { padding: 28px 0; border-bottom: 1px solid var(--line-gray); }
+    section:last-child { border-bottom: none; }
+    h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: .06em; }
+    h2 .num { font-family: var(--font-en); color: var(--wise-blue); margin-right: 10px; }
+    section p, section li { font-size: .92rem; color: var(--text-gray); margin-top: 10px; }
+    section ul { list-style: none; margin-top: 6px; }
+    section li { position: relative; padding-left: 1.1em; margin-top: 4px; }
+    section li::before { content: '・'; position: absolute; left: 0; }
+
+    .meta { margin-top: 28px; font-size: .85rem; color: var(--text-gray); text-align: right; }
+    .back { display: inline-block; margin-top: 40px; font-family: var(--font-en); font-size: .8rem; letter-spacing: .3em; text-decoration: none; color: var(--text-gray); border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+    .back:hover { color: var(--wise-navy); }
+
+    @media (max-width: 768px) {
+      .site-header { padding: 0 16px; height: 60px; }
+      .logo img { height: 48px; }
+      .header-link { letter-spacing: .15em; }
+      .page { padding: 36px 16px 72px; }
+      .card { padding: 4px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="wise.html" class="logo">
+      <img src="./untitled%20folder/banner-logo/banner_logo-removebg-preview.png" alt="WISE">
+    </a>
+    <a href="entry.html" class="header-link">ENTRY</a>
+  </header>
+
+  <main class="page">
+    <span class="label">PRIVACY</span>
+    <h1>個人情報の取り扱いについて</h1>
+    <p class="lead">株式会社WEBY（以下「当社」）は、WISEインターンシップ・新卒採用のエントリーでお預かりする個人情報を、以下のとおり取り扱います。</p>
+
+    <div class="card">
+      <section>
+        <h2><span class="num">01</span>取得する情報</h2>
+        <ul>
+          <li>氏名、大学名、卒業年度</li>
+          <li>メールアドレス、電話番号</li>
+          <li>希望出勤曜日、希望職種</li>
+          <li>応募媒体（紹介者のお名前・イベント名を含む）</li>
+          <li>選考の過程でお伺いした内容（面談の記録など）</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2><span class="num">02</span>利用目的</h2>
+        <ul>
+          <li>選考の実施および合否の判断</li>
+          <li>選考・面談の日程調整など、選考に関するご連絡</li>
+          <li>採用活動の改善のための集計（個人を特定しない形で行います）</li>
+        </ul>
+        <p>上記の目的以外には利用しません。</p>
+      </section>
+
+      <section>
+        <h2><span class="num">03</span>第三者への提供</h2>
+        <p>ご本人の同意がある場合、または法令に基づく場合を除き、個人情報を第三者に提供することはありません。</p>
+      </section>
+
+      <section>
+        <h2><span class="num">04</span>管理・保管</h2>
+        <p>個人情報は、外部のクラウドサービス（Google Workspace など）を利用して保管します。漏えい・紛失・改ざんを防ぐため、適切な安全管理に努めます。選考の終了後、不要となった情報は適切な方法で削除します。</p>
+      </section>
+
+      <section>
+        <h2><span class="num">05</span>開示・訂正・削除のご請求</h2>
+        <p>ご本人から、ご自身の個人情報の開示・訂正・利用停止・削除のご請求があった場合は、ご本人であることを確認したうえで、速やかに対応します。</p>
+      </section>
+
+      <section>
+        <h2><span class="num">06</span>お問い合わせ窓口</h2>
+        <p>株式会社WEBY　採用担当<br>EMAIL：<a href="mailto:wiserecruit.intern@gmail.com">wiserecruit.intern@gmail.com</a></p>
+      </section>
+    </div>
+
+    <p class="meta">制定日：2026年10月22日</p>
+    <a href="entry.html" class="back">BACK TO ENTRY</a>
+  </main>
+
+</body>
+</html>
