@@ -172,7 +172,7 @@ function createInterviewSheet_(r, d) {
   const detail = r['応募媒体（詳細）'];
   const media = detail !== '-' ? `${r['応募媒体']}（${detail}）` : r['応募媒体'];
   const name = `${d.lastName} ${d.firstName}`;
-  const doc = DocumentApp.create(`面談シート｜${name}（${r['大学']}）`);
+  const doc = DocumentApp.create(`${name}（${r['大学']}）`);
   const body = doc.getBody();
   body.setMarginTop(40).setMarginBottom(40).setMarginLeft(44).setMarginRight(44);
 
